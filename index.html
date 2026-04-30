@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Port-Pourri, a new musical play. Get tickets now.">
+  <meta property="og:title" content="Port-Pourri">
+  <meta property="og:description" content="A new musical play. Cada um tem sua porto.">
+  <meta property="og:image" content="rear.png">
+  <title>Port-Pourri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="stage">
+    <div class="scene">
+      <div class="sign-shadow" aria-hidden="true"></div>
+      <a class="sign-link" href="REPLACE_WITH_TICKET_URL" aria-label="Get tickets to Port-Pourri">
+        <div class="sign-fallback" aria-hidden="true">
+          <div class="sign-fallback-face sign-fallback-face--front">
+            <img src="front.png" alt="" draggable="false">
+          </div>
+          <div class="sign-fallback-face sign-fallback-face--rear">
+            <img src="rear.png" alt="" draggable="false">
+          </div>
+        </div>
+        <div class="sign-canvas" aria-hidden="true"></div>
+        <span class="sr-only">Cada um tem sua porto. Everyone has their own port. Rear reveals Port-Pourri ticket information rotated vertically.</span>
+      </a>
+    </div>
+    <p class="hint" aria-hidden="true">
+      <span class="hint-hover">hover to look behind, click for tickets</span>
+      <span class="hint-touch">tap to look behind, tap again for tickets</span>
+    </p>
+  </main>
+  <script src="vendor/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
