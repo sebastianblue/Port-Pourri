@@ -286,11 +286,11 @@
         'translate(' + shadowX.toFixed(2) + 'px, ' + shadowY.toFixed(2) + 'px) scale(' + shadowScale.toFixed(3) + ')';
       shadowElement.style.opacity = shadowOpacity.toFixed(3);
 
-      const glareX = -pointerX * 36 + entryBiasX * 18 * entryInfluence;
-      const glareY = -pointerY * 22 - (revealed ? 8 : 0);
-      const glareRotate = -12 + pointerX * -5 + entryBiasX * -4 * entryInfluence;
-      const glareScale = revealed ? 1.05 : 0.92;
-      const glareOpacity = revealed ? 0.52 : 0.34;
+      const glareX = -pointerX * 24 + entryBiasX * 12 * entryInfluence;
+      const glareY = -pointerY * 16 - (revealed ? 6 : 0);
+      const glareRotate = -12 + pointerX * -4 + entryBiasX * -3 * entryInfluence;
+      const glareScale = revealed ? 0.84 : 0.74;
+      const glareOpacity = revealed ? 0.34 : 0.2;
       glareElement.style.transform =
         'translate(' + glareX.toFixed(2) + 'px, ' + glareY.toFixed(2) + 'px) rotate(' + glareRotate.toFixed(2) + 'deg) scale(' + glareScale.toFixed(3) + ')';
       glareElement.style.opacity = glareOpacity.toFixed(3);

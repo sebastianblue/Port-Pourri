@@ -69,15 +69,16 @@ body {
 
 .sign-glare {
   position: absolute;
-  inset: 5% 11% 10%;
+  inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.38;
-  mix-blend-mode: screen;
-  filter: blur(10px);
+  overflow: hidden;
+  border-radius: 5%;
+  opacity: 0.24;
+  filter: blur(12px);
   background:
-    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.55) 0%, rgba(255, 252, 244, 0.22) 24%, rgba(255, 255, 255, 0) 60%);
-  transform: translate(0, 0) rotate(-10deg) scale(0.92);
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.46) 0%, rgba(255, 248, 235, 0.14) 22%, rgba(255, 255, 255, 0) 58%);
+  transform: translate(0, 0) rotate(-10deg) scale(0.74);
   transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
               opacity 0.9s ease;
 }
@@ -91,6 +92,7 @@ body {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   outline: none;
+  overflow: visible;
   z-index: 3;
 }
 
