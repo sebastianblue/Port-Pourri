@@ -68,6 +68,32 @@
   const rearQuaternion = new THREE.Quaternion().setFromEuler(revealEuler);
   const targetQuaternion = new THREE.Quaternion();
 
+  function bindTouchFallback() {
+    sceneElement.classList.add('is-visible');
+    link.dataset.revealed = 'false';
+
+    link.addEventListener('click', function (event) {
+      if (link.dataset.revealed !== 'true') {
+        event.preventDefault();
+        link.dataset.revealed = 'true';
+        window.clearTimeout(revealTimeout);
+        revealTimeout = window.setTimeout(function () {
+          link.dataset.revealed = 'false';
+        }, 4500);
+        return;
+      }
+
+      event.preventDefault();
+      window.clearTimeout(revealTimeout);
+      window.location.href = link.href;
+    });
+  }
+
+  if (!hoverCapable) {
+    bindTouchFallback();
+    return;
+  }
+
   function loadImage(src) {
     return new Promise(function (resolve, reject) {
       const image = new Image();
@@ -202,51 +228,35 @@
   }
 
   function bindInteraction() {
-    if (hoverCapable) {
-      link.addEventListener('pointermove', function (event) {
-        updatePointerTargets(event);
-      });
+    link.addEventListener('pointermove', function (event) {
+      updatePointerTargets(event);
+    });
 
-      link.addEventListener('mouseenter', function (event) {
-        updatePointerTargets(event);
-        entryBiasTargetX = pointerTargetX;
-        entryBiasTargetY = pointerTargetY;
-        setRevealed(true);
-      });
+    link.addEventListener('mouseenter', function (event) {
+      updatePointerTargets(event);
+      entryBiasTargetX = pointerTargetX;
+      entryBiasTargetY = pointerTargetY;
+      setRevealed(true);
+    });
 
-      link.addEventListener('mouseleave', function () {
-        setRevealed(false);
-        pointerTargetX = 0;
-        pointerTargetY = 0;
-        entryBiasTargetX = 0;
-        entryBiasTargetY = 0;
-      });
+    link.addEventListener('mouseleave', function () {
+      setRevealed(false);
+      pointerTargetX = 0;
+      pointerTargetY = 0;
+      entryBiasTargetX = 0;
+      entryBiasTargetY = 0;
+    });
 
-      link.addEventListener('focus', function () {
-        entryBiasTargetX = 0;
-        entryBiasTargetY = 0;
-        setRevealed(true);
-      });
+    link.addEventListener('focus', function () {
+      entryBiasTargetX = 0;
+      entryBiasTargetY = 0;
+      setRevealed(true);
+    });
 
-      link.addEventListener('blur', function () {
-        setRevealed(false);
-        entryBiasTargetX = 0;
-        entryBiasTargetY = 0;
-      });
-      return;
-    }
-
-    link.addEventListener('click', function (event) {
-      if (!revealed) {
-        event.preventDefault();
-        setRevealed(true);
-        scheduleReset();
-        return;
-      }
-
-      event.preventDefault();
-      window.clearTimeout(revealTimeout);
-      window.location.href = link.href;
+    link.addEventListener('blur', function () {
+      setRevealed(false);
+      entryBiasTargetX = 0;
+      entryBiasTargetY = 0;
     });
   }
 
