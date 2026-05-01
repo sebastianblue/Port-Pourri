@@ -4,9 +4,8 @@
   const canvasHost = document.querySelector('.sign-canvas');
   const sceneElement = document.querySelector('.scene');
   const shadowElement = document.querySelector('.sign-shadow');
-  const glareElement = document.querySelector('.sign-glare');
 
-  if (!THREE || !link || !canvasHost || !sceneElement || !shadowElement || !glareElement) {
+  if (!THREE || !link || !canvasHost || !sceneElement || !shadowElement) {
     return;
   }
 
@@ -41,6 +40,7 @@
   if ('outputEncoding' in renderer && 'sRGBEncoding' in THREE) {
     renderer.outputEncoding = THREE.sRGBEncoding;
   }
+  renderer.setClearColor(0x000000, 0);
 
   canvasHost.appendChild(renderer.domElement);
 
@@ -97,14 +97,53 @@
     return texture;
   }
 
+  function createSanitizedCanvas(image) {
+    const sourceWidth = image.naturalWidth || image.width;
+    const sourceHeight = image.naturalHeight || image.height;
+    const canvas = document.createElement('canvas');
+    canvas.width = sourceWidth;
+    canvas.height = sourceHeight;
+
+    const context = canvas.getContext('2d');
+    if (!context) {
+      return null;
+    }
+
+    context.drawImage(image, 0, 0, sourceWidth, sourceHeight);
+
+    const imageData = context.getImageData(0, 0, sourceWidth, sourceHeight);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const a = data[i + 3];
+
+      // Strip out pale matte pixels lingering in supposedly transparent margins.
+      if (a > 0 && r > 245 && g > 245 && b > 235) {
+        data[i + 3] = 0;
+      }
+    }
+
+    context.putImageData(imageData, 0, 0);
+    return canvas;
+  }
+
   function createTextureFromImage(image) {
-    return configureTexture(new THREE.Texture(image));
+    const sanitizedCanvas = createSanitizedCanvas(image);
+    if (!sanitizedCanvas) {
+      return configureTexture(new THREE.Texture(image));
+    }
+
+    return configureTexture(new THREE.CanvasTexture(sanitizedCanvas));
   }
 
   function createRearTexture(image) {
     const sourceWidth = image.naturalWidth || image.width;
     const sourceHeight = image.naturalHeight || image.height;
     const rearArtScale = 1.14;
+    const sourceCanvas = createSanitizedCanvas(image);
     const canvas = document.createElement('canvas');
 
     canvas.width = sourceWidth;
@@ -121,7 +160,7 @@
     const drawWidth = sourceWidth * scale * rearArtScale;
     const drawHeight = sourceHeight * scale * rearArtScale;
 
-    context.drawImage(image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+    context.drawImage(sourceCanvas || image, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
 
     return configureTexture(new THREE.CanvasTexture(canvas));
   }
@@ -286,15 +325,6 @@
         'translate(' + shadowX.toFixed(2) + 'px, ' + shadowY.toFixed(2) + 'px) scale(' + shadowScale.toFixed(3) + ')';
       shadowElement.style.opacity = shadowOpacity.toFixed(3);
 
-      const glareX = -pointerX * 24 + entryBiasX * 12 * entryInfluence;
-      const glareY = -pointerY * 16 - (revealed ? 6 : 0);
-      const glareRotate = -12 + pointerX * -4 + entryBiasX * -3 * entryInfluence;
-      const glareScale = revealed ? 0.84 : 0.74;
-      const glareOpacity = revealed ? 0.34 : 0.2;
-      glareElement.style.transform =
-        'translate(' + glareX.toFixed(2) + 'px, ' + glareY.toFixed(2) + 'px) rotate(' + glareRotate.toFixed(2) + 'deg) scale(' + glareScale.toFixed(3) + ')';
-      glareElement.style.opacity = glareOpacity.toFixed(3);
-
       renderer.render(scene, camera);
       window.requestAnimationFrame(tick);
     }
@@ -320,7 +350,7 @@
 
     window.setTimeout(function () {
       sceneElement.classList.add('is-visible');
-    }, 900);
+    }, 550);
   }).catch(function (error) {
     console.error(error);
   });
