@@ -187,6 +187,451 @@
   }
   .btn:hover { background: var(--ink); color: var(--parchment); }
 
+
+
+  /* BLOCK AVAILABILITY PLANNER */
+  .planner-panel {
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--ink);
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .planner-topline {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .duration-controls,
+  .availability-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .duration-btn[data-active="true"],
+  .btn[data-active="true"] {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+  .slot-summary {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 14px;
+    margin: 4px 0 12px;
+  }
+  .availability-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.18);
+  }
+  .availability-grid {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+  }
+  .availability-grid th,
+  .availability-grid td {
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    padding: 6px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .availability-grid tr:last-child td { border-bottom: 0; }
+  .availability-grid th:last-child,
+  .availability-grid td:last-child { border-right: 0; }
+  .availability-grid th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--parchment-deep);
+  }
+  .availability-grid .char-head {
+    text-align: left;
+    width: 190px;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    background: var(--parchment-card);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+  .availability-grid .actor-mini {
+    display: block;
+    font-family: 'Crimson Pro', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 1px;
+  }
+  .slot-toggle {
+    width: 100%;
+    min-height: 34px;
+    border: 1px solid var(--green);
+    background: var(--green-bg);
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .slot-toggle[data-available="false"] {
+    border-color: var(--rust);
+    background: var(--rust-bg);
+    color: var(--rust);
+  }
+  .plan-block {
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--green);
+    padding: 12px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .plan-block:hover { background: #fff8e2; }
+  .plan-block.amber { border-left-color: var(--amber); }
+  .plan-block.orange { border-left-color: var(--orange); }
+  .plan-block.rust { border-left-color: var(--rust); cursor: default; }
+  .block-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .plan-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.35;
+    margin-top: 8px;
+  }
+  .alternate-list {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .alternate-list strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .plan-block {
+    cursor: default;
+  }
+  .option-group {
+    margin-top: 12px;
+  }
+  .option-group + .option-group {
+    border-top: 1px dashed var(--rule);
+    padding-top: 10px;
+  }
+  .option-heading {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--ink-soft);
+  }
+  .option-heading.green { color: var(--green); }
+  .option-heading.amber { color: var(--amber); }
+  .option-heading.orange { color: var(--orange); }
+  .option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .option-item {
+    width: 100%;
+    text-align: left;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--green);
+    background: rgba(255,255,255,0.18);
+    color: var(--ink);
+    border-radius: 3px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: 'Crimson Pro', Georgia, serif;
+    transition: all 0.12s ease;
+  }
+  .option-item:hover { background: #fff8e2; transform: translateX(1px); }
+  .option-item.amber { border-left-color: var(--amber); }
+  .option-item.orange { border-left-color: var(--orange); }
+  .option-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .option-desc {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .option-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .hidden-count {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  /* ACTUAL REHEARSAL PLAN */
+  .actual-plan-panel {
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--ink);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .actual-plan-topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .actual-plan-note {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .recommendation-summary {
+    display: none;
+    border: 1px dashed var(--rule);
+    background: rgba(255,255,255,0.18);
+    padding: 10px 12px;
+    margin: 8px 0 12px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .recommendation-summary[data-visible="true"] { display: block; }
+  .recommendation-summary strong {
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .recommendation-summary .rec-line { margin-top: 4px; }
+  .actual-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .actual-block {
+    background: rgba(255,255,255,0.16);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--green);
+    padding: 12px;
+    border-radius: 3px;
+    min-height: 120px;
+  }
+  .actual-block.empty { border-left-color: var(--ink-faint); }
+  .actual-block-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 3px;
+  }
+  .reroll-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    line-height: 1.25;
+    color: var(--ink-faint);
+    margin: 2px 0 6px;
+  }
+  .actual-block .available-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    margin: 5px 0 8px;
+  }
+  .actual-empty {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  .planned-item {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--green);
+    background: var(--parchment-card);
+    padding: 9px 10px;
+    border-radius: 3px;
+    margin-top: 8px;
+  }
+  .planned-item.amber { border-left-color: var(--amber); }
+  .planned-item.orange { border-left-color: var(--orange); }
+  .planned-item.rust { border-left-color: var(--rust); }
+  .planned-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .planned-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .planned-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .planned-desc {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-top: 4px;
+  }
+  .planned-note-input {
+    width: 100%;
+    margin-top: 7px;
+    background: rgba(255,255,255,0.22);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 5px 7px;
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 13px;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 34px;
+  }
+  .planned-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 7px;
+  }
+  .mini-btn {
+    border: 1px solid var(--ink-soft);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 3px 6px;
+    cursor: pointer;
+  }
+  .mini-btn:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    background: #fff8e2;
+  }
+  .mini-btn.danger:hover {
+    border-color: var(--rust);
+    color: var(--rust);
+    background: var(--rust-bg);
+  }
+  .option-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 7px;
+  }
+  .option-action {
+    border: 1px solid var(--ink-soft);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 3px 7px;
+    cursor: pointer;
+  }
+  .option-action:hover { border-color: var(--ink); color: var(--ink); background: #fff8e2; }
+  .option-action.add { border-color: var(--green); color: var(--green); }
+  .option-action.add:hover { background: var(--green-bg); }
+
+  .plan-coverage {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--rule);
+  }
+  .coverage-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .coverage-card {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--ink-faint);
+    background: rgba(255,255,255,0.16);
+    padding: 10px 12px;
+    border-radius: 3px;
+  }
+  .coverage-card.warning { border-left-color: var(--orange); background: var(--orange-bg); }
+  .coverage-card.good { border-left-color: var(--green); background: var(--green-bg); }
+  .coverage-card.conflict { border-left-color: var(--rust); background: var(--rust-bg); }
+  .coverage-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+  .coverage-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .idle-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-soft);
+    line-height: 1.35;
+  }
+
+
   /* STATS */
   .stats {
     display: grid;
@@ -436,6 +881,8 @@
     .scene-detail { grid-template-columns: 1fr; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -453,13 +900,50 @@
   <button class="btn" id="invert">Invert</button>
 </div>
 
-<h2 class="section"><span class="num">II.</span> The Night at a Glance</h2>
-<div class="stats" id="stats"></div>
+<h2 class="section"><span class="num">II.</span> Rehearsal Length + Availability</h2>
+<div class="planner-panel">
+  <div class="planner-topline">
+    <div class="duration-controls" id="duration-controls">
+      <button class="btn duration-btn" data-duration="90">1.5 hours</button>
+      <button class="btn duration-btn" data-duration="120">2 hours</button>
+      <button class="btn duration-btn" data-duration="180">3 hours</button>
+    </div>
+    <div class="availability-actions">
+      <button class="btn" id="all-available">Everyone all blocks</button>
+      <button class="btn" id="clear-availability">Clear blocks</button>
+      <button class="btn" id="from-attendance">Fill from cast chips</button>
+      <button class="btn" id="export-xlsx">Export remaining options XLSX</button>
+    </div>
+  </div>
+  <div class="slot-summary" id="slot-summary"></div>
+  <div class="availability-scroll">
+    <table class="availability-grid" id="availability-grid"></table>
+  </div>
+</div>
 
-<h2 class="section"><span class="num">III.</span> What to Rehearse Tonight</h2>
+<h2 class="section"><span class="num">III.</span> Actual Rehearsal Plan</h2>
+<div class="actual-plan-panel">
+  <div class="actual-plan-topline">
+    <div class="actual-plan-note">Add scenes from the options below into specific 30-minute blocks. The planner will track who is occupied, who is idle, and what remains possible after each choice. Use “No songs” to keep auto-recommendations and re-rolls focused on scenes only.</div>
+    <div class="availability-actions">
+      <button class="btn" id="recommend-plan">Recommend plan</button>
+      <button class="btn" id="no-songs-recommendation">No songs: off</button>
+      <button class="btn" id="clear-plan">Clear plan</button>
+      <button class="btn" id="export-plan-xlsx">Export actual plan XLSX</button>
+    </div>
+  </div>
+  <div class="recommendation-summary" id="recommendation-summary"></div>
+  <div class="actual-plan-grid" id="actual-plan"></div>
+  <div class="plan-coverage" id="plan-coverage"></div>
+</div>
+
+<h2 class="section"><span class="num">IV.</span> Rehearsal Options by Block</h2>
 <div class="recs" id="recs"></div>
 
-<h2 class="section"><span class="num">IV.</span> All Scenes</h2>
+<h2 class="section"><span class="num">V.</span> The Night at a Glance</h2>
+<div class="stats" id="stats"></div>
+
+<h2 class="section"><span class="num">VI.</span> All Scenes</h2>
 <div class="toolbar">
   <input type="text" id="search" placeholder="Search scene or description…" />
 </div>
@@ -476,7 +960,7 @@
 </div>
 
 <footer>
-  Updated 02 May 2026 · 35 scenes · 9 cast members · song numbering revised · Click any scene to expand
+  Updated 02 May 2026 · 35 scenes · 9 cast members · actual plan builder + fixed recommendation engine + per-block re-rolls + no-song recommendation mode + accurate idle/remaining-options tracking + styled XLSX exports · Click any scene to expand
 </footer>
 
 </div>
@@ -589,8 +1073,17 @@ const SILENT_MARKS   = new Set(["O", "<>"]);
 // ============================================================
 // STATE
 // ============================================================
+const SLOT_MINUTES = 30;
+const MAX_SLOTS = 6;
+
 const state = {
   present: Object.fromEntries(CHARACTERS.map(c => [c.name, true])),
+  availability: Object.fromEntries(CHARACTERS.map(c => [c.name, Array(MAX_SLOTS).fill(true)])),
+  planned: Object.fromEntries(Array.from({ length: MAX_SLOTS }, (_, i) => [i, []])),
+  rerollCounts: Object.fromEntries(Array.from({ length: MAX_SLOTS }, (_, i) => [i, 0])),
+  lastRecommendation: null,
+  noSongsInRecommendations: false,
+  durationMinutes: 120,
   filterAct: "all",
   search: "",
   openScenes: new Set(),
@@ -599,12 +1092,51 @@ const state = {
 // ============================================================
 // LOGIC
 // ============================================================
-function sceneStatus(label) {
+function activeSlotIndexes() {
+  return Array.from({ length: state.durationMinutes / SLOT_MINUTES }, (_, i) => i);
+}
+
+function slotLabel(index) {
+  const start = index * SLOT_MINUTES;
+  const end = start + SLOT_MINUTES;
+  const fmt = (mins) => `${Math.floor(mins / 60)}:${String(mins % 60).padStart(2, "0")}`;
+  return `${fmt(start)}–${fmt(end)}`;
+}
+
+function isCharAvailable(char, slotIndex = null) {
+  if (slotIndex === null) return !!state.present[char];
+  return !!(state.availability[char] && state.availability[char][slotIndex]);
+}
+
+function updatePresentFromAvailability() {
+  const active = activeSlotIndexes();
+  CHARACTERS.forEach(c => {
+    state.present[c.name] = active.some(i => state.availability[c.name][i]);
+  });
+}
+
+function setCharacterAllActiveSlots(name, value) {
+  activeSlotIndexes().forEach(i => state.availability[name][i] = value);
+  updatePresentFromAvailability();
+}
+
+function availableCountForCharacter(name) {
+  return activeSlotIndexes().filter(i => isCharAvailable(name, i)).length;
+}
+
+function requiredCharsInScene(label) {
+  const marks = MARKS[label] || {};
+  return Object.entries(marks)
+    .filter(([_, m]) => REQUIRED_MARKS.has(m))
+    .map(([c]) => c);
+}
+
+function sceneStatus(label, slotIndex = null) {
   const marks = MARKS[label] || {};
   const missingRequired = [];
   const missingSilent = [];
   for (const [char, mark] of Object.entries(marks)) {
-    if (state.present[char]) continue;
+    if (isCharAvailable(char, slotIndex)) continue;
     if (REQUIRED_MARKS.has(mark)) missingRequired.push(char);
     else if (SILENT_MARKS.has(mark)) missingSilent.push(char);
   }
@@ -637,93 +1169,1161 @@ function speakingCharsInScene(label) {
     .map(([c]) => c);
 }
 
+function charsInScene(label) {
+  return Object.keys(MARKS[label] || {});
+}
+
+function uniqueNames(names) {
+  return [...new Set(names)].filter(Boolean);
+}
+
+function availableCharsForSlot(slot) {
+  return CHARACTERS.filter(c => isCharAvailable(c.name, slot)).map(c => c.name);
+}
+
+function plannedLabelsForSlot(slot) {
+  return new Set((state.planned[slot] || []).map(item => item.label));
+}
+
+function actualUsedCharsForSceneAgainstSet(label, availableSet) {
+  const marks = MARKS[label] || {};
+  const { status } = sceneStatusAgainstAvailableSet(label, availableSet);
+  const availableEntries = Object.entries(marks).filter(([name]) => availableSet.has(name));
+
+  // When a scene is fully ready, silent/presence marks are genuinely usable.
+  // When the scene is "speaking only" or needs a reader, only required roles are treated as occupied.
+  // This avoids the previous glitch where absent/presence-only people were counted as busy.
+  if (status === "green") return availableEntries.map(([name]) => name);
+  return availableEntries
+    .filter(([_, mark]) => REQUIRED_MARKS.has(mark))
+    .map(([name]) => name);
+}
+
+function actualUsedCharsForSceneInSlot(label, slot) {
+  return actualUsedCharsForSceneAgainstSet(label, new Set(availableCharsForSlot(slot)));
+}
+
+function occupiedCharsForSlot(slot) {
+  return uniqueNames((state.planned[slot] || []).flatMap(item => actualUsedCharsForSceneInSlot(item.label, slot)));
+}
+
+function freeCharsForSlot(slot) {
+  const occupied = new Set(occupiedCharsForSlot(slot));
+  return availableCharsForSlot(slot).filter(name => !occupied.has(name));
+}
+
+function doubleBookedCharsForSlot(slot) {
+  const counts = {};
+  (state.planned[slot] || []).forEach(item => {
+    actualUsedCharsForSceneInSlot(item.label, slot).forEach(name => {
+      counts[name] = (counts[name] || 0) + 1;
+    });
+  });
+  return Object.entries(counts).filter(([_, count]) => count > 1).map(([name]) => name);
+}
+
+function sceneStatusAgainstAvailableSet(label, availableSet) {
+  const marks = MARKS[label] || {};
+  const missingRequired = [];
+  const missingSilent = [];
+  for (const [char, mark] of Object.entries(marks)) {
+    if (availableSet.has(char)) continue;
+    if (REQUIRED_MARKS.has(mark)) missingRequired.push(char);
+    else if (SILENT_MARKS.has(mark)) missingSilent.push(char);
+  }
+  let status;
+  if (missingRequired.length === 0 && missingSilent.length === 0) status = "green";
+  else if (missingRequired.length === 0) status = "amber";
+  else if (missingRequired.length === 1) status = "orange";
+  else status = "rust";
+  return { status, missingRequired, missingSilent };
+}
+
+function remainingSceneStatus(label, slot) {
+  return sceneStatusAgainstAvailableSet(label, new Set(freeCharsForSlot(slot)));
+}
+
+function characterPlanUsage() {
+  const usage = Object.fromEntries(CHARACTERS.map(c => [c.name, { available: [], used: [], idle: [], scenes: [] }]));
+  activeSlotIndexes().forEach(slot => {
+    const occupied = new Set(occupiedCharsForSlot(slot));
+    CHARACTERS.forEach(c => {
+      if (!isCharAvailable(c.name, slot)) return;
+      usage[c.name].available.push(slot);
+      if (occupied.has(c.name)) usage[c.name].used.push(slot);
+      else usage[c.name].idle.push(slot);
+    });
+    (state.planned[slot] || []).forEach(item => {
+      actualUsedCharsForSceneInSlot(item.label, slot).forEach(name => {
+        if (usage[name]) usage[name].scenes.push(`Block ${slot + 1}: ${item.label}`);
+      });
+    });
+  });
+  return usage;
+}
+
+function blockList(slots) {
+  return slots.length ? slots.map(slot => `B${slot + 1}`).join(", ") : "—";
+}
+
+
+function sceneByLabel(label) {
+  return SCENES.find(s => s.label === label);
+}
+
+function plannedItemId() {
+  return `plan-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function activePlannedItems() {
+  return activeSlotIndexes().flatMap(slot => state.planned[slot].map((item, index) => ({ slot, index, item })));
+}
+
+function addSceneToPlan(slot, label) {
+  if (!state.planned[slot]) state.planned[slot] = [];
+  const alreadyHere = state.planned[slot].some(item => item.label === label);
+  if (alreadyHere) return;
+  state.planned[slot].push({ id: plannedItemId(), label, notes: "" });
+  state.lastRecommendation = null;
+  render();
+}
+
+function removePlannedItem(slot, id) {
+  state.planned[slot] = state.planned[slot].filter(item => item.id !== id);
+  state.lastRecommendation = null;
+  render();
+}
+
+function movePlannedItem(slot, id, direction) {
+  const currentSlot = Number(slot);
+  const targetSlot = currentSlot + direction;
+  if (!activeSlotIndexes().includes(targetSlot)) return;
+  const itemIndex = state.planned[currentSlot].findIndex(item => item.id === id);
+  if (itemIndex < 0) return;
+  const [item] = state.planned[currentSlot].splice(itemIndex, 1);
+  state.planned[targetSlot].push(item);
+  state.lastRecommendation = null;
+  render();
+}
+
+function updatePlannedNote(slot, id, notes) {
+  const item = state.planned[slot].find(item => item.id === id);
+  if (item) item.notes = notes;
+}
+
+function clearActivePlan() {
+  activeSlotIndexes().forEach(i => {
+    state.planned[i] = [];
+    state.rerollCounts[i] = 0;
+  });
+  state.lastRecommendation = null;
+}
+
+function statusQuality(status) {
+  return { green: 30, amber: 16, orange: -42, rust: -999 }[status] || 0;
+}
+
+function candidateUsedCharsForSet(label, availableSet) {
+  return actualUsedCharsForSceneAgainstSet(label, availableSet);
+}
+
+function recommendationCandidatesForSlot(slot, usedLabels, allowOrange = false) {
+  const availableSet = new Set(availableCharsForSlot(slot));
+  return SCENES
+    .filter(scene => !usedLabels.has(scene.label))
+    .filter(scene => !(state.noSongsInRecommendations && scene.song))
+    .map(scene => {
+      const { status, missingRequired, missingSilent } = sceneStatusAgainstAvailableSet(scene.label, availableSet);
+      const usedChars = candidateUsedCharsForSet(scene.label, availableSet);
+      const required = requiredCharsInScene(scene.label);
+      const requiredUsed = required.filter(name => availableSet.has(name));
+      const score =
+        (usedChars.length * 100) +
+        (requiredUsed.length * 24) +
+        (scene.song ? 22 : 0) +
+        statusQuality(status) -
+        (missingSilent.length * 4) -
+        (missingRequired.length * 55);
+      return { scene, status, missingRequired, missingSilent, usedChars, required, requiredUsed, score };
+    })
+    .filter(candidate => candidate.usedChars.length > 0)
+    .filter(candidate => candidate.status === "green" || candidate.status === "amber" || (allowOrange && candidate.status === "orange"))
+    .sort((a, b) => {
+      if (b.usedChars.length !== a.usedChars.length) return b.usedChars.length - a.usedChars.length;
+      return b.score - a.score;
+    });
+}
+
+function bestCombinationForSlot(slot, usedLabels, globalUsed) {
+  const available = availableCharsForSlot(slot);
+  if (!available.length) return { items: [], occupied: [], idle: [], score: 0, usedOrange: false };
+
+  const maxItems = Math.min(3, Math.max(1, Math.ceil(available.length / 3)));
+  let candidates = recommendationCandidatesForSlot(slot, usedLabels, false).slice(0, 24);
+  if (!candidates.length) candidates = recommendationCandidatesForSlot(slot, usedLabels, true).slice(0, 24);
+
+  let best = { items: [], occupied: new Set(), score: -Infinity, usedOrange: false };
+
+  function comboScore(items, occupied) {
+    const newPeople = [...occupied].filter(name => !globalUsed.has(name)).length;
+    const idle = available.length - occupied.size;
+    const statusScore = items.reduce((sum, item) => sum + statusQuality(item.status), 0);
+    const sceneScore = items.reduce((sum, item) => sum + item.score, 0);
+    const orangePenalty = items.filter(item => item.status === "orange").length * 300;
+    return (occupied.size * 10000) + (newPeople * 900) + statusScore + sceneScore - orangePenalty - (items.length * 18) - (idle * 40);
+  }
+
+  function visit(start, chosen, occupied) {
+    const score = comboScore(chosen, occupied);
+    if (score > best.score) best = { items: [...chosen], occupied: new Set(occupied), score, usedOrange: chosen.some(item => item.status === "orange") };
+    if (chosen.length >= maxItems || occupied.size === available.length) return;
+
+    for (let i = start; i < candidates.length; i++) {
+      const candidate = candidates[i];
+      if (candidate.usedChars.some(name => occupied.has(name))) continue;
+      const nextOccupied = new Set(occupied);
+      candidate.usedChars.forEach(name => nextOccupied.add(name));
+      visit(i + 1, [...chosen, candidate], nextOccupied);
+    }
+  }
+
+  visit(0, [], new Set());
+
+  return {
+    items: best.items,
+    occupied: [...best.occupied],
+    idle: available.filter(name => !best.occupied.has(name)),
+    score: best.score,
+    usedOrange: best.usedOrange,
+  };
+}
+
+
+function labelSignature(labels) {
+  return [...labels].sort().join("||");
+}
+
+function combinationSignature(combo) {
+  return labelSignature(combo.items.map(item => item.scene.label));
+}
+
+function slotCombinationAlternatives(slot, usedLabels, globalUsed) {
+  const available = availableCharsForSlot(slot);
+  if (!available.length) return [];
+
+  const maxItems = Math.min(3, Math.max(1, Math.ceil(available.length / 3)));
+  const candidates = recommendationCandidatesForSlot(slot, usedLabels, true).slice(0, 36);
+  const alternatives = [];
+  const seen = new Set();
+
+  function comboScore(items, occupied) {
+    const newPeople = [...occupied].filter(name => !globalUsed.has(name)).length;
+    const idle = available.length - occupied.size;
+    const statusScore = items.reduce((sum, item) => sum + statusQuality(item.status), 0);
+    const sceneScore = items.reduce((sum, item) => sum + item.score, 0);
+    const orangePenalty = items.filter(item => item.status === "orange").length * 300;
+    return (occupied.size * 10000) + (newPeople * 900) + statusScore + sceneScore - orangePenalty - (items.length * 18) - (idle * 40);
+  }
+
+  function addCombo(items, occupied) {
+    if (!items.length) return;
+    const signature = labelSignature(items.map(item => item.scene.label));
+    if (seen.has(signature)) return;
+    seen.add(signature);
+    alternatives.push({
+      items: [...items],
+      occupied: [...occupied],
+      idle: available.filter(name => !occupied.has(name)),
+      score: comboScore(items, occupied),
+      usedOrange: items.some(item => item.status === "orange"),
+    });
+  }
+
+  function visit(start, chosen, occupied) {
+    addCombo(chosen, occupied);
+    if (chosen.length >= maxItems || occupied.size === available.length) return;
+
+    for (let i = start; i < candidates.length; i++) {
+      const candidate = candidates[i];
+      if (candidate.usedChars.some(name => occupied.has(name))) continue;
+      const nextOccupied = new Set(occupied);
+      candidate.usedChars.forEach(name => nextOccupied.add(name));
+      visit(i + 1, [...chosen, candidate], nextOccupied);
+    }
+  }
+
+  visit(0, [], new Set());
+  return alternatives.sort((a, b) => b.score - a.score).slice(0, 60);
+}
+
+function labelsUsedOutsideSlot(slot) {
+  const labels = new Set();
+  activeSlotIndexes().forEach(i => {
+    if (i === slot) return;
+    (state.planned[i] || []).forEach(item => labels.add(item.label));
+  });
+  return labels;
+}
+
+function peopleUsedOutsideSlot(slot) {
+  const people = new Set();
+  activeSlotIndexes().forEach(i => {
+    if (i === slot) return;
+    occupiedCharsForSlot(i).forEach(name => people.add(name));
+  });
+  return people;
+}
+
+function autoPlanNote(candidate, prefix) {
+  const noteBits = [prefix];
+  if (candidate.status === "amber") noteBits.push(`missing silent/presence: ${candidate.missingSilent.join(", ")}`);
+  if (candidate.status === "orange") noteBits.push(`needs reader/stand-in for: ${candidate.missingRequired.join(", ")}`);
+  return noteBits.join(" · ");
+}
+
+function summarizeCurrentPlan(note = "Updated recommended plan") {
+  const availableSlots = activeSlotIndexes().reduce((sum, slot) => sum + availableCharsForSlot(slot).length, 0);
+  const occupiedSlots = activeSlotIndexes().reduce((sum, slot) => sum + occupiedCharsForSlot(slot).filter(name => isCharAvailable(name, slot)).length, 0);
+  const usedPeople = new Set();
+  activeSlotIndexes().forEach(slot => occupiedCharsForSlot(slot).forEach(name => usedPeople.add(name)));
+  const availablePeople = CHARACTERS.filter(c => availableCountForCharacter(c.name) > 0).map(c => c.name);
+  const unusedPeople = availablePeople.filter(name => !usedPeople.has(name));
+  const slotSummaries = activeSlotIndexes().map(slot => {
+    const labels = (state.planned[slot] || []).map(item => item.label);
+    const occupied = occupiedCharsForSlot(slot);
+    const idle = freeCharsForSlot(slot);
+    const usedOrange = (state.planned[slot] || []).some(item => sceneStatus(item.label, slot).status === "orange");
+    return { slot, labels, occupied, idle, usedOrange };
+  });
+  return {
+    note,
+    availableSlots,
+    occupiedSlots,
+    idleSlots: Math.max(0, availableSlots - occupiedSlots),
+    unusedPeople,
+    slotSummaries,
+    usedOrange: slotSummaries.some(summary => summary.usedOrange),
+  };
+}
+
+function applyRecommendedComboToSlot(slot, combo, prefix) {
+  state.planned[slot] = combo.items.map(candidate => ({
+    id: plannedItemId(),
+    label: candidate.scene.label,
+    notes: autoPlanNote(candidate, prefix),
+  }));
+}
+
+function rerollSlot(slot) {
+  const alternatives = slotCombinationAlternatives(slot, labelsUsedOutsideSlot(slot), peopleUsedOutsideSlot(slot));
+  if (!alternatives.length) {
+    alert(`No workable alternatives for Block ${slot + 1} with the current availability.`);
+    return;
+  }
+
+  const currentSignature = labelSignature((state.planned[slot] || []).map(item => item.label));
+  const currentIndex = alternatives.findIndex(combo => combinationSignature(combo) === currentSignature);
+
+  if (alternatives.length === 1 && currentIndex === 0) {
+    alert(`No alternate recommendation for Block ${slot + 1}. This is the only strong option with the current availability.`);
+    return;
+  }
+
+  let nextIndex;
+  if (currentIndex >= 0) nextIndex = (currentIndex + 1) % alternatives.length;
+  else nextIndex = state.rerollCounts[slot] % alternatives.length;
+
+  let safety = 0;
+  while (combinationSignature(alternatives[nextIndex]) === currentSignature && safety < alternatives.length) {
+    nextIndex = (nextIndex + 1) % alternatives.length;
+    safety++;
+  }
+
+  const combo = alternatives[nextIndex];
+  applyRecommendedComboToSlot(slot, combo, `Re-rolled Block ${slot + 1} to reduce idle time`);
+  state.rerollCounts[slot] = (nextIndex + 1) % alternatives.length;
+  state.lastRecommendation = summarizeCurrentPlan(`Re-rolled Block ${slot + 1}`);
+  render();
+}
+
+function recommendPlan() {
+  clearActivePlan();
+  const usedLabels = new Set();
+  const globalUsed = new Set();
+  const slotSummaries = [];
+
+  activeSlotIndexes().forEach(slot => {
+    const combo = bestCombinationForSlot(slot, usedLabels, globalUsed);
+    state.planned[slot] = combo.items.map(candidate => {
+      usedLabels.add(candidate.scene.label);
+      candidate.usedChars.forEach(name => globalUsed.add(name));
+      return { id: plannedItemId(), label: candidate.scene.label, notes: autoPlanNote(candidate, "Auto-recommended to reduce idle time") };
+    });
+    slotSummaries.push({ slot, labels: combo.items.map(candidate => candidate.scene.label), occupied: combo.occupied, idle: combo.idle, usedOrange: combo.usedOrange });
+  });
+
+  const availableSlots = activeSlotIndexes().reduce((sum, slot) => sum + availableCharsForSlot(slot).length, 0);
+  const occupiedSlots = activeSlotIndexes().reduce((sum, slot) => sum + occupiedCharsForSlot(slot).filter(name => isCharAvailable(name, slot)).length, 0);
+  const availablePeople = CHARACTERS.filter(c => availableCountForCharacter(c.name) > 0).map(c => c.name);
+  const unusedPeople = availablePeople.filter(name => !globalUsed.has(name));
+
+  state.lastRecommendation = {
+    availableSlots,
+    occupiedSlots,
+    idleSlots: Math.max(0, availableSlots - occupiedSlots),
+    unusedPeople,
+    slotSummaries,
+    usedOrange: slotSummaries.some(summary => summary.usedOrange),
+  };
+  render();
+}
+
+function renderRecommendationSummary() {
+  const box = document.getElementById("recommendation-summary");
+  if (!box) return;
+  const rec = state.lastRecommendation;
+  if (!rec) {
+    box.dataset.visible = "false";
+    box.innerHTML = "";
+    return;
+  }
+  const percent = rec.availableSlots ? Math.round((rec.occupiedSlots / rec.availableSlots) * 100) : 0;
+  const orangeNote = rec.usedOrange ? " Some missing-one options were used because they improved coverage; treat those as reader/stand-in moments." : "";
+  const songNote = state.noSongsInRecommendations ? " No-song mode was on, so songs were skipped." : "";
+  box.dataset.visible = "true";
+  box.innerHTML = `
+    <strong>${rec.note || "Recommended plan"}</strong>
+    <div class="rec-line">Uses ${rec.occupiedSlots}/${rec.availableSlots} available person-blocks (${percent}%). Idle person-blocks left: ${rec.idleSlots}.${orangeNote}${songNote}</div>
+    <div class="rec-line">Unused but present: ${rec.unusedPeople.length ? rec.unusedPeople.join(", ") : "nobody"}.</div>
+  `;
+}
+
 // ============================================================
 // RENDER
 // ============================================================
 function renderRoster() {
   const roster = document.getElementById("roster");
-  roster.innerHTML = CHARACTERS.map(c => `
-    <div class="chip" data-char="${c.name}" data-present="${state.present[c.name]}">
-      <div class="name">${c.name}</div>
-      <div class="role">${c.role}</div>
-      <div class="actor">${c.actor}</div>
-    </div>
-  `).join("");
+  roster.innerHTML = CHARACTERS.map(c => {
+    const count = availableCountForCharacter(c.name);
+    return `
+      <div class="chip" data-char="${c.name}" data-present="${state.present[c.name]}">
+        <div class="name">${c.name}</div>
+        <div class="role">${c.role}</div>
+        <div class="actor">${c.actor} · ${count}/${activeSlotIndexes().length} blocks</div>
+      </div>
+    `;
+  }).join("");
   roster.querySelectorAll(".chip").forEach(el => {
     el.addEventListener("click", () => {
       const name = el.dataset.char;
-      state.present[name] = !state.present[name];
+      setCharacterAllActiveSlots(name, !state.present[name]);
       render();
     });
   });
 }
 
-function renderStats() {
-  const tally = { green: 0, amber: 0, orange: 0, rust: 0 };
-  SCENES.forEach(s => tally[sceneStatus(s.label).status]++);
-  const present = Object.values(state.present).filter(Boolean).length;
-  const absent  = CHARACTERS.length - present;
+function renderPlannerControls() {
+  document.querySelectorAll(".duration-btn").forEach(btn => {
+    btn.dataset.active = Number(btn.dataset.duration) === state.durationMinutes;
+  });
+  const noSongsBtn = document.getElementById("no-songs-recommendation");
+  if (noSongsBtn) {
+    noSongsBtn.dataset.active = state.noSongsInRecommendations;
+    noSongsBtn.textContent = state.noSongsInRecommendations ? "No songs: on" : "No songs: off";
+    noSongsBtn.title = state.noSongsInRecommendations
+      ? "Recommendations and re-rolls will skip songs. Manual options still show everything."
+      : "Recommendations and re-rolls may include songs.";
+  }
+}
 
-  document.getElementById("stats").innerHTML = `
-    <div class="stat"><div class="label">Present</div><div class="value">${present}/${CHARACTERS.length}</div></div>
-    <div class="stat green"><div class="label">Fully Ready</div><div class="value">${tally.green}</div></div>
-    <div class="stat amber"><div class="label">Speaking-Only</div><div class="value">${tally.amber}</div></div>
-    <div class="stat orange"><div class="label">Missing 1</div><div class="value">${tally.orange}</div></div>
-    <div class="stat rust"><div class="label">Blocked</div><div class="value">${tally.rust}</div></div>
+function renderAvailabilityGrid() {
+  const grid = document.getElementById("availability-grid");
+  const summary = document.getElementById("slot-summary");
+  if (!grid || !summary) return;
+
+  const slots = activeSlotIndexes();
+  summary.textContent = `Planning a ${state.durationMinutes / 60}-hour rehearsal in ${slots.length} half-hour blocks. Click cells to mark arrivals and departures.`;
+
+  const head = `
+    <thead>
+      <tr>
+        <th class="char-head">Cast</th>
+        ${slots.map(i => `<th>Block ${i + 1}<br>${slotLabel(i)}</th>`).join("")}
+      </tr>
+    </thead>
+  `;
+
+  const body = `
+    <tbody>
+      ${CHARACTERS.map(c => `
+        <tr>
+          <td class="char-head">${c.name}<span class="actor-mini">${c.actor}</span></td>
+          ${slots.map(i => `
+            <td>
+              <button class="slot-toggle" data-char="${c.name}" data-slot="${i}" data-available="${isCharAvailable(c.name, i)}">
+                ${isCharAvailable(c.name, i) ? "IN" : "OUT"}
+              </button>
+            </td>
+          `).join("")}
+        </tr>
+      `).join("")}
+    </tbody>
+  `;
+
+  grid.innerHTML = head + body;
+  grid.querySelectorAll(".slot-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.char;
+      const slot = Number(btn.dataset.slot);
+      state.availability[name][slot] = !state.availability[name][slot];
+      updatePresentFromAvailability();
+      render();
+    });
+  });
+}
+
+
+function plannedItemHTML(slot, item) {
+  const scene = sceneByLabel(item.label);
+  if (!scene) return "";
+  const { status, missingRequired, missingSilent } = sceneStatus(scene.label, slot);
+  const missingRequiredLine = missingRequired.length ? `<br>Missing required: ${missingRequired.join(", ")}` : "";
+  const missingSilentLine = missingSilent.length ? `<br>Missing silent/presence: ${missingSilent.join(", ")}` : "";
+  const usedThisBlock = actualUsedCharsForSceneInSlot(scene.label, slot);
+  const usedLine = usedThisBlock.length ? `Used this block: ${usedThisBlock.join(", ")}` : "Used this block: nobody";
+  const requiredLine = requiredCharsInScene(scene.label).length ? `<br>Required roles: ${requiredCharsInScene(scene.label).join(", ")}` : "";
+  return `
+    <div class="planned-item ${status}" data-slot="${slot}" data-id="${item.id}">
+      <div class="planned-head">
+        <div class="planned-title">${scene.song ? "♪ " : ""}${scene.label}</div>
+        <div class="planned-status">${statusLabel(status)}</div>
+      </div>
+      <div class="planned-desc">${scene.desc}</div>
+      <div class="option-meta">${usedLine}${requiredLine}${missingRequiredLine}${missingSilentLine}</div>
+      <textarea class="planned-note-input" data-note-slot="${slot}" data-note-id="${item.id}" placeholder="Notes, goal, cut, staging focus…">${item.notes || ""}</textarea>
+      <div class="planned-actions">
+        <button class="mini-btn" data-jump="${scene.label}">Details</button>
+        <button class="mini-btn" data-move="-1" data-slot="${slot}" data-id="${item.id}">Earlier</button>
+        <button class="mini-btn" data-move="1" data-slot="${slot}" data-id="${item.id}">Later</button>
+        <button class="mini-btn danger" data-remove="true" data-slot="${slot}" data-id="${item.id}">Remove</button>
+      </div>
+    </div>
   `;
 }
 
-function renderRecs() {
-  // Score every scene; pick top 6 from green + amber tiers, sorted by:
-  //   (1) tier (green before amber)
-  //   (2) involvement of present cast (more = juicier)
-  //   (3) # of present cast members WITH SPEAKING ROLES in scene (focus)
-  const candidates = SCENES.map(s => {
-    const { status, missingSilent } = sceneStatus(s.label);
-    if (status !== "green" && status !== "amber") return null;
-    const marks = MARKS[s.label] || {};
-    const presentInScene = Object.entries(marks)
-      .filter(([c]) => state.present[c]).length;
-    const presentSpeaking = Object.entries(marks)
-      .filter(([c, m]) => state.present[c] && REQUIRED_MARKS.has(m)).length;
-    return { scene: s, status, missingSilent, presentInScene, presentSpeaking };
-  }).filter(Boolean);
-
-  candidates.sort((a, b) => {
-    if (a.status !== b.status) return a.status === "green" ? -1 : 1;
-    if (b.presentSpeaking !== a.presentSpeaking) return b.presentSpeaking - a.presentSpeaking;
-    return b.presentInScene - a.presentInScene;
-  });
-
-  const top = candidates.slice(0, 6);
-  const recs = document.getElementById("recs");
-  if (top.length === 0) {
-    recs.innerHTML = `<div class="recs-empty">No fully-rehearsable scenes with this attendance. Try the orange-bordered scenes below — those are missing one speaking actor and may work with a stand-in.</div>`;
-    return;
-  }
-  recs.innerHTML = top.map(({ scene, status, missingSilent }) => {
-    const speakers = speakingCharsInScene(scene.label).filter(c => state.present[c]);
-    const note = status === "amber"
-      ? `<div class="chars" style="color: var(--amber)">Missing silent: ${missingSilent.join(", ")}</div>`
-      : "";
+function renderActualPlan() {
+  const container = document.getElementById("actual-plan");
+  if (!container) return;
+  renderRecommendationSummary();
+  const slots = activeSlotIndexes();
+  container.innerHTML = slots.map(slot => {
+    const available = availableCharsForSlot(slot);
+    const occupied = occupiedCharsForSlot(slot);
+    const free = freeCharsForSlot(slot);
+    const conflicts = doubleBookedCharsForSlot(slot);
+    const items = state.planned[slot] || [];
     return `
-      <div class="rec ${status === "amber" ? "amber" : ""}" data-jump="${scene.label}">
-        <div class="scene-label">${scene.song ? "♪ " : ""}${scene.label}</div>
-        <div class="desc">${scene.desc}</div>
-        <div class="chars">Speaking: ${speakers.join(", ") || "(none)"}</div>
-        ${note}
+      <div class="actual-block ${items.length ? "" : "empty"}">
+        <div class="actual-block-head">
+          <div class="block-time">Block ${slot + 1} · ${slotLabel(slot)}</div>
+          <button class="mini-btn" data-reroll-slot="${slot}">${items.length ? "Re-roll" : "Recommend"}</button>
+        </div>
+        <div class="reroll-hint">Swaps only this block; other blocks stay put.</div>
+        <div class="available-line">Available: ${available.join(", ") || "nobody"}</div>
+        <div class="available-line">Occupied by plan: ${occupied.join(", ") || "nobody yet"}</div>
+        <div class="available-line">Free / idle this block: ${free.join(", ") || (available.length ? "nobody" : "n/a")}</div>
+        ${conflicts.length ? `<div class="available-line" style="color: var(--rust);">Double-booked: ${conflicts.join(", ")}</div>` : ""}
+        ${items.length ? items.map(item => plannedItemHTML(slot, item)).join("") : `<div class="actual-empty">Nothing assigned yet. Add from the options below.</div>`}
       </div>
     `;
   }).join("");
-  recs.querySelectorAll(".rec").forEach(el => {
-    el.addEventListener("click", () => {
-      const label = el.dataset.jump;
+
+  container.querySelectorAll("[data-reroll-slot]").forEach(btn => {
+    btn.addEventListener("click", () => rerollSlot(Number(btn.dataset.rerollSlot)));
+  });
+  container.querySelectorAll("[data-remove='true']").forEach(btn => {
+    btn.addEventListener("click", () => removePlannedItem(Number(btn.dataset.slot), btn.dataset.id));
+  });
+  container.querySelectorAll("[data-move]").forEach(btn => {
+    btn.addEventListener("click", () => movePlannedItem(Number(btn.dataset.slot), btn.dataset.id, Number(btn.dataset.move)));
+  });
+  container.querySelectorAll("[data-jump]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const label = btn.dataset.jump;
       state.openScenes.add(label);
       renderScenes();
       const target = document.querySelector(`.scene[data-label="${CSS.escape(label)}"]`);
       if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   });
+  container.querySelectorAll(".planned-note-input").forEach(input => {
+    input.addEventListener("input", () => updatePlannedNote(Number(input.dataset.noteSlot), input.dataset.noteId, input.value));
+  });
+  renderPlanCoverage();
+}
+
+function renderPlanCoverage() {
+  const container = document.getElementById("plan-coverage");
+  if (!container) return;
+  const usage = characterPlanUsage();
+  const hasPlan = activePlannedItems().length > 0;
+  if (!hasPlan) {
+    container.innerHTML = `
+      <div class="coverage-title">Coverage check</div>
+      <div class="coverage-card">
+        <h4>No plan yet</h4>
+        <p>Add scenes/songs below and this will flag unused people, idle blocks and double-booking.</p>
+      </div>
+    `;
+    return;
+  }
+  const availableAtAll = CHARACTERS.filter(c => usage[c.name].available.length > 0).map(c => c.name);
+  const usedAtAll = availableAtAll.filter(name => usage[name].used.length > 0);
+  const unused = availableAtAll.filter(name => usage[name].used.length === 0);
+  const partlyIdle = availableAtAll.filter(name => usage[name].used.length > 0 && usage[name].idle.length > 0);
+  const conflicts = activeSlotIndexes().flatMap(slot => doubleBookedCharsForSlot(slot).map(name => `${name} in B${slot + 1}`));
+  const idleLines = availableAtAll
+    .filter(name => usage[name].idle.length > 0)
+    .map(name => `<div>${name}: idle ${blockList(usage[name].idle)}</div>`)
+    .join("");
+
+  container.innerHTML = `
+    <div class="coverage-title">Coverage check</div>
+    <div class="coverage-grid">
+      <div class="coverage-card ${unused.length ? "warning" : "good"}">
+        <h4>Unused but present</h4>
+        <p>${unused.length ? unused.join(", ") : "Nobody. Everyone present gets used somewhere."}</p>
+      </div>
+      <div class="coverage-card ${partlyIdle.length ? "warning" : "good"}">
+        <h4>Idle time</h4>
+        <p>${partlyIdle.length ? `${partlyIdle.length} person${partlyIdle.length === 1 ? "" : "s"} still have open blocks.` : "No extra idle blocks among used cast."}</p>
+        ${idleLines ? `<div class="idle-list">${idleLines}</div>` : ""}
+      </div>
+      <div class="coverage-card ${conflicts.length ? "conflict" : "good"}">
+        <h4>Double-booking</h4>
+        <p>${conflicts.length ? conflicts.join(", ") : "No one is assigned to two selected items in the same block."}</p>
+      </div>
+      <div class="coverage-card">
+        <h4>Plan coverage</h4>
+        <p>${usedAtAll.length}/${availableAtAll.length} available cast members used somewhere in the rehearsal.</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderStats() {
+  const active = activeSlotIndexes();
+  const present = CHARACTERS.filter(c => state.present[c.name]).length;
+  const readySceneBlocks = active.reduce((total, slot) => {
+    return total + SCENES.filter(s => ["green", "amber"].includes(sceneStatus(s.label, slot).status)).length;
+  }, 0);
+  const readySongs = SCENES.filter(s => s.song && active.some(slot => ["green", "amber"].includes(sceneStatus(s.label, slot).status))).length;
+  const blockCounts = active.map(slot => CHARACTERS.filter(c => isCharAvailable(c.name, slot)).length);
+  const fullest = Math.max(...blockCounts);
+  const thinnest = Math.min(...blockCounts);
+
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="label">Cast Sometime</div><div class="value">${present}/${CHARACTERS.length}</div></div>
+    <div class="stat green"><div class="label">Ready Scene-Blocks</div><div class="value">${readySceneBlocks}</div></div>
+    <div class="stat amber"><div class="label">Songs Ready</div><div class="value">${readySongs}/8</div></div>
+    <div class="stat orange"><div class="label">Fullest Block</div><div class="value">${fullest}</div></div>
+    <div class="stat rust"><div class="label">Thinnest Block</div><div class="value">${thinnest}</div></div>
+  `;
+}
+
+function blockCandidates(slotIndex, opts = {}) {
+  const respectPlan = !!opts.respectPlan;
+  const plannedLabels = respectPlan ? plannedLabelsForSlot(slotIndex) : new Set();
+  const availableSet = respectPlan ? new Set(freeCharsForSlot(slotIndex)) : new Set(availableCharsForSlot(slotIndex));
+  const occupiedSet = respectPlan ? new Set(occupiedCharsForSlot(slotIndex)) : new Set();
+
+  return SCENES
+    .filter(scene => !plannedLabels.has(scene.label))
+    .map(scene => {
+      const { status, missingRequired, missingSilent } = sceneStatusAgainstAvailableSet(scene.label, availableSet);
+      const marks = MARKS[scene.label] || {};
+      const required = requiredCharsInScene(scene.label);
+      const presentRequired = required.filter(c => availableSet.has(c));
+      const occupiedConflicts = actualUsedCharsForSceneAgainstSet(scene.label, new Set([...availableSet, ...occupiedSet])).filter(c => occupiedSet.has(c));
+      const rarityBoost = required.reduce((sum, c) => {
+        const count = Math.max(1, availableCountForCharacter(c));
+        return sum + (6 / count);
+      }, 0);
+      const score =
+        (status === "green" ? 100 : status === "amber" ? 88 : status === "orange" ? 32 : 0) +
+        (scene.song ? 18 : 0) +
+        (required.length * 7) +
+        (Object.keys(marks).length * 1.5) +
+        rarityBoost -
+        (occupiedConflicts.length * 9) -
+        (missingSilent.length * 2) -
+        (missingRequired.length * 24);
+      return { scene, status, missingRequired, missingSilent, required, presentRequired, occupiedConflicts, score };
+    }).sort((a, b) => b.score - a.score);
+}
+
+function generateBlockOptions(opts = {}) {
+  return activeSlotIndexes().map(slot => {
+    const candidates = blockCandidates(slot, opts);
+    const groups = {
+      green: candidates.filter(c => c.status === "green"),
+      amber: candidates.filter(c => c.status === "amber"),
+      orange: candidates.filter(c => c.status === "orange"),
+      rust: candidates.filter(c => c.status === "rust"),
+    };
+    return { slot, groups };
+  });
+}
+
+function optionGroupLabel(status, count) {
+	return {
+		green: `Ready · ${count}`,
+		amber: `Speaking-only / missing silent presence · ${count}`,
+		orange: `Missing one required person · ${count}`,
+	}[status];
+}
+
+
+function optionGroupName(status) {
+	return {
+		green: "Ready",
+		amber: "Speaking-only / missing silent presence",
+		orange: "Missing one required person",
+		rust: "Blocked",
+	}[status] || status;
+}
+
+function xlsxCellSafe(value) {
+	if (Array.isArray(value)) return value.join(", ");
+	if (value === null || value === undefined) return "";
+	return value;
+}
+
+function buildOptionsExportRows(opts = {}) {
+	const rows = [];
+	generateBlockOptions(opts).forEach(({ slot, groups }) => {
+		const available = availableCharsForSlot(slot);
+		const free = opts.respectPlan ? freeCharsForSlot(slot) : available;
+		const occupied = opts.respectPlan ? occupiedCharsForSlot(slot) : [];
+		["green", "amber", "orange"].forEach(status => {
+			groups[status].forEach(candidate => {
+				const availableRequired = candidate.required.filter(c => free.includes(c));
+				const marks = MARKS[candidate.scene.label] || {};
+				rows.push({
+					"Block": slot + 1,
+					"Time": slotLabel(slot),
+					"Option Type": optionGroupName(status),
+					"Scene/Song": candidate.scene.label,
+					"Song?": candidate.scene.song ? "Yes" : "No",
+					"Act": candidate.scene.act,
+					"Description": candidate.scene.desc,
+					"Required Cast": xlsxCellSafe(candidate.required),
+					"Available Required Cast": xlsxCellSafe(availableRequired),
+					"Missing Required": xlsxCellSafe(candidate.missingRequired),
+					"Missing Silent/Presence": xlsxCellSafe(candidate.missingSilent),
+					"Available This Block": xlsxCellSafe(available),
+					"Free After Current Plan": xlsxCellSafe(free),
+					"Occupied By Current Plan": xlsxCellSafe(occupied),
+					"All Marks": Object.entries(marks).map(([char, mark]) => `${char}: ${mark}`).join("; "),
+				});
+			});
+		});
+	});
+	return rows;
+}
+
+function buildBlockedExportRows(opts = {}) {
+	const rows = [];
+	generateBlockOptions(opts).forEach(({ slot, groups }) => {
+		const available = availableCharsForSlot(slot);
+		const free = opts.respectPlan ? freeCharsForSlot(slot) : available;
+		const occupied = opts.respectPlan ? occupiedCharsForSlot(slot) : [];
+		groups.rust.forEach(candidate => {
+			const marks = MARKS[candidate.scene.label] || {};
+			rows.push({
+				"Block": slot + 1,
+				"Time": slotLabel(slot),
+				"Scene/Song": candidate.scene.label,
+				"Song?": candidate.scene.song ? "Yes" : "No",
+				"Act": candidate.scene.act,
+				"Description": candidate.scene.desc,
+				"Required Cast": xlsxCellSafe(candidate.required),
+				"Missing Required": xlsxCellSafe(candidate.missingRequired),
+				"Missing Silent/Presence": xlsxCellSafe(candidate.missingSilent),
+				"Available This Block": xlsxCellSafe(available),
+				"Free After Current Plan": xlsxCellSafe(free),
+				"Occupied By Current Plan": xlsxCellSafe(occupied),
+				"All Marks": Object.entries(marks).map(([char, mark]) => `${char}: ${mark}`).join("; "),
+			});
+		});
+	});
+	return rows;
+}
+
+function buildAvailabilityExportRows() {
+	const slots = activeSlotIndexes();
+	return CHARACTERS.map(c => {
+		const row = {
+			"Character": c.name,
+			"Role": c.role,
+			"Actor": c.actor,
+			"Total Blocks Available": availableCountForCharacter(c.name),
+		};
+		slots.forEach(slot => {
+			row[`Block ${slot + 1} (${slotLabel(slot)})`] = isCharAvailable(c.name, slot) ? "IN" : "OUT";
+		});
+		return row;
+	});
+}
+
+function buildSummaryExportRows(opts = {}) {
+	return activeSlotIndexes().map(slot => {
+		const candidates = blockCandidates(slot, opts);
+		const available = availableCharsForSlot(slot);
+		const free = opts.respectPlan ? freeCharsForSlot(slot) : available;
+		const occupied = opts.respectPlan ? occupiedCharsForSlot(slot) : [];
+		return {
+			"Block": slot + 1,
+			"Time": slotLabel(slot),
+			"Available Count": available.length,
+			"Available Cast": xlsxCellSafe(available),
+			"Occupied By Current Plan": xlsxCellSafe(occupied),
+			"Free After Current Plan": xlsxCellSafe(free),
+			"Ready Options": candidates.filter(c => c.status === "green").length,
+			"Speaking-Only Options": candidates.filter(c => c.status === "amber").length,
+			"Missing-One Options": candidates.filter(c => c.status === "orange").length,
+			"Blocked Scenes": candidates.filter(c => c.status === "rust").length,
+		};
+	});
+}
+
+function worksheetFromRows(rows, headers, widths) {
+	const safeRows = rows.length ? rows : [Object.fromEntries(headers.map(h => [h, ""]))];
+	const ws = XLSX.utils.json_to_sheet(safeRows, { header: headers });
+	ws["!cols"] = widths.map(w => ({ wch: w }));
+	if (ws["!ref"]) ws["!autofilter"] = { ref: ws["!ref"] };
+	return ws;
+}
+
+function exportRehearsalOptionsXLSX() {
+	if (typeof XLSX === "undefined") {
+		alert("The XLSX export library did not load. Check your internet connection, then reload this page.");
+		return;
+	}
+
+	const wb = XLSX.utils.book_new();
+	const optionsHeaders = ["Block", "Time", "Option Type", "Scene/Song", "Song?", "Act", "Description", "Required Cast", "Available Required Cast", "Missing Required", "Missing Silent/Presence", "Available This Block", "Free After Current Plan", "Occupied By Current Plan", "All Marks"];
+	const blockedHeaders = ["Block", "Time", "Scene/Song", "Song?", "Act", "Description", "Required Cast", "Missing Required", "Missing Silent/Presence", "Available This Block", "Free After Current Plan", "Occupied By Current Plan", "All Marks"];
+	const availabilityHeaders = ["Character", "Role", "Actor", "Total Blocks Available", ...activeSlotIndexes().map(slot => `Block ${slot + 1} (${slotLabel(slot)})`)];
+	const summaryHeaders = ["Block", "Time", "Available Count", "Available Cast", "Occupied By Current Plan", "Free After Current Plan", "Ready Options", "Speaking-Only Options", "Missing-One Options", "Blocked Scenes"];
+
+	XLSX.utils.book_append_sheet(wb, worksheetFromRows(buildOptionsExportRows({ respectPlan: true }), optionsHeaders, [8, 12, 34, 16, 8, 8, 48, 32, 32, 28, 28, 40, 40, 36, 46]), "Options");
+	XLSX.utils.book_append_sheet(wb, worksheetFromRows(buildSummaryExportRows({ respectPlan: true }), summaryHeaders, [8, 12, 16, 42, 36, 40, 16, 22, 20, 16]), "Block Summary");
+	XLSX.utils.book_append_sheet(wb, worksheetFromRows(buildAvailabilityExportRows(), availabilityHeaders, [18, 28, 24, 22, 18, 18, 18, 18, 18, 18]), "Availability");
+	XLSX.utils.book_append_sheet(wb, worksheetFromRows(buildBlockedExportRows({ respectPlan: true }), blockedHeaders, [8, 12, 16, 8, 8, 48, 32, 32, 28, 40, 40, 36, 46]), "Blocked");
+
+	const stamp = new Date().toISOString().slice(0, 10);
+	XLSX.writeFile(wb, `Port-Pourri_Remaining_Rehearsal_Options_${stamp}.xlsx`);
+}
+
+
+function buildActualPlanExportRows() {
+  const rows = [];
+  activeSlotIndexes().forEach(slot => {
+    const available = CHARACTERS.filter(c => isCharAvailable(c.name, slot)).map(c => c.name);
+    const items = state.planned[slot] || [];
+    if (!items.length) {
+      rows.push({
+        "Block": slot + 1,
+        "Time": slotLabel(slot),
+        "Scene/Song": "",
+        "Status": "Open",
+        "Description": "",
+        "Required Cast": "",
+        "Missing Required": "",
+        "Missing Silent/Presence": "",
+        "Used By This Item": "",
+        "Available Cast": xlsxCellSafe(available),
+        "Occupied By Plan": xlsxCellSafe(occupiedCharsForSlot(slot)),
+        "Idle Cast This Block": xlsxCellSafe(freeCharsForSlot(slot)),
+        "Double-Booked Cast": xlsxCellSafe(doubleBookedCharsForSlot(slot)),
+        "Notes": "",
+      });
+      return;
+    }
+    items.forEach(item => {
+      const scene = sceneByLabel(item.label);
+      const { status, missingRequired, missingSilent } = sceneStatus(item.label, slot);
+      const usedByThisItem = actualUsedCharsForSceneInSlot(item.label, slot);
+      rows.push({
+        "Block": slot + 1,
+        "Time": slotLabel(slot),
+        "Scene/Song": `${scene.song ? "♪ " : ""}${scene.label}`,
+        "Status": statusLabel(status),
+        "Description": scene.desc,
+        "Required Cast": xlsxCellSafe(requiredCharsInScene(scene.label)),
+        "Missing Required": xlsxCellSafe(missingRequired),
+        "Missing Silent/Presence": xlsxCellSafe(missingSilent),
+        "Used By This Item": xlsxCellSafe(usedByThisItem),
+        "Available Cast": xlsxCellSafe(available),
+        "Occupied By Plan": xlsxCellSafe(occupiedCharsForSlot(slot)),
+        "Idle Cast This Block": xlsxCellSafe(freeCharsForSlot(slot)),
+        "Double-Booked Cast": xlsxCellSafe(doubleBookedCharsForSlot(slot)),
+        "Notes": item.notes || "",
+      });
+    });
+  });
+  return rows;
+}
+
+function buildSelectedSceneDetailsRows() {
+  const rows = [];
+  activePlannedItems().forEach(({ slot, item }) => {
+    const scene = sceneByLabel(item.label);
+    const marks = MARKS[item.label] || {};
+    const { status, missingRequired, missingSilent } = sceneStatus(item.label, slot);
+    rows.push({
+      "Block": slot + 1,
+      "Time": slotLabel(slot),
+      "Scene/Song": `${scene.song ? "♪ " : ""}${scene.label}`,
+      "Status": statusLabel(status),
+      "Act": scene.act,
+      "Description": scene.desc,
+      "Required Cast": xlsxCellSafe(requiredCharsInScene(scene.label)),
+      "Missing Required": xlsxCellSafe(missingRequired),
+      "Missing Silent/Presence": xlsxCellSafe(missingSilent),
+      "Characters Used": xlsxCellSafe(actualUsedCharsForSceneInSlot(item.label, slot)),
+      "All Marks": Object.entries(marks).map(([char, mark]) => `${char}: ${mark}`).join("; "),
+      "Notes": item.notes || "",
+    });
+  });
+  return rows;
+}
+
+function buildPlanCoverageRows() {
+  const usage = characterPlanUsage();
+  return CHARACTERS.map(c => {
+    const u = usage[c.name];
+    let status = "Absent";
+    if (u.available.length && !u.used.length) status = "Unused";
+    else if (u.available.length && u.idle.length) status = "Partly used";
+    else if (u.available.length) status = "Fully used";
+    return {
+      "Character": c.name,
+      "Role": c.role,
+      "Actor": c.actor,
+      "Available Blocks": blockList(u.available),
+      "Used Blocks": blockList(u.used),
+      "Usage Status": status,
+      "Idle Blocks": blockList(u.idle),
+      "Assigned Scenes/Songs": u.scenes.join("; "),
+    };
+  });
+}
+
+function buildRemainingOptionsExportRows() {
+  return buildOptionsExportRows({ respectPlan: true });
+}
+
+function statusFill(status) {
+  return {
+    "Ready": "E1EBD6",
+    "Speaking only": "F4E4C2",
+    "Missing 1": "F7D9BD",
+    "Blocked": "F0C8BE",
+    "Open": "EBDFBF",
+    "Unused": "F7D9BD",
+    "Partly used": "F4E4C2",
+    "Fully used": "E1EBD6",
+    "Absent": "F0C8BE",
+  }[status] || "FBF5E3";
+}
+
+function applyWorksheetStyle(ws, options = {}) {
+  const title = options.title || ws.name;
+  const columnWidths = options.widths || [];
+  const statusColumn = options.statusColumn || 4;
+  ws.properties.defaultRowHeight = 18;
+  ws.views = [{ state: "frozen", ySplit: 2 }];
+
+  ws.insertRow(1, [title]);
+  ws.mergeCells(1, 1, 1, Math.max(1, ws.columnCount));
+  const titleCell = ws.getCell(1, 1);
+  titleCell.font = { name: "Arial", size: 18, bold: true, italic: true, color: { argb: "FF2A1D12" } };
+  titleCell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFF3EAD4" } };
+  titleCell.alignment = { vertical: "middle", horizontal: "left" };
+  ws.getRow(1).height = 28;
+
+  const headerRow = ws.getRow(2);
+  headerRow.font = { name: "Arial", size: 10, bold: true, color: { argb: "FFFFFFFF" } };
+  headerRow.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF2A1D12" } };
+  headerRow.alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+  headerRow.height = 24;
+
+  ws.columns.forEach((col, i) => {
+    col.width = columnWidths[i] || 18;
+    col.eachCell({ includeEmpty: true }, cell => {
+      cell.font = cell.font || { name: "Arial", size: 10, color: { argb: "FF2A1D12" } };
+      cell.border = {
+        top: { style: "thin", color: { argb: "FFD6C7A3" } },
+        left: { style: "thin", color: { argb: "FFD6C7A3" } },
+        bottom: { style: "thin", color: { argb: "FFD6C7A3" } },
+        right: { style: "thin", color: { argb: "FFD6C7A3" } },
+      };
+      cell.alignment = { vertical: "top", wrapText: true };
+    });
+  });
+
+  for (let r = 3; r <= ws.rowCount; r += 1) {
+    const row = ws.getRow(r);
+    row.height = 34;
+    const statusCell = row.getCell(statusColumn);
+    const fill = statusFill(statusCell.value);
+    row.eachCell({ includeEmpty: true }, cell => {
+      cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: `FF${fill}` } };
+      cell.font = { name: "Arial", size: 10, color: { argb: "FF2A1D12" } };
+    });
+    row.getCell(1).font = { name: "Arial", size: 10, bold: true, color: { argb: "FF2A1D12" } };
+    row.getCell(3).font = { name: "Arial", size: 10, bold: true, color: { argb: "FF2A1D12" } };
+  }
+
+  if (ws.rowCount >= 2 && ws.columnCount >= 1) {
+    ws.autoFilter = { from: { row: 2, column: 1 }, to: { row: ws.rowCount, column: ws.columnCount } };
+  }
+}
+
+function addRowsSheet(wb, name, rows, headers, widths, title, styleOptions = {}) {
+  const ws = wb.addWorksheet(name);
+  ws.addRow(headers);
+  const safeRows = rows.length ? rows : [Object.fromEntries(headers.map(h => [h, ""]))];
+  safeRows.forEach(row => ws.addRow(headers.map(h => row[h] || "")));
+  applyWorksheetStyle(ws, { title, widths, ...styleOptions });
+  return ws;
+}
+
+async function exportActualPlanXLSX() {
+  if (typeof ExcelJS === "undefined") {
+    alert("The styled XLSX export library did not load. Check your internet connection, then reload this page.");
+    return;
+  }
+  const hasPlan = activePlannedItems().length > 0;
+  if (!hasPlan) {
+    alert("Add at least one scene/song to the actual plan first.");
+    return;
+  }
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Port-Pourri Rehearsal Planner";
+  wb.created = new Date();
+  wb.modified = new Date();
+
+  const planHeaders = ["Block", "Time", "Scene/Song", "Status", "Description", "Required Cast", "Missing Required", "Missing Silent/Presence", "Used By This Item", "Available Cast", "Occupied By Plan", "Idle Cast This Block", "Double-Booked Cast", "Notes"];
+  const detailHeaders = ["Block", "Time", "Scene/Song", "Status", "Act", "Description", "Required Cast", "Missing Required", "Missing Silent/Presence", "Characters Used", "All Marks", "Notes"];
+  const availabilityHeaders = ["Character", "Role", "Actor", "Total Blocks Available", ...activeSlotIndexes().map(slot => `Block ${slot + 1} (${slotLabel(slot)})`)];
+  const optionsHeaders = ["Block", "Time", "Option Type", "Scene/Song", "Song?", "Act", "Description", "Required Cast", "Available Required Cast", "Missing Required", "Missing Silent/Presence", "Available This Block", "Free After Current Plan", "Occupied By Current Plan", "All Marks"];
+
+  addRowsSheet(wb, "Actual Plan", buildActualPlanExportRows(), planHeaders, [8, 12, 16, 15, 44, 28, 24, 24, 30, 38, 34, 34, 28, 34], "Port-Pourri · Actual Rehearsal Plan", { statusColumn: 4 });
+  addRowsSheet(wb, "Selected Details", buildSelectedSceneDetailsRows(), detailHeaders, [8, 12, 16, 15, 8, 44, 28, 24, 24, 30, 46, 34], "Selected Scene Details", { statusColumn: 4 });
+  addRowsSheet(wb, "Availability", buildAvailabilityExportRows(), availabilityHeaders, [18, 28, 24, 20, 18, 18, 18, 18, 18, 18], "Availability by 30-Minute Block");
+  const coverageHeaders = ["Character", "Role", "Actor", "Available Blocks", "Used Blocks", "Usage Status", "Idle Blocks", "Assigned Scenes/Songs"];
+  addRowsSheet(wb, "Coverage", buildPlanCoverageRows(), coverageHeaders, [18, 28, 24, 18, 18, 16, 18, 52], "Coverage Check: Who Is Used, Idle or Excluded", { statusColumn: 6 });
+  addRowsSheet(wb, "Remaining Options", buildRemainingOptionsExportRows(), optionsHeaders, [8, 12, 34, 16, 8, 8, 48, 32, 32, 28, 28, 40, 40, 36, 46], "Remaining Options After Current Plan", { statusColumn: 3 });
+  addRowsSheet(wb, "Settings", [
+    { "Setting": "Rehearsal length", "Value": `${state.durationMinutes / 60} hours` },
+    { "Setting": "No songs in recommendations", "Value": state.noSongsInRecommendations ? "On" : "Off" },
+    { "Setting": "Export date", "Value": new Date().toLocaleString() },
+  ], ["Setting", "Value"], [30, 36], "Planner Settings");
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `Port-Pourri_Actual_Rehearsal_Plan_${stamp}.xlsx`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function optionItemHTML(candidate, slot) {
+	const availableRequired = candidate.presentRequired || candidate.required.filter(c => isCharAvailable(c, slot));
+	const missingRequired = candidate.missingRequired.length
+		? `<br>Missing required: ${candidate.missingRequired.join(", ")}`
+		: "";
+	const missingSilent = candidate.missingSilent.length
+		? `<br>Missing silent/presence: ${candidate.missingSilent.join(", ")}`
+		: "";
+	const occupiedLine = candidate.occupiedConflicts && candidate.occupiedConflicts.length
+		? `<br>Already occupied: ${candidate.occupiedConflicts.join(", ")}`
+		: "";
+	const useLine = availableRequired.length
+		? `Use/free: ${availableRequired.join(", ")}`
+		: "Use/free: ensemble/presence/music cleanup";
+
+	return `
+		<div class="option-item ${candidate.status}">
+			<div class="option-title">${candidate.scene.song ? "♪ " : ""}${candidate.scene.label}</div>
+			<div class="option-desc">${candidate.scene.desc}</div>
+			<div class="option-meta">${useLine}${missingRequired}${missingSilent}${occupiedLine}</div>
+			<div class="option-buttons">
+				<button class="option-action add" data-add-to-plan="${candidate.scene.label}" data-slot="${slot}">Add to block ${slot + 1}</button>
+				<button class="option-action" data-jump="${candidate.scene.label}">Details</button>
+			</div>
+		</div>
+	`;
+}
+
+function renderRecs() {
+	const recs = document.getElementById("recs");
+	const plan = generateBlockOptions({ respectPlan: true });
+
+	if (plan.length === 0) {
+		recs.innerHTML = `<div class="recs-empty">Choose a rehearsal length to generate block-by-block options.</div>`;
+		return;
+	}
+
+	recs.innerHTML = plan.map(({ slot, groups }) => {
+		const available = availableCharsForSlot(slot);
+		const occupied = occupiedCharsForSlot(slot);
+		const free = freeCharsForSlot(slot);
+		const visibleStatuses = ["green", "amber", "orange"].filter(status => groups[status].length);
+		const hiddenBlocked = groups.rust.length;
+		const groupHTML = visibleStatuses.length
+			? visibleStatuses.map(status => `
+				<div class="option-group">
+					<div class="option-heading ${status}">${optionGroupLabel(status, groups[status].length)}</div>
+					<div class="option-list">
+						${groups[status].map(candidate => optionItemHTML(candidate, slot)).join("")}
+					</div>
+				</div>
+			`).join("")
+			: `<div class="recs-empty">No clean remaining scene/song fits this block. Use it for line work, music cleanup or split-room notes.</div>`;
+
+		return `
+			<div class="plan-block">
+				<div class="block-time">Block ${slot + 1} · ${slotLabel(slot)}</div>
+				<div class="scene-label">${visibleStatuses.length ? "Remaining rehearsal options" : "No remaining full-scene fit"}</div>
+				<div class="plan-meta">Available this block: ${available.join(", ") || "nobody"}<br>Already occupied: ${occupied.join(", ") || "nobody"}<br>Free after selected plan: ${free.join(", ") || (available.length ? "nobody" : "n/a")}</div>
+				${groupHTML}
+				${hiddenBlocked ? `<div class="hidden-count">${hiddenBlocked} blocked scene${hiddenBlocked === 1 ? "" : "s"} hidden for sanity.</div>` : ""}
+			</div>
+		`;
+	}).join("");
+
+	recs.querySelectorAll("[data-add-to-plan]").forEach(btn => {
+		btn.addEventListener("click", () => addSceneToPlan(Number(btn.dataset.slot), btn.dataset.addToPlan));
+	});
+	recs.querySelectorAll("[data-jump]").forEach(btn => {
+		btn.addEventListener("click", () => {
+			const label = btn.dataset.jump;
+			state.openScenes.add(label);
+			renderScenes();
+			const target = document.querySelector(`.scene[data-label="${CSS.escape(label)}"]`);
+			if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+		});
+	});
 }
 
 function renderFilters() {
@@ -826,9 +2426,13 @@ function renderScenes() {
 }
 
 function render() {
+  updatePresentFromAvailability();
   renderRoster();
-  renderStats();
+  renderPlannerControls();
+  renderAvailabilityGrid();
+  renderActualPlan();
   renderRecs();
+  renderStats();
   renderFilters();
   renderScenes();
 }
@@ -836,14 +2440,56 @@ function render() {
 // ============================================================
 // CONTROLS
 // ============================================================
+document.querySelectorAll(".duration-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.durationMinutes = Number(btn.dataset.duration);
+    render();
+  });
+});
+
+document.getElementById("all-available").addEventListener("click", () => {
+  CHARACTERS.forEach(c => activeSlotIndexes().forEach(i => state.availability[c.name][i] = true));
+  render();
+});
+
+document.getElementById("clear-availability").addEventListener("click", () => {
+  CHARACTERS.forEach(c => activeSlotIndexes().forEach(i => state.availability[c.name][i] = false));
+  render();
+});
+
+document.getElementById("from-attendance").addEventListener("click", () => {
+  CHARACTERS.forEach(c => activeSlotIndexes().forEach(i => state.availability[c.name][i] = state.present[c.name]));
+  render();
+});
+
+document.getElementById("export-xlsx").addEventListener("click", exportRehearsalOptionsXLSX);
+
+document.getElementById("recommend-plan").addEventListener("click", recommendPlan);
+
+document.getElementById("no-songs-recommendation").addEventListener("click", () => {
+  state.noSongsInRecommendations = !state.noSongsInRecommendations;
+  Object.keys(state.rerollCounts).forEach(slot => state.rerollCounts[slot] = 0);
+  state.lastRecommendation = null;
+  render();
+});
+
+document.getElementById("clear-plan").addEventListener("click", () => {
+  clearActivePlan();
+  render();
+});
+
+document.getElementById("export-plan-xlsx").addEventListener("click", exportActualPlanXLSX);
+
 document.getElementById("all-present").addEventListener("click", () => {
-  CHARACTERS.forEach(c => state.present[c.name] = true);
+  CHARACTERS.forEach(c => activeSlotIndexes().forEach(i => state.availability[c.name][i] = true));
   render();
 });
+
 document.getElementById("invert").addEventListener("click", () => {
-  CHARACTERS.forEach(c => state.present[c.name] = !state.present[c.name]);
+  CHARACTERS.forEach(c => activeSlotIndexes().forEach(i => state.availability[c.name][i] = !state.availability[c.name][i]));
   render();
 });
+
 document.getElementById("search").addEventListener("input", e => {
   state.search = e.target.value;
   renderScenes();

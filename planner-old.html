@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Port-Pourri Rehearsal Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f3ead4;
+    --parchment-deep: #ebdfbf;
+    --parchment-card: #fbf5e3;
+    --ink: #2a1d12;
+    --ink-soft: #6e5c44;
+    --ink-faint: #a89478;
+    --rule: #d6c7a3;
+
+    --green: #4a7042;
+    --green-bg: #e1ebd6;
+    --amber: #a8772a;
+    --amber-bg: #f4e4c2;
+    --orange: #b85a26;
+    --orange-bg: #f7d9bd;
+    --rust: #8a3522;
+    --rust-bg: #f0c8be;
+
+    --absent: #b8a890;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(220, 200, 150, 0.25), transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(200, 170, 110, 0.18), transparent 55%);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 24px 20px 80px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* HEADER */
+  header.playbill {
+    text-align: center;
+    border-top: 3px double var(--ink);
+    border-bottom: 3px double var(--ink);
+    padding: 18px 8px 22px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  header.playbill::before, header.playbill::after {
+    content: "❦";
+    color: var(--ink-soft);
+    font-size: 18px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  header.playbill::before { top: -12px; background: var(--parchment); padding: 0 12px; }
+  header.playbill::after { bottom: -12px; background: var(--parchment); padding: 0 12px; }
+
+  h1.title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 54px);
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+    line-height: 1.05;
+  }
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .tagline {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  /* SECTION HEADERS */
+  h2.section {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    margin: 36px 0 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  h2.section::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  h2.section .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* CAST ROSTER */
+  .roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 10px;
+  }
+  .chip {
+    background: var(--parchment-card);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 10px 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    box-shadow: 2px 2px 0 var(--ink);
+    position: relative;
+  }
+  .chip:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+  .chip:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--ink); }
+  .chip .name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.1;
+    margin-bottom: 2px;
+  }
+  .chip .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .chip .actor {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .chip[data-present="false"] {
+    background: transparent;
+    border-style: dashed;
+    color: var(--absent);
+    box-shadow: none;
+  }
+  .chip[data-present="false"] .name {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: var(--absent);
+  }
+  .chip[data-present="false"] .role,
+  .chip[data-present="false"] .actor { color: var(--absent); }
+
+  .roster-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--parchment-card);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    padding: 6px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.12s ease;
+  }
+  .btn:hover { background: var(--ink); color: var(--parchment); }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 14px 0 0;
+  }
+  .stat {
+    background: var(--parchment-card);
+    border-left: 4px solid var(--ink);
+    padding: 10px 14px;
+  }
+  .stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .stat .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .stat.green { border-color: var(--green); }
+  .stat.amber { border-color: var(--amber); }
+  .stat.orange { border-color: var(--orange); }
+  .stat.rust { border-color: var(--rust); }
+  .stat.green .value { color: var(--green); }
+  .stat.amber .value { color: var(--amber); }
+  .stat.orange .value { color: var(--orange); }
+  .stat.rust .value { color: var(--rust); }
+
+  /* RECOMMENDATIONS */
+  .recs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .rec {
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--green);
+    padding: 12px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .rec:hover { background: #fff8e2; }
+  .rec .scene-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--green);
+  }
+  .rec .desc {
+    font-size: 14px;
+    color: var(--ink);
+    margin: 4px 0 8px;
+    line-height: 1.35;
+  }
+  .rec .chars {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .rec.amber { border-left-color: var(--amber); }
+  .rec.amber .scene-label { color: var(--amber); }
+  .recs-empty {
+    grid-column: 1/-1;
+    padding: 24px;
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-soft);
+    background: var(--parchment-card);
+    border: 1px dashed var(--rule);
+  }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .filter {
+    background: transparent;
+    border: 1px solid var(--ink-soft);
+    color: var(--ink-soft);
+    padding: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 14px;
+    transition: all 0.12s ease;
+  }
+  .filter:hover { border-color: var(--ink); color: var(--ink); }
+  .filter[data-active="true"] {
+    background: var(--ink);
+    color: var(--parchment);
+    border-color: var(--ink);
+  }
+
+  /* SCENES TABLE */
+  .scenes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .scene {
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--ink-faint);
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+  .scene:hover { background: #fff8e2; }
+  .scene[data-status="green"]  { border-left-color: var(--green); }
+  .scene[data-status="amber"]  { border-left-color: var(--amber); }
+  .scene[data-status="orange"] { border-left-color: var(--orange); }
+  .scene[data-status="rust"]   { border-left-color: var(--rust); }
+
+  .scene-header {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .scene-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .scene-desc {
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .scene-status-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .scene-status-badge[data-status="green"]  { background: var(--green-bg); color: var(--green); }
+  .scene-status-badge[data-status="amber"]  { background: var(--amber-bg); color: var(--amber); }
+  .scene-status-badge[data-status="orange"] { background: var(--orange-bg); color: var(--orange); }
+  .scene-status-badge[data-status="rust"]   { background: var(--rust-bg); color: var(--rust); }
+
+  .scene.is-song .scene-label::before {
+    content: "♪ ";
+  }
+
+  .scene-detail {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .scene[data-open="true"] .scene-detail { display: grid; }
+  .scene-detail h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .char-list { display: flex; flex-direction: column; gap: 3px; font-size: 14px; }
+  .char-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .char-line .mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 11px;
+    width: 28px;
+    text-align: center;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--parchment-deep);
+    color: var(--ink);
+  }
+  .char-line.absent .name { text-decoration: line-through; color: var(--absent); }
+  .char-line.absent .mark { background: var(--rust-bg); color: var(--rust); }
+
+  /* MISC */
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .toolbar input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    background: var(--parchment-card);
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .toolbar input[type="text"]:focus { outline: none; border-color: var(--ink); }
+
+  .legend {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background: var(--parchment-card);
+    border: 1px dashed var(--rule);
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 6px 18px;
+  }
+  .legend strong { color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-right: 4px; }
+
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 16px 12px 60px; }
+    .scene-header { grid-template-columns: 70px 1fr; }
+    .scene-status-badge { grid-column: 1/-1; justify-self: start; margin-top: 4px; }
+    .scene-detail { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="playbill">
+  <div class="subtitle">A Rehearsal Planner</div>
+  <h1 class="title">Port-Pourri</h1>
+  <div class="tagline">O Carvalho · the final night</div>
+</header>
+
+<h2 class="section"><span class="num">I.</span> Cast Attendance</h2>
+<div class="roster" id="roster"></div>
+<div class="roster-controls">
+  <button class="btn" id="all-present">All present</button>
+  <button class="btn" id="invert">Invert</button>
+</div>
+
+<h2 class="section"><span class="num">II.</span> The Night at a Glance</h2>
+<div class="stats" id="stats"></div>
+
+<h2 class="section"><span class="num">III.</span> What to Rehearse Tonight</h2>
+<div class="recs" id="recs"></div>
+
+<h2 class="section"><span class="num">IV.</span> All Scenes</h2>
+<div class="toolbar">
+  <input type="text" id="search" placeholder="Search scene or description…" />
+</div>
+<div class="filters" id="filters"></div>
+<div class="scenes" id="scenes"></div>
+
+<div class="legend">
+  <div><strong>X</strong> speaks · required</div>
+  <div><strong>MU</strong> performs music · required</div>
+  <div><strong>(X)</strong> brief moment · required</div>
+  <div><strong>O</strong> silent presence</div>
+  <div><strong>&lt;&gt;</strong> exits during scene</div>
+  <div><strong>—</strong> offstage</div>
+</div>
+
+<footer>
+  Updated 02 May 2026 · 35 scenes · 9 cast members · song numbering revised · Click any scene to expand
+</footer>
+
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const CHARACTERS = [
+  { name: "Isabela",  role: "The Old Soldier",      actor: "Amistad Vanegas" },
+  { name: "Sofia",    role: "The Young Soldier",    actor: "Athena Naylor"   },
+  { name: "Christian",role: "The Bartender",        actor: "Andrew Lee"      },
+  { name: "Bruno",    role: "The Captain",          actor: "Ty Hosein"       },
+  { name: "Gabriel",  role: "The Fisherman",        actor: "Jules Jackson"   },
+  { name: "Leon",     role: "The Dentist",          actor: "Reid Smith"      },
+  { name: "Livia",    role: "The Engineer",         actor: "Justine Sato"    },
+  { name: "Enhio",    role: "The Rubber Tapper",    actor: "Ethan Kirgan"    },
+  { name: "Alzira",   role: "Christian's Daughter", actor: "Athena Naylor"   },
+];
+
+const SCENES = [
+  { act: 1, label: "Preshow", song: false, desc: "Bar opens, audience trickles in; Christian and Isabela settle in" },
+  { act: 1, label: "1.1a",    song: false, desc: "Two parallel chats (Isa/Chris and Enhio/Gabi)" },
+  { act: 1, label: "1.1b",    song: false, desc: "Gabi waits for Bruno; Leon enters; Enhio's joke lands wrong" },
+  { act: 1, label: "Song 1",  song: true,  desc: "A Time Without War — end of 1.1b; Isabela leads, ensemble joins on chorus; Christian on surdo/tantan, Leon on piano, Enhio on guitar" },
+  { act: 1, label: "Song 2",  song: true,  desc: "They Hum (List Song) — end of 1.1b into 1.2a; Isa, Gabi, Christian, Enhio, Leon; Bruno + Livia enter mid-song; Christian on plato y faca, Gabi on cavaco" },
+  { act: 1, label: "1.2a",    song: false, desc: "Bruno + Gabriel reunion; Christian welcomes Bruno; Isabela learns caipirinha" },
+  { act: 1, label: "1.2b",    song: false, desc: "Leon and Livia (DENT/ENG); confession about the river runs" },
+  { act: 1, label: "1.2c",    song: false, desc: "Isa introduces Sofia to the bar; 'scared of dying' exchange" },
+
+  { act: 2, label: "2.1a",    song: false, desc: "All gathered at the central table; catfish; Bruno moves to piano" },
+  { act: 2, label: "Song 3",  song: true,  desc: "Among the Players (Roda de Samba) — central-table samba; Sofia drawn in mid-song; Bruno piano then pandeiro; Christian rebolo → tantan → surdo" },
+  { act: 2, label: "2.1b",    song: false, desc: "Leon is sad; Christian's first-day story; cleaning together; Livia joins" },
+  { act: 2, label: "2.2",     song: false, desc: "Sofia and Isabela alone; Alzira reveal; near-confession; 'remember me'" },
+
+  { act: 3, label: "3.0",     song: false, desc: "Christian round; Bruno hands out letters; Sofia opens Isa's; war is over; storm starts" },
+  { act: 3, label: "Song 3.5",song: true,  desc: "A Time Without War (Reprise 1) — embedded in 3.0; Sofia leads on guitar, Isabela joins, Leon yells; Sofia plays C – Bb – Fm – C; ensemble on final chorus" },
+  { act: 3, label: "Song 4",  song: true,  desc: "The Storm (Forró) — 3.0 into 3.1a; all, led by Leon on accordion; includes Leon's Yiddish verse" },
+  { act: 3, label: "3.1a",    song: false, desc: "Post-storm celebration; Christian/Isa, Christian/Sofia (drunk), Sofia/Isa about Alzira" },
+  { act: 3, label: "3.1b",    song: false, desc: "Bruno and Gabriel fight; Bruno walks out" },
+  { act: 3, label: "3.2a",    song: false, desc: "Leon's photos; Christian finds Alzira's photo; Christian kicks Leon out" },
+  { act: 3, label: "3.2b",    song: false, desc: "Christian's breakdown / green-flash speech; 'Could we play it for her one last time'" },
+  { act: 3, label: "Song 5",  song: true,  desc: "Letters — between 3.2b and 3.2c; Christian/Isa duet → Bruno/Gabi → Sofia cascade; Isa on violin; open question: lyric sheet still lists a Leon line though he was kicked out at end of 3.2a" },
+  { act: 3, label: "3.2c",    song: false, desc: "BLACKOUT; everyone exits for candles; phone rings; Alzira's ghost visits Christian" },
+  { act: 3, label: "3.3a",    song: false, desc: "Crew returns with candles; Christian violent again; Isa cues Enhio to play" },
+  { act: 3, label: "Song 6",  song: true,  desc: "Won't You Bring Me Flowers — 3.3a into 3.3b; Sofia v1, Isa v2, Bruno v3; trio harmonize bridge; Christian cello, Gabi cavaco, Livia trumpet fills, Enhio guitar" },
+  { act: 3, label: "3.3b",    song: false, desc: "Christian announces leaving; Isa fights with him about Alzira; Isa exits" },
+  { act: 3, label: "3.3c",    song: false, desc: "Sofia/Christian/Bruno reflect; Sofia considers staying" },
+
+  { act: 4, label: "4.1a",    song: false, desc: "Leon returns with leather bag; Livia hugs and updates him; cigars/brigadeiros" },
+  { act: 4, label: "4.1b",    song: false, desc: "Bruno talks to Enhio about saving things with Gabriel; Enhio's riptide story" },
+  { act: 4, label: "4.2a",    song: false, desc: "Leon brings Isabela the leatherbound book of pressed flowers; Leon's farewell" },
+  { act: 4, label: "5.1a",    song: false, desc: "Christian and Isa reconcile; Isa inherits the bar (script labels 5.1a, lives in Act IV)" },
+
+  { act: 5, label: "5.1b",    song: false, desc: "Bruno and Gabriel reconcile; decide to leave together" },
+  { act: 5, label: "5.2a",    song: false, desc: "Livia tries to kiss Leon; Enhio joins; Christian's terse farewell to Leon" },
+  { act: 5, label: "5.2b",    song: false, desc: "Sofia and Isabela's final goodbye at the phone; the kiss; 'I love you'" },
+  { act: 5, label: "5.2c",    song: false, desc: "Gabriel finds the João puppet; everyone's returned" },
+  { act: 5, label: "Song 7",  song: true,  desc: "An Old Tale / Vai — 5.2c; all; Gabriel and Leon operate the João puppet" },
+  { act: 5, label: "Ending",  song: false, desc: "Final Lai (Opening Reprise → Among the Players); company exits one by one; Isabela left singing alone" },
+];
+
+const MARKS = {
+  "Preshow":  {Isabela:"X", Christian:"X"},
+  "1.1a":     {Isabela:"X", Christian:"X", Gabriel:"X", Enhio:"X"},
+  "1.1b":     {Isabela:"X", Christian:"X", Gabriel:"X", Leon:"X", Enhio:"X"},
+  "Song 1":   {Isabela:"X", Christian:"MU", Gabriel:"X", Leon:"MU", Enhio:"MU"},
+  "Song 2":   {Isabela:"X", Christian:"MU", Bruno:"X", Gabriel:"MU", Leon:"X", Livia:"X", Enhio:"MU"},
+  "1.2a":     {Isabela:"X", Sofia:"O", Christian:"X", Bruno:"X", Gabriel:"X", Leon:"O", Livia:"O", Enhio:"O"},
+  "1.2b":     {Isabela:"O", Sofia:"O", Christian:"(X)", Bruno:"O", Gabriel:"O", Leon:"X", Livia:"X", Enhio:"O"},
+  "1.2c":     {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"O", Gabriel:"O", Leon:"O", Livia:"O", Enhio:"O"},
+
+  "2.1a":     {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"X", Gabriel:"X", Leon:"(X)", Livia:"X", Enhio:"O"},
+  "Song 3":   {Isabela:"MU", Sofia:"MU", Christian:"MU", Bruno:"MU", Gabriel:"MU", Leon:"MU", Livia:"MU", Enhio:"MU"},
+  "2.1b":     {Isabela:"O", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"O", Leon:"X", Livia:"X", Enhio:"O"},
+  "2.2":      {Isabela:"X", Sofia:"X", Christian:"O", Bruno:"O", Gabriel:"O", Leon:"O", Livia:"O", Enhio:"O"},
+
+  "3.0":      {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"X", Gabriel:"X", Leon:"O", Livia:"O", Enhio:"O"},
+  "Song 3.5": {Isabela:"X", Sofia:"MU", Christian:"O", Bruno:"O", Gabriel:"O", Leon:"(X)", Livia:"O", Enhio:"O"},
+  "Song 4":   {Isabela:"MU", Sofia:"MU", Christian:"MU", Bruno:"MU", Gabriel:"MU", Leon:"MU", Livia:"MU", Enhio:"MU"},
+  "3.1a":     {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"O", Gabriel:"O", Leon:"O", Livia:"O", Enhio:"(X)"},
+  "3.1b":     {Isabela:"O", Sofia:"O", Christian:"O", Bruno:"X", Gabriel:"X", Leon:"O", Livia:"O", Enhio:"O"},
+  "3.2a":     {Isabela:"X", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"O", Leon:"X", Livia:"X", Enhio:"X"},
+  "3.2b":     {Isabela:"X", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"O", Livia:"O", Enhio:"O"},
+  "Song 5":   {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"X", Gabriel:"X"},
+  "3.2c":     {Christian:"X", Alzira:"O"},
+  "3.3a":     {Isabela:"X", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"O", Livia:"O", Enhio:"X"},
+  "Song 6":   {Isabela:"X", Sofia:"X", Christian:"MU", Bruno:"X", Gabriel:"MU", Livia:"MU", Enhio:"MU"},
+  "3.3b":     {Isabela:"X", Sofia:"X", Christian:"X", Bruno:"X", Gabriel:"X", Livia:"O", Enhio:"X"},
+  "3.3c":     {Sofia:"X", Christian:"X", Bruno:"X", Livia:"O", Enhio:"O"},
+
+  "4.1a":     {Sofia:"O", Christian:"O", Bruno:"O", Leon:"X", Livia:"X", Enhio:"O"},
+  "4.1b":     {Isabela:"O", Sofia:"O", Christian:"O", Bruno:"X", Leon:"O", Livia:"O", Enhio:"X"},
+  "4.2a":     {Isabela:"X", Sofia:"O", Christian:"O", Bruno:"O", Leon:"X", Livia:"O", Enhio:"O"},
+  "5.1a":     {Isabela:"X", Sofia:"O", Christian:"X", Bruno:"O", Leon:"O", Livia:"O", Enhio:"O"},
+
+  "5.1b":     {Isabela:"O", Sofia:"O", Christian:"O", Bruno:"X", Gabriel:"X", Leon:"O", Livia:"O", Enhio:"O"},
+  "5.2a":     {Isabela:"O", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"O", Leon:"X", Livia:"X", Enhio:"X"},
+  "5.2b":     {Isabela:"X", Sofia:"X", Christian:"O", Bruno:"O", Gabriel:"O", Leon:"O", Livia:"O", Enhio:"O"},
+  "5.2c":     {Isabela:"O", Sofia:"O", Christian:"X", Bruno:"O", Gabriel:"X", Leon:"O", Livia:"O", Enhio:"O"},
+  "Song 7":   {Isabela:"MU", Sofia:"MU", Christian:"MU", Bruno:"MU", Gabriel:"MU", Leon:"MU", Livia:"MU", Enhio:"MU"},
+  "Ending":  {Isabela:"X", Sofia:"<>", Christian:"<>", Bruno:"<>", Gabriel:"<>", Leon:"<>", Livia:"<>", Enhio:"<>"},
+};
+
+// Marks that mean "this character is REQUIRED for the scene to function"
+const REQUIRED_MARKS = new Set(["X", "MU", "(X)"]);
+// Marks that mean "in scene but silent"
+const SILENT_MARKS   = new Set(["O", "<>"]);
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  present: Object.fromEntries(CHARACTERS.map(c => [c.name, true])),
+  filterAct: "all",
+  search: "",
+  openScenes: new Set(),
+};
+
+// ============================================================
+// LOGIC
+// ============================================================
+function sceneStatus(label) {
+  const marks = MARKS[label] || {};
+  const missingRequired = [];
+  const missingSilent = [];
+  for (const [char, mark] of Object.entries(marks)) {
+    if (state.present[char]) continue;
+    if (REQUIRED_MARKS.has(mark)) missingRequired.push(char);
+    else if (SILENT_MARKS.has(mark)) missingSilent.push(char);
+  }
+  let status;
+  if (missingRequired.length === 0 && missingSilent.length === 0) status = "green";
+  else if (missingRequired.length === 0) status = "amber";
+  else if (missingRequired.length === 1) status = "orange";
+  else status = "rust";
+  return { status, missingRequired, missingSilent };
+}
+
+function statusLabel(s) {
+  return {
+    green:  "Ready",
+    amber:  "Speaking only",
+    orange: "Missing 1",
+    rust:   "Blocked",
+  }[s];
+}
+
+function sceneCastSize(label) {
+  const marks = MARKS[label] || {};
+  return Object.keys(marks).length;
+}
+
+function speakingCharsInScene(label) {
+  const marks = MARKS[label] || {};
+  return Object.entries(marks)
+    .filter(([_, m]) => REQUIRED_MARKS.has(m))
+    .map(([c]) => c);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderRoster() {
+  const roster = document.getElementById("roster");
+  roster.innerHTML = CHARACTERS.map(c => `
+    <div class="chip" data-char="${c.name}" data-present="${state.present[c.name]}">
+      <div class="name">${c.name}</div>
+      <div class="role">${c.role}</div>
+      <div class="actor">${c.actor}</div>
+    </div>
+  `).join("");
+  roster.querySelectorAll(".chip").forEach(el => {
+    el.addEventListener("click", () => {
+      const name = el.dataset.char;
+      state.present[name] = !state.present[name];
+      render();
+    });
+  });
+}
+
+function renderStats() {
+  const tally = { green: 0, amber: 0, orange: 0, rust: 0 };
+  SCENES.forEach(s => tally[sceneStatus(s.label).status]++);
+  const present = Object.values(state.present).filter(Boolean).length;
+  const absent  = CHARACTERS.length - present;
+
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="label">Present</div><div class="value">${present}/${CHARACTERS.length}</div></div>
+    <div class="stat green"><div class="label">Fully Ready</div><div class="value">${tally.green}</div></div>
+    <div class="stat amber"><div class="label">Speaking-Only</div><div class="value">${tally.amber}</div></div>
+    <div class="stat orange"><div class="label">Missing 1</div><div class="value">${tally.orange}</div></div>
+    <div class="stat rust"><div class="label">Blocked</div><div class="value">${tally.rust}</div></div>
+  `;
+}
+
+function renderRecs() {
+  // Score every scene; pick top 6 from green + amber tiers, sorted by:
+  //   (1) tier (green before amber)
+  //   (2) involvement of present cast (more = juicier)
+  //   (3) # of present cast members WITH SPEAKING ROLES in scene (focus)
+  const candidates = SCENES.map(s => {
+    const { status, missingSilent } = sceneStatus(s.label);
+    if (status !== "green" && status !== "amber") return null;
+    const marks = MARKS[s.label] || {};
+    const presentInScene = Object.entries(marks)
+      .filter(([c]) => state.present[c]).length;
+    const presentSpeaking = Object.entries(marks)
+      .filter(([c, m]) => state.present[c] && REQUIRED_MARKS.has(m)).length;
+    return { scene: s, status, missingSilent, presentInScene, presentSpeaking };
+  }).filter(Boolean);
+
+  candidates.sort((a, b) => {
+    if (a.status !== b.status) return a.status === "green" ? -1 : 1;
+    if (b.presentSpeaking !== a.presentSpeaking) return b.presentSpeaking - a.presentSpeaking;
+    return b.presentInScene - a.presentInScene;
+  });
+
+  const top = candidates.slice(0, 6);
+  const recs = document.getElementById("recs");
+  if (top.length === 0) {
+    recs.innerHTML = `<div class="recs-empty">No fully-rehearsable scenes with this attendance. Try the orange-bordered scenes below — those are missing one speaking actor and may work with a stand-in.</div>`;
+    return;
+  }
+  recs.innerHTML = top.map(({ scene, status, missingSilent }) => {
+    const speakers = speakingCharsInScene(scene.label).filter(c => state.present[c]);
+    const note = status === "amber"
+      ? `<div class="chars" style="color: var(--amber)">Missing silent: ${missingSilent.join(", ")}</div>`
+      : "";
+    return `
+      <div class="rec ${status === "amber" ? "amber" : ""}" data-jump="${scene.label}">
+        <div class="scene-label">${scene.song ? "♪ " : ""}${scene.label}</div>
+        <div class="desc">${scene.desc}</div>
+        <div class="chars">Speaking: ${speakers.join(", ") || "(none)"}</div>
+        ${note}
+      </div>
+    `;
+  }).join("");
+  recs.querySelectorAll(".rec").forEach(el => {
+    el.addEventListener("click", () => {
+      const label = el.dataset.jump;
+      state.openScenes.add(label);
+      renderScenes();
+      const target = document.querySelector(`.scene[data-label="${CSS.escape(label)}"]`);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+}
+
+function renderFilters() {
+  const filters = document.getElementById("filters");
+  const opts = [
+    { key: "all", label: "All" },
+    { key: "1",   label: "Act I" },
+    { key: "2",   label: "Act II" },
+    { key: "3",   label: "Act III" },
+    { key: "4",   label: "Act IV" },
+    { key: "5",   label: "Act V" },
+    { key: "songs", label: "♪ Songs" },
+    { key: "ready", label: "Ready only" },
+  ];
+  filters.innerHTML = opts.map(o => `
+    <button class="filter" data-key="${o.key}" data-active="${state.filterAct === o.key}">${o.label}</button>
+  `).join("");
+  filters.querySelectorAll(".filter").forEach(el => {
+    el.addEventListener("click", () => {
+      state.filterAct = el.dataset.key;
+      render();
+    });
+  });
+}
+
+function renderScenes() {
+  const container = document.getElementById("scenes");
+  const search = state.search.trim().toLowerCase();
+  const filtered = SCENES.filter(s => {
+    if (state.filterAct === "songs" && !s.song) return false;
+    if (state.filterAct === "ready") {
+      if (sceneStatus(s.label).status !== "green") return false;
+    }
+    if (["1","2","3","4","5"].includes(state.filterAct) && String(s.act) !== state.filterAct) return false;
+    if (search) {
+      const hay = (s.label + " " + s.desc).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="recs-empty">No scenes match.</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(s => {
+    const { status, missingRequired, missingSilent } = sceneStatus(s.label);
+    const isOpen = state.openScenes.has(s.label);
+    const marks = MARKS[s.label] || {};
+    const charLines = CHARACTERS.map(c => {
+      const mark = marks[c.name];
+      if (!mark) return null;
+      const isAbsent = !state.present[c.name];
+      return `<div class="char-line ${isAbsent ? "absent" : ""}">
+                <span class="mark">${mark}</span>
+                <span class="name">${c.name}</span>
+              </div>`;
+    }).filter(Boolean).join("");
+    const offstage = CHARACTERS
+      .filter(c => !marks[c.name])
+      .map(c => c.name)
+      .join(", ");
+
+    return `
+      <div class="scene ${s.song ? "is-song" : ""}" data-label="${s.label}" data-status="${status}" data-open="${isOpen}">
+        <div class="scene-header">
+          <div class="scene-label">${s.label}</div>
+          <div class="scene-desc">${s.desc}</div>
+          <div class="scene-status-badge" data-status="${status}">${statusLabel(status)}${
+            missingRequired.length ? ` · −${missingRequired.join(", ")}` : ""
+          }</div>
+        </div>
+        <div class="scene-detail">
+          <div>
+            <h4>In this scene</h4>
+            <div class="char-list">${charLines || "<em style='color:var(--ink-soft)'>nobody</em>"}</div>
+          </div>
+          <div>
+            <h4>Offstage</h4>
+            <div style="font-size: 14px; color: var(--ink-soft); font-style: italic;">${offstage || "—"}</div>
+            ${missingRequired.length ? `<h4 style="margin-top:10px; color: var(--rust);">Missing speakers</h4>
+              <div style="font-size: 14px; color: var(--rust);">${missingRequired.join(", ")}</div>` : ""}
+            ${missingSilent.length ? `<h4 style="margin-top:10px; color: var(--amber);">Missing silent</h4>
+              <div style="font-size: 14px; color: var(--amber);">${missingSilent.join(", ")}</div>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.querySelectorAll(".scene").forEach(el => {
+    el.addEventListener("click", (e) => {
+      const label = el.dataset.label;
+      if (state.openScenes.has(label)) state.openScenes.delete(label);
+      else state.openScenes.add(label);
+      renderScenes();
+    });
+  });
+}
+
+function render() {
+  renderRoster();
+  renderStats();
+  renderRecs();
+  renderFilters();
+  renderScenes();
+}
+
+// ============================================================
+// CONTROLS
+// ============================================================
+document.getElementById("all-present").addEventListener("click", () => {
+  CHARACTERS.forEach(c => state.present[c.name] = true);
+  render();
+});
+document.getElementById("invert").addEventListener("click", () => {
+  CHARACTERS.forEach(c => state.present[c.name] = !state.present[c.name]);
+  render();
+});
+document.getElementById("search").addEventListener("input", e => {
+  state.search = e.target.value;
+  renderScenes();
+});
+
+render();
+</script>
+</body>
+</html>
