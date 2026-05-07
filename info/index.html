@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Port-Pourri, a new musical play. May 29 to 31, 2026. Roble Hall Courtyard, Stanford. Free, limited seating.">
+  <meta property="og:title" content="Port-Pourri — A new musical play">
+  <meta property="og:description" content="A bar at the edge of a port town. The final night. May 29 to 31, 2026.">
+  <meta property="og:image" content="../front.png">
+  <title>Port-Pourri — A new musical play</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/pergola.jpg">
+  <style>
+    @font-face {
+      font-family: 'Kuunari';
+      src:
+        url('kuunari-black-condensed.woff2') format('woff2'),
+        url('kuunari-black-condensed.otf') format('opentype');
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #041730;
+      --bg-deeper: #020c1c;
+      --bg-panel: rgba(5, 18, 40, 0.72);
+      --bg-panel-strong: rgba(7, 23, 50, 0.88);
+      --ink-light: #f5eddc;
+      --ink-mid: #d5c7a0;
+      --ink-soft: #998a68;
+      --orange: #d28943;
+      --orange-bright: #efab58;
+      --orange-deep: #b56e31;
+      --rule: rgba(239, 171, 88, 0.24);
+      --shadow: rgba(0, 0, 0, 0.58);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+      color: var(--ink-light);
+      background: var(--bg);
+      background-image:
+        radial-gradient(circle at 50% 14%, rgba(218, 164, 84, 0.12), transparent 28%),
+        radial-gradient(circle at 15% 0%, rgba(60, 95, 158, 0.18), transparent 30%),
+        radial-gradient(circle at 88% 22%, rgba(24, 53, 103, 0.18), transparent 24%),
+        linear-gradient(180deg, rgba(1, 8, 18, 0.55), rgba(1, 8, 18, 0.08) 25%, rgba(1, 8, 18, 0.55) 100%);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 30%, transparent 0%, rgba(0, 0, 0, 0.52) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 0.84 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: cover, 220px 220px;
+      mix-blend-mode: overlay;
+    }
+
+    .memories {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .memory {
+      position: absolute;
+      opacity: 0;
+      filter: sepia(0.15) brightness(0.72) contrast(0.95) saturate(0.9);
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+      transition: opacity 1.6s ease;
+    }
+
+    .memory.is-revealed { opacity: 0.42; }
+
+    .memory img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 1px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.65);
+    }
+
+    .memory--m1 { top: 380px; right: -140px; width: 280px; transform: rotate(4deg); }
+    .memory--m2 { top: 1100px; left: -120px; width: 320px; transform: rotate(-6deg); }
+    .memory--m3 { top: 1900px; right: -100px; width: 260px; transform: rotate(3deg); }
+    .memory--m4 { top: 2700px; left: -90px; width: 340px; transform: rotate(-3deg); }
+    .memory--m5 { top: 3500px; right: -130px; width: 300px; transform: rotate(5deg); }
+    .memory--m6 { top: 4300px; left: -100px; width: 280px; transform: rotate(-4deg); }
+
+    @media (max-width: 900px) { .memory { display: none; } }
+
+    .page { position: relative; z-index: 5; }
+
+    .gate-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 50;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      padding: 0.5rem 0.9rem;
+      border-radius: 4px;
+      background: rgba(3, 14, 32, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      transition: color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+
+    .gate-link:hover, .gate-link:focus-visible {
+      color: var(--orange-bright);
+      transform: translateX(-3px);
+      background: rgba(3, 14, 32, 0.82);
+      outline: none;
+    }
+
+    .gate-link::before { content: "← "; }
+
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+    }
+
+    @media (min-width: 720px) {
+      main { padding: 0 2rem; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 4rem 0 6rem;
+    }
+
+    .hero__title {
+      font-family: 'Kuunari', 'Anton', 'Bebas Neue', Impact, sans-serif;
+      font-weight: 900;
+      font-size: clamp(4.6rem, 14vw, 9rem);
+      letter-spacing: 0.02em;
+      color: #f3e4bf;
+      line-height: 0.88;
+      margin-bottom: 1rem;
+      text-shadow: 0 10px 40px rgba(210, 137, 67, 0.24);
+      -webkit-text-stroke: 1px rgba(210, 137, 67, 0.45);
+      will-change: transform, opacity;
+      animation: hero-rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero__subtitle {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 2.8vw, 1.5rem);
+      letter-spacing: 0.18em;
+      color: var(--orange-bright);
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+      opacity: 0;
+      animation: hero-rise 1.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero__dates {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: hero-rise 1.6s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero__scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.1em;
+      text-transform: lowercase;
+      opacity: 0;
+      animation: hero-fade-in 2s 1.5s ease both, scroll-bob 2.8s 1.5s ease-in-out infinite;
+    }
+
+    @keyframes hero-rise {
+      0% { opacity: 0; transform: translateY(28px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes hero-fade-in { to { opacity: 0.7; } }
+
+    @keyframes scroll-bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* Quote */
+    .quote {
+      padding: 6rem 0 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .quote__original {
+      font-style: italic;
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      line-height: 1.4;
+      color: var(--ink-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .quote__translation {
+      font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+      line-height: 1.4;
+      color: var(--ink-mid);
+      margin-bottom: 1.75rem;
+    }
+
+    .quote__attribution {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.04em;
+    }
+
+    /* Sections */
+    section.content {
+      padding: 4.5rem 0;
+      position: relative;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    h2 {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      letter-spacing: 0.14em;
+      color: var(--orange-bright);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-weight: 400;
+      font-size: 1.18rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-light);
+      text-transform: uppercase;
+      margin-top: 2.25rem;
+      margin-bottom: 0.6rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--ink-light);
+      margin-bottom: 1.15rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    a {
+      color: var(--orange-bright);
+      text-decoration: underline;
+      text-decoration-color: rgba(216, 148, 63, 0.4);
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    a:hover, a:focus-visible {
+      color: var(--ink-light);
+      text-decoration-color: var(--orange-bright);
+    }
+
+    .lede {
+      font-size: 1.3rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink-light);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Practical info as a definition list */
+    .practicalia {
+      margin: 1.75rem 0 0.5rem;
+      list-style: none;
+    }
+
+    .practicalia li {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      align-items: baseline;
+      gap: 1.25rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px dashed var(--rule);
+      font-size: 1.05rem;
+    }
+
+    .practicalia li:last-child { border-bottom: none; }
+
+    .practicalia .key {
+      font-family: 'Anton', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      color: var(--orange-bright);
+      text-transform: uppercase;
+    }
+
+    .practicalia .val { color: var(--ink-light); }
+
+    @media (max-width: 540px) {
+      .practicalia li {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+    }
+
+    /* Performances ticket card */
+    .performances {
+      background: linear-gradient(180deg, #f7eed7 0%, #ede2c5 100%);
+      color: var(--bg);
+      padding: 2rem 1.75rem 1.5rem;
+      position: relative;
+      margin: 1.5rem 0;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.4),
+                  inset 0 0 0 2px var(--orange);
+      border-radius: 12px;
+    }
+
+    .performances::before, .performances::after,
+    .performances > .corner-bl, .performances > .corner-br {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--bg);
+      border-radius: 50%;
+    }
+
+    .performances::before { top: -8px; left: -8px; }
+    .performances::after { top: -8px; right: -8px; }
+    .performances > .corner-bl { bottom: -8px; left: -8px; }
+    .performances > .corner-br { bottom: -8px; right: -8px; }
+
+    .performances h3 {
+      margin-top: 0;
+      text-align: center;
+      color: var(--orange-deep);
+    }
+
+    .performances ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .performances li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.65rem 0;
+      border-bottom: 1px dashed rgba(196, 126, 58, 0.4);
+      font-size: 1.05rem;
+      gap: 1rem;
+      color: var(--bg);
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .performances.is-revealed li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .performances.is-revealed li:nth-child(1) { transition-delay: 0.1s; }
+    .performances.is-revealed li:nth-child(2) { transition-delay: 0.22s; }
+    .performances.is-revealed li:nth-child(3) { transition-delay: 0.34s; }
+
+    .performances li:last-child { border-bottom: none; }
+
+    .performances .label {
+      font-style: italic;
+      color: var(--orange-deep);
+      font-size: 0.95rem;
+    }
+
+    .performances .when { font-weight: 500; }
+
+    .performances .meta {
+      text-align: center;
+      margin-top: 1rem;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--orange-deep);
+      letter-spacing: 0.02em;
+    }
+
+    /* Tabs (cast / creative / team) */
+    .roster {
+      margin-top: 0.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      background: transparent;
+      border: none;
+      padding: 0.85rem 1.5rem 0.85rem 0;
+      margin-right: 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.25s ease;
+      font-feature-settings: normal;
+    }
+
+    .tab::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 1.5rem;
+      bottom: -1px;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tab:hover { color: var(--ink-mid); }
+    .tab[aria-selected="true"] { color: var(--orange-bright); }
+    .tab[aria-selected="true"]::after { transform: scaleX(1); }
+
+    .tab:focus-visible {
+      outline: none;
+      color: var(--ink-light);
+    }
+
+    .panel {
+      display: none;
+      animation: panel-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .panel.is-active { display: block; }
+
+    @keyframes panel-fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .credit-list {
+      list-style: none;
+    }
+
+    .credit-list li {
+      padding: 0.85rem 0;
+      border-bottom: 1px dashed var(--rule);
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: baseline;
+    }
+
+    .credit-list li:last-child { border-bottom: none; }
+
+    .credit-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink-light);
+    }
+
+    .credit-role {
+      font-size: 0.95rem;
+      color: var(--orange-bright);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .credit-instrument {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      font-style: italic;
+      margin-top: 0.15rem;
+    }
+
+    @media (max-width: 540px) {
+      .credit-list li {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+      .credit-role::before { content: "— "; }
+    }
+
+    /* FAQ */
+    .faq h3 {
+      margin-top: 1.75rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+      color: var(--orange-bright);
+    }
+
+    .faq p { font-size: 1.05rem; }
+
+    /* Final reserve callout */
+    .final-cta {
+      text-align: center;
+      padding: 5rem 0 6rem;
+      position: relative;
+    }
+
+    .final-cta__line {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .final-cta__sub {
+      font-style: italic;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+      margin-bottom: 2.25rem;
+    }
+
+    .final-cta__button {
+      display: inline-block;
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-light);
+      background: var(--orange-deep);
+      padding: 1.15rem 2.6rem;
+      border-radius: 2px;
+      box-shadow: 0 18px 44px -12px rgba(196, 126, 58, 0.55);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .final-cta__button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255, 235, 200, 0.3) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.7s ease;
+    }
+
+    .final-cta__button:hover, .final-cta__button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 56px -10px rgba(196, 126, 58, 0.7);
+      background: var(--orange);
+      color: var(--ink-light);
+      text-decoration: none;
+    }
+
+    .final-cta__button:hover::before,
+    .final-cta__button:focus-visible::before {
+      transform: translateX(100%);
+    }
+
+    .final-cta__fineprint {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .sponsors {
+      padding: 1.5rem 0 3.5rem;
+      text-align: center;
+    }
+
+    .sponsors__eyebrow {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange-bright);
+      margin-bottom: 1.25rem;
+    }
+
+    .sponsors__grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1.1rem 0.8rem;
+      align-items: center;
+    }
+
+    .sponsor {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 102px;
+      padding: 0;
+      opacity: 0.9;
+      text-decoration: none;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .sponsor img {
+      display: block;
+      max-width: 100%;
+      max-height: 74px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.25));
+      transform-origin: center;
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .sponsor:hover,
+    .sponsor:focus-visible {
+      opacity: 1;
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .sponsor--latam {
+      grid-column: 1 / span 4;
+    }
+
+    .sponsor--music {
+      grid-column: 5 / span 4;
+    }
+
+    .sponsor--sloco {
+      grid-column: 9 / span 4;
+    }
+
+    .sponsor--taps {
+      grid-column: 3 / span 4;
+    }
+
+    .sponsor--tlab {
+      grid-column: 7 / span 4;
+    }
+
+    .sponsor--latam img {
+      max-height: 82px;
+    }
+
+    .sponsor--music img {
+      max-height: 82px;
+      transform: scale(1.78);
+    }
+
+    .sponsor--sloco img {
+      max-height: 84px;
+      transform: scale(1.9);
+    }
+
+    .sponsor--taps img {
+      max-height: 82px;
+      transform: scale(1.8);
+    }
+
+    .sponsor--tlab img {
+      max-height: 68px;
+      transform: scale(1.85);
+    }
+
+    .sponsor:hover img,
+    .sponsor:focus-visible img {
+      filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.34));
+    }
+
+    @media (max-width: 760px) {
+      .sponsors__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem 1rem;
+      }
+
+      .sponsor--latam,
+      .sponsor--music,
+      .sponsor--sloco,
+      .sponsor--taps,
+      .sponsor--tlab {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .sponsors__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Ornament */
+    .ornament {
+      text-align: center;
+      margin: 1rem 0;
+      color: var(--orange);
+      font-size: 1.4rem;
+      letter-spacing: 0.5em;
+      user-select: none;
+      opacity: 0.6;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 720px;
+      margin: 2rem auto 3rem;
+      padding: 3rem 1.75rem 0;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        padding-top: 5.5rem;
+      }
+    }
+
+    footer .copy {
+      font-style: italic;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
+      margin-top: 1.25rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .memory { opacity: 0.4; }
+    }
+  </style>
+  <noscript>
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .performances li { opacity: 1 !important; transform: none !important; }
+      .memory { opacity: 0.4 !important; }
+      .hero__scroll-hint { display: none; }
+      .panel { display: block !important; margin-bottom: 2rem; }
+      .panel::before {
+        content: attr(data-label);
+        display: block;
+        font-family: 'Anton', sans-serif;
+        font-size: 1.05rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--orange-bright);
+        margin-bottom: 0.75rem;
+      }
+      .tabs { display: none; }
+    </style>
+  </noscript>
+</head>
+<body>
+  <a href="../" class="gate-link">back to the gate</a>
+
+  <div class="memories" aria-hidden="true">
+    <div class="memory memory--m1" data-parallax="0.18"><img src="img/pergola.jpg" alt=""></div>
+    <div class="memory memory--m2" data-parallax="0.32"><img src="img/snowberry.jpg" alt=""></div>
+    <div class="memory memory--m3" data-parallax="0.22"><img src="img/bouquet.jpg" alt=""></div>
+    <div class="memory memory--m4" data-parallax="0.28"><img src="img/wallflowers.jpg" alt=""></div>
+    <div class="memory memory--m5" data-parallax="0.20"><img src="img/ladyslipper.jpg" alt=""></div>
+    <div class="memory memory--m6" data-parallax="0.30"><img src="img/pinks.jpg" alt=""></div>
+  </div>
+
+  <div class="page">
+    <main>
+      <header class="hero">
+        <h1 class="hero__title">Port-Pourri</h1>
+        <p class="hero__subtitle">A new musical play</p>
+        <p class="hero__dates">May 29 to 31, 2026 · Roble Hall Courtyard, Stanford</p>
+        <p class="hero__scroll-hint">scroll to enter ↓</p>
+      </header>
+
+      <section class="quote reveal">
+        <p class="quote__original">
+          E agora, José?<br>
+          <em>A festa acabou, a luz apagou, o povo sumiu.</em>
+        </p>
+        <p class="quote__translation">
+          And what about now, José?<br>
+          The party's over, the lights are out, the crowd's dispersed.
+        </p>
+        <p class="quote__attribution">
+          Carlos Drummond de Andrade, <em>José</em> (1942)
+        </p>
+      </section>
+
+      <section class="content" id="about">
+        <h2 class="reveal">The night</h2>
+        <p class="lede reveal reveal-delay-1">
+          A bar at the edge of a port town. The last hours before a ship leaves. A handful of people who know each other and a handful who don't. Music. A few drinks. Some things finally said, some things unsaid forever.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Port-Pourri is an immersive musical play. The audience sits inside the bar. The bartender pours real drinks. Songs come up the way songs come up in real bars, like conversations that go a little further than they meant to. Some of what you hear was written months ago. Some of it is happening for the first time tonight.
+        </p>
+        <p class="reveal reveal-delay-3">
+          By the end of the evening, the ship will leave. Some of the people in the room will be on it. Some won't. That's the piece.
+        </p>
+      </section>
+
+      <section class="content" id="practical">
+        <h2 class="reveal">Before you come</h2>
+        <ul class="practicalia reveal reveal-delay-1">
+          <li><span class="key">Where</span><span class="val">Roble Hall Courtyard, by Lake Lagunita, Stanford</span></li>
+          <li><span class="key">Doors</span><span class="val">7:00 PM. Preshow begins as you arrive — the bar opens early.</span></li>
+          <li><span class="key">Length</span><span class="val">About two and a half hours, no intermission. We aim to finish by 9:30.</span></li>
+          <li><span class="key">Seating</span><span class="val">Inside the bar. Reserved with your ticket. No standing.</span></li>
+          <li><span class="key">Bar</span><span class="val">Drinks served throughout. Alcohol optional, ID checked at the door. Light food too.</span></li>
+          <li><span class="key">Outdoors</span><span class="val">The courtyard is partly open to the night. Bring a layer — Stanford evenings get cool.</span></li>
+          <li><span class="key">Ages</span><span class="val">13 and up. Strong language and themes of war.</span></li>
+          <li><span class="key">Tickets</span><span class="val">Free. Limited to 50 seats per night. Reservation required.</span></li>
+        </ul>
+      </section>
+
+      <section class="content" id="performances">
+        <h2 class="reveal">Performances</h2>
+        <div class="performances reveal">
+          <span class="corner-bl"></span><span class="corner-br"></span>
+          <h3>May 29 to 31, 2026</h3>
+          <ul>
+            <li><span class="when">Friday, May 29 · 7:00 PM</span><span class="label">opening</span></li>
+            <li><span class="when">Saturday, May 30 · 8:00 PM</span><span class="label">evening</span></li>
+            <li><span class="when">Sunday, May 31 · 7:00 PM</span><span class="label">closing</span></li>
+          </ul>
+          <p class="meta">Free · 50 seats per night · reservation required</p>
+        </div>
+      </section>
+
+      <section class="content" id="company">
+        <h2 class="reveal">The company</h2>
+        <div class="roster reveal reveal-delay-1">
+          <div class="tabs" role="tablist" aria-label="Company">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="panel-cast" id="tab-cast">Cast</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-creative" id="tab-creative">Creative</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-team" id="tab-team">Team</button>
+          </div>
+
+          <div class="panel is-active" role="tabpanel" id="panel-cast" aria-labelledby="tab-cast" data-label="Cast">
+            <ul class="credit-list">
+              <li><span class="credit-name">Andrew Lee</span><span class="credit-role">The Bartender<span class="credit-instrument">cello, percussion</span></span></li>
+              <li><span class="credit-name">Amistad Vanegas</span><span class="credit-role">The Old Soldier<span class="credit-instrument">violin</span></span></li>
+              <li><span class="credit-name">Athena Naylor</span><span class="credit-role">The Young Soldier<span class="credit-instrument">voice, guitar, alto sax</span></span></li>
+              <li><span class="credit-name">Ty Hosein</span><span class="credit-role">The Captain<span class="credit-instrument">percussion, guitar, melodica, piano</span></span></li>
+              <li><span class="credit-name">Justine Sato</span><span class="credit-role">The Engineer<span class="credit-instrument">trumpet, percussion</span></span></li>
+              <li><span class="credit-name">Reid Smith</span><span class="credit-role">The Dentist</span></li>
+              <li><span class="credit-name">Ethan Kirgan</span><span class="credit-role">The Rubber Tapper<span class="credit-instrument">guitar, percussion</span></span></li>
+              <li><span class="credit-name">Jules Jackson</span><span class="credit-role">The Fisherman<span class="credit-instrument">cavaquinho, guitar</span></span></li>
+            </ul>
+          </div>
+
+          <div class="panel" role="tabpanel" id="panel-creative" aria-labelledby="tab-creative" data-label="Creative">
+            <ul class="credit-list">
+              <li><span class="credit-name">Sebastian Blue Hochman</span><span class="credit-role">Composer, Bookwriter, Director, Music Director</span></li>
+              <li><span class="credit-name">Samuel Minev-Benzecry</span><span class="credit-role">Story, Bookwriter</span></li>
+              <li><span class="credit-name">Heather Schechter</span><span class="credit-role">Director, Bookwriter</span></li>
+              <li><span class="credit-name">Emily Saletan</span><span class="credit-role">Lyrics</span></li>
+              <li><span class="credit-name">Audrey Hunter</span><span class="credit-role">Bookwriter</span></li>
+              <li><span class="credit-name">Lionel Humphreys</span><span class="credit-role">Bookwriter</span></li>
+              <li><span class="credit-name">Elizabeth Shepherd</span><span class="credit-role">Yiddish Lyrics</span></li>
+            </ul>
+          </div>
+
+          <div class="panel" role="tabpanel" id="panel-team" aria-labelledby="tab-team" data-label="Team">
+            <ul class="credit-list">
+              <li><span class="credit-name">Flora Zhu</span><span class="credit-role">Producer</span></li>
+              <li><span class="credit-name">Sydney Wang</span><span class="credit-role">Producer</span></li>
+              <li><span class="credit-name">Vivi LaFont</span><span class="credit-role">Stage Manager</span></li>
+              <li><span class="credit-name">Emma Melville</span><span class="credit-role">Technical Director</span></li>
+              <li><span class="credit-name">Ashley Dong</span><span class="credit-role">Production Assistant</span></li>
+              <li><span class="credit-name">Raina Yang</span><span class="credit-role">Lighting Design</span></li>
+              <li><span class="credit-name">Jude St John</span><span class="credit-role">Sound Design</span></li>
+              <li><span class="credit-name">Noah Dehli</span><span class="credit-role">Set Design</span></li>
+              <li><span class="credit-name">Chelsea Wei</span><span class="credit-role">Props Design</span></li>
+              <li><span class="credit-name">Yinuo Yu</span><span class="credit-role">Costume Design</span></li>
+              <li><span class="credit-name">Da-Hee Kim</span><span class="credit-role">Graphics &amp; Marketing</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="ornament reveal">· · ·</div>
+
+      <section class="content faq" id="faqs">
+        <h2 class="reveal">Questions</h2>
+
+        <div class="reveal reveal-delay-1">
+          <h3>What time should I arrive?</h3>
+          <p>The bar opens at 7:00. Christian (the bartender) starts pouring before the play officially begins, and you'll want to settle in. Arrive a little before 7 if you can.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <h3>How long is the night?</h3>
+          <p>Plan to be there until around 9:30. There's no intermission, so use the bathroom before you walk in.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <h3>Is it indoor or outdoor?</h3>
+          <p>The courtyard is partly open to the night air, which is part of why the room feels the way it does. Stanford evenings in late May can drop into the 50s, so dress for an evening outside, not for a dark theater.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <h3>Will I have to participate?</h3>
+          <p>Present, yes. Put on the spot, no. Christian might pour you a drink and ask where you're from. He won't make you sing.</p>
+        </div>
+
+        <div class="reveal reveal-delay-3">
+          <h3>What about food and drinks?</h3>
+          <p>A small bar serves drinks all evening. Alcohol is optional and only served to guests with ID checked at the door. There's also light food.</p>
+        </div>
+
+        <div class="reveal reveal-delay-3">
+          <h3>Is it appropriate for kids?</h3>
+          <p>Recommended 13 and up. The piece has strong language and themes of war.</p>
+        </div>
+
+        <div class="reveal reveal-delay-3">
+          <h3>What if it goes wrong?</h3>
+          <p>Then it becomes part of the night. That's the piece.</p>
+        </div>
+      </section>
+
+      <section class="final-cta" id="reserve">
+        <p class="final-cta__line reveal">Come to the bar.</p>
+        <p class="final-cta__sub reveal reveal-delay-1">Three nights. Fifty seats each. Free.</p>
+        <a class="final-cta__button reveal reveal-delay-2" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Reserve your seat</a>
+        <p class="final-cta__fineprint reveal reveal-delay-3">May 29, 30, 31 · Roble Hall Courtyard, Stanford</p>
+      </section>
+
+      <section class="sponsors reveal" aria-labelledby="sponsors-title">
+        <h2 id="sponsors-title" class="sponsors__eyebrow">Supported by</h2>
+        <div class="sponsors__grid">
+          <a class="sponsor sponsor--latam" href="https://clas.stanford.edu/" target="_blank" rel="noreferrer">
+            <img src="img/LatAm Studies white logo.png" alt="Center for Latin American Studies">
+          </a>
+          <a class="sponsor sponsor--music" href="https://music.stanford.edu/" target="_blank" rel="noreferrer">
+            <img src="img/Music Dept White Logo.png" alt="Stanford Department of Music">
+          </a>
+          <a class="sponsor sponsor--sloco" href="https://www.instagram.com/stanfordloco/" target="_blank" rel="noreferrer">
+            <img src="img/sloco white logo.png" alt="SLOCo">
+          </a>
+          <a class="sponsor sponsor--taps" href="https://taps.stanford.edu/" target="_blank" rel="noreferrer">
+            <img src="img/taps logo white.png" alt="TAPS">
+          </a>
+          <a class="sponsor sponsor--tlab" href="https://www.instagram.com/theater_lab/" target="_blank" rel="noreferrer">
+            <img src="img/theaterlab white logo.png" alt="T Lab">
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="copy">Port-Pourri · A new musical play · © 2025 / 2026</p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Reveal-on-scroll
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('is-revealed'); });
+      }
+
+      // Memory parallax reveal
+      const memories = document.querySelectorAll('.memory');
+      if ('IntersectionObserver' in window) {
+        const memIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+            } else {
+              entry.target.classList.remove('is-revealed');
+            }
+          });
+        }, { threshold: 0.05, rootMargin: '20% 0px 20% 0px' });
+        memories.forEach(function (el) { memIO.observe(el); });
+      } else {
+        memories.forEach(function (el) { el.classList.add('is-revealed'); });
+      }
+
+      // Tabs
+      const tabs = document.querySelectorAll('.tab');
+      const panels = document.querySelectorAll('.panel');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+          panels.forEach(function (p) { p.classList.remove('is-active'); });
+          tab.setAttribute('aria-selected', 'true');
+          const panelId = tab.getAttribute('aria-controls');
+          const panel = document.getElementById(panelId);
+          if (panel) panel.classList.add('is-active');
+        });
+        // Keyboard navigation between tabs
+        tab.addEventListener('keydown', function (e) {
+          const tabsArr = Array.from(tabs);
+          const idx = tabsArr.indexOf(tab);
+          let next = null;
+          if (e.key === 'ArrowRight') next = tabsArr[(idx + 1) % tabsArr.length];
+          if (e.key === 'ArrowLeft') next = tabsArr[(idx - 1 + tabsArr.length) % tabsArr.length];
+          if (next) {
+            e.preventDefault();
+            next.focus();
+            next.click();
+          }
+        });
+      });
+
+      // Parallax + pointer drift
+      if (prefersReduced) return;
+
+      const heroTitle = document.querySelector('.hero__title');
+      const heroSubtitle = document.querySelector('.hero__subtitle');
+
+      let scrollY = window.scrollY;
+      let targetScrollY = scrollY;
+      let pointerX = 0;
+      let pointerY = 0;
+      let smoothPointerX = 0;
+      let smoothPointerY = 0;
+
+      window.addEventListener('scroll', function () {
+        targetScrollY = window.scrollY;
+      }, { passive: true });
+
+      window.addEventListener('pointermove', function (e) {
+        pointerX = (e.clientX / window.innerWidth - 0.5) * 2;
+        pointerY = (e.clientY / window.innerHeight - 0.5) * 2;
+      }, { passive: true });
+
+      const memoryData = Array.from(memories).map(function (el) {
+        const rotMatch = el.style.transform.match(/rotate\(([-\d.]+)deg\)/);
+        const rotation = rotMatch ? parseFloat(rotMatch[1]) : 0;
+        const parallax = parseFloat(el.dataset.parallax) || 0.2;
+        return { el: el, rotation: rotation, parallax: parallax };
+      });
+
+      function tick() {
+        scrollY += (targetScrollY - scrollY) * 0.12;
+        smoothPointerX += (pointerX - smoothPointerX) * 0.08;
+        smoothPointerY += (pointerY - smoothPointerY) * 0.08;
+
+        memoryData.forEach(function (m) {
+          const offset = scrollY * m.parallax;
+          const driftX = smoothPointerX * 14 * m.parallax;
+          const driftY = smoothPointerY * 10 * m.parallax;
+          m.el.style.transform =
+            'translate3d(' + driftX.toFixed(2) + 'px, ' + (-offset + driftY).toFixed(2) + 'px, 0) rotate(' + m.rotation + 'deg)';
+        });
+
+        if (heroTitle) {
+          const tx = smoothPointerX * 6;
+          const ty = smoothPointerY * 4;
+          heroTitle.style.transform = 'translate3d(' + tx.toFixed(2) + 'px, ' + ty.toFixed(2) + 'px, 0)';
+        }
+        if (heroSubtitle) {
+          const tx = smoothPointerX * 3;
+          heroSubtitle.style.transform = 'translate3d(' + tx.toFixed(2) + 'px, 0, 0)';
+        }
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

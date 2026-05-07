@@ -334,7 +334,7 @@
 
   Promise.all([
     loadImage('front.png'),
-    loadImage('rear.png')
+    loadImage('rear-2.png')
   ]).then(function (images) {
     const frontTexture = createTextureFromImage(images[0]);
     const rearTexture = createRearTexture(images[1]);
