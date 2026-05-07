@@ -107,6 +107,10 @@
 
     .page { position: relative; z-index: 5; }
 
+    body.has-floating-ticket {
+      padding-bottom: 7.5rem;
+    }
+
     .gate-link {
       position: fixed;
       top: 1.5rem;
@@ -794,6 +798,20 @@
       .credit-entry--wide .credit-entry__name {
         max-width: 14ch;
       }
+
+      body.has-floating-ticket {
+        padding-bottom: 6.25rem;
+      }
+
+      .floating-ticket {
+        right: 0.75rem;
+        min-width: auto;
+        max-width: calc(100vw - 1.5rem);
+        bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+        padding: 0.78rem 0.95rem;
+        font-size: 0.74rem;
+        letter-spacing: 0.12em;
+      }
     }
 
     /* FAQ */
@@ -877,6 +895,47 @@
       letter-spacing: 0.02em;
     }
 
+    .floating-ticket {
+      position: fixed;
+      right: 1.25rem;
+      bottom: calc(env(safe-area-inset-bottom) + 1rem);
+      transform: translate3d(0, 18px, 0);
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1.15rem;
+      border-radius: 999px;
+      background: rgba(7, 23, 50, 0.78);
+      border: 1px solid rgba(239, 171, 88, 0.24);
+      color: var(--orange-bright);
+      text-decoration: none;
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 18px 38px -18px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.35s ease, background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+    }
+
+    .floating-ticket.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .floating-ticket:hover,
+    .floating-ticket:focus-visible {
+      color: var(--ink-light);
+      text-decoration: none;
+      background: rgba(181, 110, 49, 0.9);
+      box-shadow: 0 24px 46px -16px rgba(0, 0, 0, 0.78);
+      outline: none;
+    }
+
     .sponsors {
       padding: 1.5rem 0 3.5rem;
       text-align: center;
@@ -912,7 +971,7 @@
     .sponsor img {
       display: block;
       max-width: 100%;
-      max-height: 74px;
+      max-height: 90px;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -929,48 +988,48 @@
     }
 
     .sponsor--latam {
-      grid-column: 1 / span 4;
+      grid-column: 3 / span 8;
     }
 
     .sponsor--music {
-      grid-column: 5 / span 4;
+      grid-column: 1 / span 3;
     }
 
     .sponsor--sloco {
-      grid-column: 9 / span 4;
+      grid-column: 4 / span 3;
     }
 
     .sponsor--taps {
-      grid-column: 3 / span 4;
+      grid-column: 7 / span 3;
     }
 
     .sponsor--tlab {
-      grid-column: 7 / span 4;
+      grid-column: 10 / span 3;
     }
 
     .sponsor--latam img {
-      max-height: 82px;
-      transform: translateY(-6px);
+      max-height: 88px;
+      transform: none;
     }
 
     .sponsor--music img {
-      max-height: 82px;
-      transform: scale(1.78);
+      max-height: 110px;
+      transform: none;
     }
 
     .sponsor--sloco img {
-      max-height: 84px;
-      transform: scale(1.9);
+      max-height: 104px;
+      transform: none;
     }
 
     .sponsor--taps img {
-      max-height: 82px;
-      transform: scale(1.8);
+      max-height: 96px;
+      transform: none;
     }
 
     .sponsor--tlab img {
-      max-height: 68px;
-      transform: scale(1.85);
+      max-height: 98px;
+      transform: none;
     }
 
     .sponsor:hover img,
@@ -990,6 +1049,10 @@
       .sponsor--taps,
       .sponsor--tlab {
         grid-column: auto;
+      }
+
+      .sponsor--latam {
+        grid-column: 1 / -1;
       }
     }
 
@@ -1067,7 +1130,7 @@
     </style>
   </noscript>
 </head>
-<body>
+<body class="has-floating-ticket">
   <a href="../" class="gate-link">back to the gate</a>
 
   <div class="memories" aria-hidden="true">
@@ -1342,6 +1405,8 @@
       </section>
     </main>
 
+    <a class="floating-ticket" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Get tickets now</a>
+
     <footer>
       <p class="copy">Port-Pourri · A new musical play · © 2025 / 2026</p>
     </footer>
@@ -1350,6 +1415,7 @@
   <script>
     (function () {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const floatingTicket = document.querySelector('.floating-ticket');
 
       // Reveal-on-scroll
       const reveals = document.querySelectorAll('.reveal');
@@ -1444,6 +1510,22 @@
         scrollY += (targetScrollY - scrollY) * 0.12;
         smoothPointerX += (pointerX - smoothPointerX) * 0.08;
         smoothPointerY += (pointerY - smoothPointerY) * 0.08;
+
+        if (floatingTicket) {
+          const showThreshold = Math.min(window.innerHeight * 0.45, 320);
+          const shouldShow = scrollY > showThreshold;
+          floatingTicket.classList.toggle('is-visible', shouldShow);
+
+          if (shouldShow) {
+            const bob = Math.sin(scrollY * 0.012) * 4;
+            const driftY = Math.max(-6, Math.min(10, (targetScrollY - scrollY) * 0.04));
+            const driftX = smoothPointerX * -4;
+            floatingTicket.style.transform =
+              'translate3d(' + driftX.toFixed(2) + 'px, ' + (bob + driftY).toFixed(2) + 'px, 0)';
+          } else {
+            floatingTicket.style.transform = 'translate3d(0, 18px, 0)';
+          }
+        }
 
         memoryData.forEach(function (m) {
           const offset = scrollY * m.parallax;
