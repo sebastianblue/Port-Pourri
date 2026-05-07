@@ -29,6 +29,8 @@
   let entryBiasTargetY = 0;
   let entryBiasX = 0;
   let entryBiasY = 0;
+  let hoverReady = !hoverCapable;
+  let pendingInitialHoverReveal = false;
 
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({
@@ -201,6 +203,13 @@
     pointerTargetY = (py - 0.5) * 2;
   }
 
+  function isViewportCenterHoveringLink() {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const hoveredNode = document.elementFromPoint(centerX, centerY);
+    return !!(hoveredNode && link.contains(hoveredNode));
+  }
+
   function bindInteraction() {
     if (hoverCapable) {
       link.addEventListener('pointermove', function (event) {
@@ -211,10 +220,17 @@
         updatePointerTargets(event);
         entryBiasTargetX = pointerTargetX;
         entryBiasTargetY = pointerTargetY;
+
+        if (!hoverReady) {
+          pendingInitialHoverReveal = true;
+          return;
+        }
+
         setRevealed(true);
       });
 
       link.addEventListener('mouseleave', function () {
+        pendingInitialHoverReveal = false;
         setRevealed(false);
         pointerTargetX = 0;
         pointerTargetY = 0;
@@ -351,6 +367,19 @@
     window.setTimeout(function () {
       sceneElement.classList.add('is-visible');
     }, hoverCapable ? 550 : 0);
+
+    if (hoverCapable) {
+      window.setTimeout(function () {
+        hoverReady = true;
+
+        if (pendingInitialHoverReveal || (link.matches(':hover') && isViewportCenterHoveringLink())) {
+          pendingInitialHoverReveal = false;
+          entryBiasTargetX = 0;
+          entryBiasTargetY = 0;
+          setRevealed(true);
+        }
+      }, prefersReducedMotion ? 220 : 900);
+    }
   }).catch(function (error) {
     console.error(error);
     sceneElement.classList.add('is-visible');
