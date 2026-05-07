@@ -254,6 +254,12 @@
       position: relative;
     }
 
+    #company {
+      width: min(100vw - 4rem, 1320px);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(36px);
@@ -509,46 +515,226 @@
 
     .credit-list {
       list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.9rem 2.2rem;
+      align-items: flex-start;
     }
 
     .credit-list li {
-      padding: 0.85rem 0;
-      border-bottom: 1px dashed var(--rule);
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 1.5rem;
-      align-items: baseline;
+      flex: 0 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.45rem;
     }
 
-    .credit-list li:last-child { border-bottom: none; }
-
     .credit-name {
-      font-size: 1.1rem;
-      font-weight: 500;
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: clamp(1.3rem, 1.55vw, 2.05rem);
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
       color: var(--ink-light);
+      white-space: nowrap;
+      margin-inline: auto;
+      word-break: normal;
+      overflow-wrap: normal;
     }
 
     .credit-role {
-      font-size: 0.95rem;
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
       color: var(--orange-bright);
-      font-style: italic;
-      letter-spacing: 0.02em;
+      text-wrap: balance;
+      max-width: 18ch;
     }
 
     .credit-instrument {
       display: block;
-      font-size: 0.85rem;
-      color: var(--ink-soft);
+      font-size: 0.82rem;
+      color: var(--ink-mid);
       font-style: italic;
+      letter-spacing: 0.02em;
       margin-top: 0.15rem;
     }
 
-    @media (max-width: 540px) {
-      .credit-list li {
-        grid-template-columns: 1fr;
-        gap: 0.15rem;
+    .credit-list li.credit--wide {
+      flex-basis: 100%;
+      width: 100%;
+    }
+
+    .credit-list li.credit--wide .credit-name {
+      white-space: normal;
+      text-wrap: balance;
+      max-width: 24ch;
+    }
+
+    .credit-list--cast li {
+      flex: 0 1 calc(25% - 1.65rem);
+      width: calc(25% - 1.65rem);
+    }
+
+    .credit-list--cast .credit-name {
+      white-space: normal;
+      text-wrap: balance;
+      max-width: 10ch;
+    }
+
+    .credit-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .credit-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1.4rem 2.2rem;
+    }
+
+    .credit-entry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.45rem;
+    }
+
+    .credit-entry--wide {
+      width: 100%;
+    }
+
+    .credit-entry__role {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: clamp(1.35rem, 1.65vw, 1.82rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--orange-bright);
+      text-wrap: balance;
+      max-width: 20ch;
+    }
+
+    .credit-entry__name {
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: clamp(2.1rem, 2.55vw, 3.35rem);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      white-space: nowrap;
+    }
+
+    .credit-entry--wide .credit-entry__name {
+      white-space: normal;
+      text-wrap: balance;
+      max-width: 26ch;
+    }
+
+    .credit-row--dense .credit-entry__name {
+      font-size: clamp(1.88rem, 2.05vw, 2.65rem);
+    }
+
+    .credit-row--dense .credit-entry__role {
+      font-size: clamp(1.2rem, 1.32vw, 1.42rem);
+      max-width: 18ch;
+    }
+
+    @media (max-width: 780px) {
+      #company {
+        width: 100%;
+        margin-left: 0;
+        transform: none;
       }
-      .credit-role::before { content: "— "; }
+
+      .credit-list {
+        gap: 2.2rem 1.5rem;
+      }
+
+      .credit-list--cast li {
+        flex-basis: calc(50% - 0.75rem);
+        width: calc(50% - 0.75rem);
+      }
+
+      .credit-name {
+        font-size: clamp(1.2rem, 3.2vw, 1.8rem);
+      }
+
+      .credit-row {
+        gap: 1.4rem 1.4rem;
+      }
+
+      .credit-entry__name {
+        font-size: clamp(1.55rem, 3.8vw, 2.35rem);
+      }
+    }
+
+    @media (max-width: 540px) {
+      #company {
+        width: calc(100vw - 2rem);
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.45rem;
+        border-bottom: none;
+        margin-bottom: 1.25rem;
+      }
+
+      .tab {
+        margin-right: 0;
+        padding: 0.6rem 0.2rem 0.8rem;
+        text-align: center;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .tab::after {
+        right: 0;
+      }
+
+      .credit-list {
+        gap: 1.8rem;
+      }
+
+      .credit-name {
+        white-space: normal;
+        text-wrap: balance;
+        max-width: 12ch;
+      }
+
+      .credit-entry__name {
+        white-space: normal;
+        text-wrap: balance;
+        max-width: 11ch;
+        font-size: clamp(1.3rem, 7.4vw, 1.95rem);
+      }
+
+      .credit-entry__role {
+        font-size: clamp(0.92rem, 4.2vw, 1.18rem);
+        max-width: 14ch;
+      }
+
+      .credit-row--dense .credit-entry__name {
+        font-size: clamp(1.18rem, 6.4vw, 1.65rem);
+      }
+
+      .credit-row {
+        gap: 1rem 0.95rem;
+      }
+
+      .credit-rows {
+        gap: 1.35rem;
+      }
     }
 
     /* FAQ */
@@ -877,7 +1063,7 @@
           <li><span class="key">Length</span><span class="val">About two and a half hours, no intermission. We aim to finish by 9:30.</span></li>
           <li><span class="key">Seating</span><span class="val">Inside the bar. Reserved with your ticket. No standing.</span></li>
           <li><span class="key">Bar</span><span class="val">Drinks served throughout. Alcohol optional, ID checked at the door. Light food too.</span></li>
-          <li><span class="key">Outdoors</span><span class="val">The courtyard is partly open to the night. Bring a layer — Stanford evenings get cool.</span></li>
+          <li><span class="key">Outdoors</span><span class="val">Outdoor. The courtyard is open to the sky. Bring a layer — Stanford evenings get cool fast.</span></li>
           <li><span class="key">Ages</span><span class="val">13 and up. Strong language and themes of war.</span></li>
           <li><span class="key">Tickets</span><span class="val">Free. Limited to 50 seats per night. Reservation required.</span></li>
         </ul>
@@ -903,48 +1089,135 @@
           <div class="tabs" role="tablist" aria-label="Company">
             <button class="tab" role="tab" aria-selected="true" aria-controls="panel-cast" id="tab-cast">Cast</button>
             <button class="tab" role="tab" aria-selected="false" aria-controls="panel-creative" id="tab-creative">Creative</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-team" id="tab-team">Team</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="panel-team" id="tab-team">Production</button>
           </div>
 
           <div class="panel is-active" role="tabpanel" id="panel-cast" aria-labelledby="tab-cast" data-label="Cast">
-            <ul class="credit-list">
-              <li><span class="credit-name">Andrew Lee</span><span class="credit-role">The Bartender<span class="credit-instrument">cello, percussion</span></span></li>
-              <li><span class="credit-name">Amistad Vanegas</span><span class="credit-role">The Old Soldier<span class="credit-instrument">violin</span></span></li>
-              <li><span class="credit-name">Athena Naylor</span><span class="credit-role">The Young Soldier<span class="credit-instrument">voice, guitar, alto sax</span></span></li>
-              <li><span class="credit-name">Ty Hosein</span><span class="credit-role">The Captain<span class="credit-instrument">percussion, guitar, melodica, piano</span></span></li>
-              <li><span class="credit-name">Justine Sato</span><span class="credit-role">The Engineer<span class="credit-instrument">trumpet, percussion</span></span></li>
-              <li><span class="credit-name">Reid Smith</span><span class="credit-role">The Dentist</span></li>
-              <li><span class="credit-name">Ethan Kirgan</span><span class="credit-role">The Rubber Tapper<span class="credit-instrument">guitar, percussion</span></span></li>
-              <li><span class="credit-name">Jules Jackson</span><span class="credit-role">The Fisherman<span class="credit-instrument">cavaquinho, guitar</span></span></li>
+            <ul class="credit-list credit-list--cast">
+              <li><span class="credit-role">The Bartender</span><span class="credit-name">Andrew Lee</span></li>
+              <li><span class="credit-role">The Old Soldier</span><span class="credit-name">Amistad Vanegas</span></li>
+              <li><span class="credit-role">The Young Soldier</span><span class="credit-name">Athena Naylor</span></li>
+              <li><span class="credit-role">The Captain</span><span class="credit-name">Ty Hosein</span></li>
+              <li><span class="credit-role">The Engineer</span><span class="credit-name">Justine Sato</span></li>
+              <li><span class="credit-role">The Dentist</span><span class="credit-name">Reid Smith</span></li>
+              <li><span class="credit-role">The Rubber Tapper</span><span class="credit-name">Ethan Kirgan</span></li>
+              <li><span class="credit-role">The Fisherman</span><span class="credit-name">Jules Jackson</span></li>
             </ul>
           </div>
 
           <div class="panel" role="tabpanel" id="panel-creative" aria-labelledby="tab-creative" data-label="Creative">
-            <ul class="credit-list">
-              <li><span class="credit-name">Sebastian Blue Hochman</span><span class="credit-role">Composer, Bookwriter, Director, Music Director</span></li>
-              <li><span class="credit-name">Samuel Minev-Benzecry</span><span class="credit-role">Story, Bookwriter</span></li>
-              <li><span class="credit-name">Heather Schechter</span><span class="credit-role">Director, Bookwriter</span></li>
-              <li><span class="credit-name">Emily Saletan</span><span class="credit-role">Lyrics</span></li>
-              <li><span class="credit-name">Audrey Hunter</span><span class="credit-role">Bookwriter</span></li>
-              <li><span class="credit-name">Lionel Humphreys</span><span class="credit-role">Bookwriter</span></li>
-              <li><span class="credit-name">Elizabeth Shepherd</span><span class="credit-role">Yiddish Lyrics</span></li>
-            </ul>
+            <div class="credit-rows">
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Lyrics</div>
+                  <div class="credit-entry__name">Emily Saletan</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Yiddish Lyrics</div>
+                  <div class="credit-entry__name">Elizabeth Shepherd</div>
+                </div>
+              </div>
+
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Bookwriter</div>
+                  <div class="credit-entry__name">Heather Schechter</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Bookwriter</div>
+                  <div class="credit-entry__name">Audrey Hunter</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Bookwriter</div>
+                  <div class="credit-entry__name">Lionel Humphreys</div>
+                </div>
+              </div>
+
+              <div class="credit-row">
+                <div class="credit-entry credit-entry--wide">
+                  <div class="credit-entry__role">Composer / Bookwriter</div>
+                  <div class="credit-entry__name">Sebastian Blue Hochman</div>
+                </div>
+              </div>
+
+              <div class="credit-row">
+                <div class="credit-entry credit-entry--wide">
+                  <div class="credit-entry__role">Created By</div>
+                  <div class="credit-entry__name">Sebastian Blue Hochman &amp; Samuel Minev-Benzecry</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="panel" role="tabpanel" id="panel-team" aria-labelledby="tab-team" data-label="Team">
-            <ul class="credit-list">
-              <li><span class="credit-name">Flora Zhu</span><span class="credit-role">Producer</span></li>
-              <li><span class="credit-name">Sydney Wang</span><span class="credit-role">Producer</span></li>
-              <li><span class="credit-name">Vivi LaFont</span><span class="credit-role">Stage Manager</span></li>
-              <li><span class="credit-name">Emma Melville</span><span class="credit-role">Technical Director</span></li>
-              <li><span class="credit-name">Ashley Dong</span><span class="credit-role">Production Assistant</span></li>
-              <li><span class="credit-name">Raina Yang</span><span class="credit-role">Lighting Design</span></li>
-              <li><span class="credit-name">Jude St John</span><span class="credit-role">Sound Design</span></li>
-              <li><span class="credit-name">Noah Dehli</span><span class="credit-role">Set Design</span></li>
-              <li><span class="credit-name">Chelsea Wei</span><span class="credit-role">Props Design</span></li>
-              <li><span class="credit-name">Yinuo Yu</span><span class="credit-role">Costume Design</span></li>
-              <li><span class="credit-name">Da-Hee Kim</span><span class="credit-role">Graphics &amp; Marketing</span></li>
-            </ul>
+            <div class="credit-rows">
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Producer</div>
+                  <div class="credit-entry__name">Flora Zhu</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Producer</div>
+                  <div class="credit-entry__name">Sydney Wang</div>
+                </div>
+              </div>
+
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Stage Manager</div>
+                  <div class="credit-entry__name">Vivi LaFont</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Technical Director</div>
+                  <div class="credit-entry__name">Emma Melville</div>
+                </div>
+              </div>
+
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Lighting Design</div>
+                  <div class="credit-entry__name">Raina Yang</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Sound Design</div>
+                  <div class="credit-entry__name">Jude St John</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Set Design</div>
+                  <div class="credit-entry__name">Noah Dehli</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Props Design</div>
+                  <div class="credit-entry__name">Chelsea Wei</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Costume Design</div>
+                  <div class="credit-entry__name">Yinuo Yu</div>
+                </div>
+              </div>
+
+              <div class="credit-row credit-row--dense">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Production Assistant</div>
+                  <div class="credit-entry__name">Ashley Dong</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Graphics &amp; Marketing</div>
+                  <div class="credit-entry__name">Da-Hee Kim</div>
+                </div>
+              </div>
+
+              <div class="credit-row">
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Music Direction and Direction</div>
+                  <div class="credit-entry__name">Sebastian Blue Hochman</div>
+                </div>
+                <div class="credit-entry">
+                  <div class="credit-entry__role">Direction</div>
+                  <div class="credit-entry__name">Heather Schechter</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -956,7 +1229,7 @@
 
         <div class="reveal reveal-delay-1">
           <h3>What time should I arrive?</h3>
-          <p>The bar opens at 7:00. Christian (the bartender) starts pouring before the play officially begins, and you'll want to settle in. Arrive a little before 7 if you can.</p>
+          <p>7 or a bit after. That's when the doors open and the bar opens with them — Christian starts pouring as you walk in, and the line between arriving and watching the show dissolves pretty quickly.</p>
         </div>
 
         <div class="reveal reveal-delay-1">
@@ -966,12 +1239,7 @@
 
         <div class="reveal reveal-delay-2">
           <h3>Is it indoor or outdoor?</h3>
-          <p>The courtyard is partly open to the night air, which is part of why the room feels the way it does. Stanford evenings in late May can drop into the 50s, so dress for an evening outside, not for a dark theater.</p>
-        </div>
-
-        <div class="reveal reveal-delay-2">
-          <h3>Will I have to participate?</h3>
-          <p>Present, yes. Put on the spot, no. Christian might pour you a drink and ask where you're from. He won't make you sing.</p>
+          <p>Outdoor. The courtyard is open to the sky, which is part of how the room feels — you can hear the night and feel the air. Stanford in late May drops into the 50s after dark, so dress for an evening outside, not a dark theater.</p>
         </div>
 
         <div class="reveal reveal-delay-3">
@@ -981,12 +1249,7 @@
 
         <div class="reveal reveal-delay-3">
           <h3>Is it appropriate for kids?</h3>
-          <p>Recommended 13 and up. The piece has strong language and themes of war.</p>
-        </div>
-
-        <div class="reveal reveal-delay-3">
-          <h3>What if it goes wrong?</h3>
-          <p>Then it becomes part of the night. That's the piece.</p>
+          <p>13 and up. There's strong language, and the show sits with themes of war and loss pretty seriously.</p>
         </div>
       </section>
 
