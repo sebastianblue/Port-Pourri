@@ -197,6 +197,47 @@
       animation: hero-rise 1.6s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: hero-rise 1.6s 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.9rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid rgba(239, 171, 88, 0.24);
+      background: rgba(7, 23, 50, 0.55);
+      color: var(--ink-light);
+      text-decoration: none;
+      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 18px 38px -22px rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .hero__button:hover,
+    .hero__button:focus-visible {
+      color: var(--ink-light);
+      text-decoration: none;
+      background: rgba(181, 110, 49, 0.82);
+      border-color: rgba(239, 171, 88, 0.5);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
     .hero__scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -714,6 +755,17 @@
         line-height: 0.9;
       }
 
+      .hero__actions {
+        gap: 0.65rem;
+        margin-top: 1.8rem;
+      }
+
+      .hero__button {
+        width: 100%;
+        font-size: 0.82rem;
+        padding: 0.82rem 1rem;
+      }
+
       #company {
         width: calc(100vw - 2rem);
       }
@@ -1179,6 +1231,9 @@
         <p class="reveal reveal-delay-3">
           At its heart, Port-Pourri is about learning to be left behind—and the music we carry after people are gone.
         </p>
+        <div class="hero__actions reveal reveal-delay-3">
+          <a class="hero__button" href="https://open.spotify.com/playlist/2u1dIXjYaQoP2SzYlSEFRL?si=bcb9c07f9f934673" target="_blank" rel="noreferrer">Listen to the playlist</a>
+        </div>
       </section>
 
       <section class="content" id="practical">
