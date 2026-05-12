@@ -250,6 +250,17 @@
       outline: none;
     }
 
+    .hero__button--ghost {
+      background: rgba(7, 23, 50, 0.28);
+      color: var(--ink-mid);
+    }
+
+    .hero__button--ghost:hover,
+    .hero__button--ghost:focus-visible {
+      color: var(--ink-light);
+      background: rgba(7, 23, 50, 0.68);
+    }
+
     .hero__scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -778,7 +789,11 @@
         margin-top: 1.8rem;
       }
 
-    .hero__button {
+      .final-cta__actions {
+        gap: 0.65rem;
+      }
+
+      .hero__button {
         width: 100%;
         font-size: 0.82rem;
         padding: 0.82rem 1rem;
@@ -917,6 +932,14 @@
       color: var(--ink-soft);
       letter-spacing: 0.02em;
       margin-bottom: 2.25rem;
+    }
+
+    .final-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      margin-top: 0.2rem;
     }
 
     .final-cta__button {
@@ -1256,6 +1279,7 @@
         </p>
         <div class="hero__actions reveal reveal-delay-3">
           <a class="hero__button" href="https://open.spotify.com/playlist/2u1dIXjYaQoP2SzYlSEFRL?si=bcb9c07f9f934673" target="_blank" rel="noreferrer">Listen to the playlist</a>
+          <a class="hero__button hero__button--ghost" href="../list/">Join the mailing list</a>
         </div>
       </section>
 
@@ -1460,7 +1484,10 @@
       <section class="final-cta" id="reserve">
         <p class="final-cta__line reveal">Come to the bar.</p>
         <p class="final-cta__sub reveal reveal-delay-1">Three nights. Free.</p>
-        <a class="final-cta__button reveal reveal-delay-2" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Reserve your seat</a>
+        <div class="final-cta__actions reveal reveal-delay-2">
+          <a class="final-cta__button" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Reserve your seat</a>
+          <a class="hero__button hero__button--ghost" href="../list/">Join the mailing list</a>
+        </div>
         <p class="final-cta__fineprint reveal reveal-delay-3">May 29, 30, 31 · Roble Hall Courtyard, Stanford</p>
       </section>
 
