@@ -21,6 +21,14 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: 'Super Clarendon Web';
+      src: url('superclarendon-rg-bold-italic-5872742196896,superclarendon-rg-bold-587272c8dce6b,superclarendon[...]/superclarendon-rg-bold-587272c8dce6b.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #041730;
       --bg-deeper: #020c1c;
@@ -34,6 +42,7 @@
       --orange-deep: #b56e31;
       --rule: rgba(239, 171, 88, 0.24);
       --shadow: rgba(0, 0, 0, 0.58);
+      --display-font: "Super Clarendon Web", "Super Clarendon", "Bookman Old Style", Georgia, serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,10 +53,11 @@
       color: var(--ink-light);
       background: var(--bg);
       background-image:
-        radial-gradient(circle at 50% 14%, rgba(218, 164, 84, 0.12), transparent 28%),
-        radial-gradient(circle at 15% 0%, rgba(60, 95, 158, 0.18), transparent 30%),
-        radial-gradient(circle at 88% 22%, rgba(24, 53, 103, 0.18), transparent 24%),
-        linear-gradient(180deg, rgba(1, 8, 18, 0.55), rgba(1, 8, 18, 0.08) 25%, rgba(1, 8, 18, 0.55) 100%);
+        radial-gradient(circle at 50% 8%, rgba(214, 184, 122, 0.18), transparent 24%),
+        radial-gradient(circle at 16% 10%, rgba(146, 70, 40, 0.3), transparent 30%),
+        radial-gradient(circle at 85% 18%, rgba(110, 46, 31, 0.24), transparent 24%),
+        radial-gradient(circle at 50% 82%, rgba(84, 112, 99, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(28, 16, 12, 0.76), rgba(58, 34, 20, 0.34) 34%, rgba(16, 11, 10, 0.82) 100%);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -163,26 +173,27 @@
     }
 
     .hero__title {
-      font-family: 'Kuunari', 'Anton', 'Bebas Neue', Impact, sans-serif;
-      font-weight: 900;
-      font-size: clamp(4.6rem, 14vw, 9rem);
-      letter-spacing: 0.02em;
+      font-family: var(--display-font);
+      font-weight: 700;
+      font-size: clamp(3.5rem, 11vw, 6.2rem);
+      letter-spacing: 0.68em;
       color: #f3e4bf;
-      line-height: 0.88;
-      margin-bottom: 1rem;
+      line-height: 0.95;
+      margin-bottom: 0.8rem;
+      padding-left: 0.32em;
       text-shadow: 0 10px 40px rgba(210, 137, 67, 0.24);
-      -webkit-text-stroke: 1px rgba(210, 137, 67, 0.45);
       will-change: transform, opacity;
       animation: hero-rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      text-transform: uppercase;
     }
 
     .hero__subtitle {
-      font-family: 'Kuunari', 'Anton', sans-serif;
-      font-weight: 400;
-      font-size: clamp(1rem, 2.8vw, 1.5rem);
-      letter-spacing: 0.18em;
+      font-family: var(--display-font);
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      letter-spacing: 0.015em;
       color: var(--orange-bright);
-      text-transform: uppercase;
+      text-transform: lowercase;
       margin-bottom: 1.1rem;
       opacity: 0;
       animation: hero-rise 1.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -218,9 +229,10 @@
       background: rgba(7, 23, 50, 0.55);
       color: var(--ink-light);
       text-decoration: none;
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: var(--display-font);
+      font-weight: 700;
       font-size: 0.9rem;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       box-shadow: 0 18px 38px -22px rgba(0, 0, 0, 0.72);
       backdrop-filter: blur(8px);
@@ -323,10 +335,10 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
     h2 {
-      font-family: 'Kuunari', 'Anton', sans-serif;
-      font-weight: 400;
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      letter-spacing: 0.14em;
+      font-family: var(--display-font);
+      font-weight: 700;
+      font-size: clamp(1.55rem, 3.4vw, 2.15rem);
+      letter-spacing: 0.025em;
       color: var(--orange-bright);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
@@ -335,10 +347,10 @@
     }
 
     h3 {
-      font-family: 'Kuunari', 'Anton', sans-serif;
-      font-weight: 400;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: 1.18rem;
-      letter-spacing: 0.14em;
+      letter-spacing: -0.06em;
       color: var(--ink-light);
       text-transform: uppercase;
       margin-top: 2.25rem;
@@ -399,9 +411,10 @@
     .practicalia li:last-child { border-bottom: none; }
 
     .practicalia .key {
-      font-family: 'Anton', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: 0.9rem;
-      letter-spacing: 0.1em;
+      letter-spacing: -0.06em;
       color: var(--orange-bright);
       text-transform: uppercase;
     }
@@ -508,10 +521,10 @@
     }
 
     .tab {
-      font-family: 'Kuunari', 'Anton', sans-serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.18em;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.96rem;
+      letter-spacing: -0.06em;
       text-transform: uppercase;
       color: var(--ink-soft);
       background: transparent;
@@ -577,11 +590,12 @@
     }
 
     .credit-name {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: clamp(1.3rem, 1.55vw, 2.05rem);
       line-height: 0.98;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
+      letter-spacing: -0.085em;
+      text-transform: none;
       color: var(--ink-light);
       white-space: nowrap;
       margin-inline: auto;
@@ -590,10 +604,11 @@
     }
 
     .credit-role {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: clamp(0.9rem, 1.1vw, 1.2rem);
       line-height: 1;
-      letter-spacing: 0.03em;
+      letter-spacing: -0.07em;
       text-transform: uppercase;
       color: var(--orange-bright);
       text-wrap: balance;
@@ -630,6 +645,7 @@
       text-wrap: nowrap;
       max-width: none;
       font-size: clamp(1.7rem, 1.95vw, 2.55rem);
+      text-transform: none;
     }
 
     .credit-list--cast .credit-role {
@@ -664,10 +680,11 @@
     }
 
     .credit-entry__role {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: clamp(1.35rem, 1.65vw, 1.82rem);
       line-height: 1;
-      letter-spacing: 0.03em;
+      letter-spacing: -0.07em;
       text-transform: uppercase;
       color: var(--orange-bright);
       text-wrap: balance;
@@ -675,11 +692,12 @@
     }
 
     .credit-entry__name {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
       font-size: clamp(2.1rem, 2.55vw, 3.35rem);
       line-height: 0.95;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
+      letter-spacing: -0.1em;
+      text-transform: none;
       color: var(--ink-light);
       white-space: nowrap;
     }
@@ -760,7 +778,7 @@
         margin-top: 1.8rem;
       }
 
-      .hero__button {
+    .hero__button {
         width: 100%;
         font-size: 0.82rem;
         padding: 0.82rem 1rem;
@@ -884,9 +902,10 @@
     }
 
     .final-cta__line {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: var(--display-font);
+      font-weight: 700;
       font-size: clamp(1.4rem, 3.5vw, 2rem);
-      letter-spacing: 0.18em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       color: var(--ink-mid);
       margin-bottom: 0.6rem;
@@ -902,9 +921,10 @@
 
     .final-cta__button {
       display: inline-block;
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: var(--display-font);
+      font-weight: 700;
       font-size: 1.4rem;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
       color: var(--ink-light);
@@ -962,9 +982,10 @@
       border: 1px solid rgba(239, 171, 88, 0.24);
       color: var(--orange-bright);
       text-decoration: none;
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: var(--display-font);
+      font-weight: 700;
       font-size: 0.82rem;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       box-shadow: 0 18px 38px -18px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(10px);
@@ -994,9 +1015,10 @@
     }
 
     .sponsors__eyebrow {
-      font-family: 'Kuunari', 'Anton', sans-serif;
+      font-family: var(--display-font);
+      font-weight: 700;
       font-size: 0.9rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--orange-bright);
       margin-bottom: 1.25rem;
@@ -1171,9 +1193,10 @@
       .panel::before {
         content: attr(data-label);
         display: block;
-        font-family: 'Anton', sans-serif;
+        font-family: var(--display-font);
+        font-weight: 700;
         font-size: 1.05rem;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
         color: var(--orange-bright);
         margin-bottom: 0.75rem;
@@ -1197,8 +1220,8 @@
   <div class="page">
     <main>
       <header class="hero">
-        <h1 class="hero__title">Port-Pourri</h1>
-        <p class="hero__subtitle">A new musical play</p>
+        <h1 class="hero__title">PORT-POURRI</h1>
+        <p class="hero__subtitle">a new play with music</p>
         <p class="hero__dates">May 29 to 31, 2026 · Roble Hall Courtyard, Stanford</p>
         <p class="hero__scroll-hint">scroll to enter ↓</p>
       </header>
@@ -1243,10 +1266,10 @@
           <li><span class="key">Doors</span><span class="val">7:00 PM. Preshow begins as you arrive — the bar opens early.</span></li>
           <li><span class="key">Length</span><span class="val">About two and a half hours, no intermission. We aim to finish by 9:30.</span></li>
           <li><span class="key">Seating</span><span class="val">Inside the bar. Reserved with your ticket. No standing.</span></li>
-          <li><span class="key">Bar</span><span class="val">Drinks served throughout. Alcohol optional, ID checked at the door. Light food too.</span></li>
+          <li><span class="key">Bar</span><span class="val">Drinks served throughout. Alcohol optional (for 21+ with ID checked at the door). Light food too.</span></li>
           <li><span class="key">Outdoors</span><span class="val">Outdoor. The courtyard is open to the sky. Bring a layer — Stanford evenings get cool fast.</span></li>
-          <li><span class="key">Ages</span><span class="val">16 and up. Strong language and themes of war.</span></li>
-          <li><span class="key">Tickets</span><span class="val">Free. Limited to 50 seats per night. Reservation required.</span></li>
+          <li><span class="key">Ages</span><span class="val">16 and up. If you're drinking, be 21+ with valid ID.</span></li>
+          <li><span class="key">Tickets</span><span class="val">Free. Reservation required.</span></li>
         </ul>
       </section>
 
@@ -1260,7 +1283,7 @@
             <li><span class="when">Saturday, May 30 · Preshow 7:00 PM</span><span class="label">evening</span></li>
             <li><span class="when">Sunday, May 31 · Preshow 7:00 PM</span><span class="label">closing</span></li>
           </ul>
-          <p class="meta">Free · 50 seats per night · reservation required</p>
+          <p class="meta">Free · reservation required</p>
         </div>
       </section>
 
@@ -1425,18 +1448,18 @@
 
         <div class="reveal reveal-delay-3">
           <h3>What about food and drinks?</h3>
-          <p>A small bar serves drinks all evening. Alcohol is optional and only served to guests with ID checked at the door. There's also light food.</p>
+          <p>A small bar serves drinks all evening. Alcohol optional (for 21+ with ID checked at the door). There's also light food.</p>
         </div>
 
         <div class="reveal reveal-delay-3">
           <h3>Is it appropriate for kids?</h3>
-          <p>16 and up. There's strong language, and the show sits with themes of war and loss pretty seriously.</p>
+          <p>16 and up. There's strong language, and the show sits with themes of war and loss pretty seriously. If you're drinking, be 21+ and bring ID.</p>
         </div>
       </section>
 
       <section class="final-cta" id="reserve">
         <p class="final-cta__line reveal">Come to the bar.</p>
-        <p class="final-cta__sub reveal reveal-delay-1">Three nights. Fifty seats each. Free.</p>
+        <p class="final-cta__sub reveal reveal-delay-1">Three nights. Free.</p>
         <a class="final-cta__button reveal reveal-delay-2" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Reserve your seat</a>
         <p class="final-cta__fineprint reveal reveal-delay-3">May 29, 30, 31 · Roble Hall Courtyard, Stanford</p>
       </section>
