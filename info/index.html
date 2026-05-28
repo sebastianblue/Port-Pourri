@@ -89,7 +89,7 @@
             "url": "https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator",
             "price": "0",
             "priceCurrency": "USD",
-            "availability": "https://schema.org/LimitedAvailability",
+            "availability": "https://schema.org/SoldOut",
             "validFrom": "2026-05-13T00:00:00-07:00"
           },
           "subEvent": [
@@ -1507,13 +1507,13 @@
           <a class="hero__button" href="https://open.spotify.com/playlist/2u1dIXjYaQoP2SzYlSEFRL?si=bcb9c07f9f934673" target="_blank" rel="noreferrer">Listen to the playlist</a>
           <a class="hero__button hero__button--ghost" href="../list/">Join the mailing list</a>
         </div>
-        <div class="ticket-countdown reveal reveal-delay-3" aria-live="polite">
-          <span class="ticket-countdown__label">Next ticket release</span>
-          <span class="ticket-countdown__time" id="ticket-countdown">
-            <span class="ticket-countdown__units">Counting down</span>
-            <span class="ticket-countdown__suffix">to Monday, May 18 at 8:00 AM PT</span>
+        <div class="ticket-countdown reveal reveal-delay-3">
+          <span class="ticket-countdown__label">All performances sold out</span>
+          <span class="ticket-countdown__time">
+            <span class="ticket-countdown__units">Waitlist at the door</span>
+            <span class="ticket-countdown__suffix">Arrive by 6:45 PM · get on the list · entry at 7:15</span>
           </span>
-          <p class="ticket-countdown__note">Next round of tickets drops Monday, May 18, 2026 at 8:00 AM Pacific.</p>
+          <p class="ticket-countdown__note">Join the <a href="../list/">mailing list</a> for waitlist updates and news.</p>
         </div>
       </section>
 
@@ -1527,7 +1527,7 @@
           <li><span class="key">Bar</span><span class="val">Drinks served throughout. Alcohol optional (for 21+ with ID checked at the door). Light food too.</span></li>
           <li><span class="key">Outdoors</span><span class="val">Outdoor. The courtyard is open to the sky. Bring a layer — Stanford evenings get cool fast.</span></li>
           <li><span class="key">Ages</span><span class="val">16 and up. If you're drinking, be 21+ with valid ID.</span></li>
-          <li><span class="key">Tickets</span><span class="val">Free. Reservation required.</span></li>
+          <li><span class="key">Tickets</span><span class="val">Sold out. Waitlist at the door — arrive by 6:45 PM and your name goes on the list for 7:15 entry. <a href="../list/">Join the mailing list</a> for updates.</span></li>
         </ul>
       </section>
 
@@ -1541,7 +1541,7 @@
             <li><span class="when">Saturday, May 30 · Preshow 7:00 PM</span><span class="label">evening</span></li>
             <li><span class="when">Sunday, May 31 · Preshow 7:00 PM</span><span class="label">closing</span></li>
           </ul>
-          <p class="meta">Free · reservation required</p>
+          <p class="meta">Sold out · waitlist at the door</p>
         </div>
       </section>
 
@@ -1682,6 +1682,9 @@
             </div>
           </div>
         </div>
+        <div class="hero__actions reveal reveal-delay-2">
+          <a class="hero__button hero__button--ghost" href="bios/">Read the company bios</a>
+        </div>
       </section>
 
       <div class="ornament reveal">· · ·</div>
@@ -1692,6 +1695,7 @@
         <div class="reveal reveal-delay-1">
           <h3>What time should I arrive?</h3>
           <p>7 or a bit after. That's when the doors open and the bar opens with them — Christian starts pouring as you walk in, and the line between arriving and watching the show dissolves pretty quickly.</p>
+          <p>If you're coming on the waitlist, arrive by 6:45 PM. We'll take names until 7:00, then call the list at 7:15 as space opens up.</p>
         </div>
 
         <div class="reveal reveal-delay-1">
@@ -1716,13 +1720,12 @@
       </section>
 
       <section class="final-cta" id="reserve">
-        <p class="final-cta__line reveal">Come to the bar.</p>
-        <p class="final-cta__sub reveal reveal-delay-1">Three nights. Free.</p>
+        <p class="final-cta__line reveal">Sold out. Come anyway.</p>
+        <p class="final-cta__sub reveal reveal-delay-1">Arrive by 6:45 — waitlist opens at the door.</p>
         <div class="final-cta__actions reveal reveal-delay-2">
-          <a class="final-cta__button" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Reserve your seat</a>
-          <a class="hero__button hero__button--ghost" href="../list/">Join the mailing list</a>
+          <a class="final-cta__button" href="../list/">Join the mailing list</a>
         </div>
-        <p class="final-cta__fineprint reveal reveal-delay-3">May 29, 30, 31 · Roble Hall Courtyard, Stanford</p>
+        <p class="final-cta__fineprint reveal reveal-delay-3">Names taken until 7:00 PM · list called at 7:15 as space opens up · May 29, 30, 31 · Roble Hall Courtyard, Stanford</p>
       </section>
 
       <section class="sponsors reveal" aria-labelledby="sponsors-title">
@@ -1747,7 +1750,7 @@
       </section>
     </main>
 
-    <a class="floating-ticket" href="https://www.eventbrite.com/e/port-pourri-a-new-play-tickets-1988589855790?aff=oddtdtcreator">Get tickets now</a>
+    <a class="floating-ticket" href="../list/">Join the mailing list</a>
 
     <footer>
       <p class="copy">Port-Pourri · A new musical play · © 2025 / 2026</p>
@@ -1758,39 +1761,6 @@
     (function () {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const floatingTicket = document.querySelector('.floating-ticket');
-      const countdownEl = document.getElementById('ticket-countdown');
-      const nextTicketDrop = new Date('2026-05-18T08:00:00-07:00');
-
-      function renderCountdown() {
-        if (!countdownEl) return;
-
-        const now = new Date();
-        const diff = nextTicketDrop.getTime() - now.getTime();
-
-        if (diff <= 0) {
-          countdownEl.textContent = 'Tickets release today at 8:00 AM PT';
-          return;
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        const parts = [];
-
-        if (days) parts.push(days + 'd');
-        parts.push(hours + 'h');
-        parts.push(minutes + 'm');
-        parts.push(seconds + 's');
-
-        countdownEl.innerHTML =
-          '<span class="ticket-countdown__units">' + parts.join(' ') + '</span>' +
-          '<span class="ticket-countdown__suffix">until Monday, May 18 at 8:00 AM PT</span>';
-      }
-
-      renderCountdown();
-      window.setInterval(renderCountdown, 1000);
 
       // Reveal-on-scroll
       const reveals = document.querySelectorAll('.reveal');
