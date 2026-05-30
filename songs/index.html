@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="The songs of Port-Pourri — liner notes on the music and lyrics of an immersive new play, drawing on samba pagode, samba chula, samba de raiz, klezmer and more.">
+  <meta name="description" content="The songs of Port-Pourri — liner notes on the music and lyrics of an immersive new play, drawing on samba pagode, samba chula, samba de raiz, forró, klezmer, bolero, and more.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="theme-color" content="#1a110d">
   <link rel="canonical" href="https://port.sebastian.blue/songs/">
@@ -463,6 +463,50 @@
       color: var(--orange-deep);
       margin: 0.5rem 0 1.4rem;
     }
+    /* Yiddish / translation lines inside a stanza */
+    .lyrics .yiddish {
+      font-size: 1.24rem;
+      color: var(--ink-light);
+      direction: rtl;
+      display: block;
+    }
+    .lyrics .translit {
+      color: var(--ink-mid);
+      font-style: italic;
+      font-size: 0.96em;
+      display: block;
+    }
+    .lyrics .gloss {
+      color: var(--ink-soft);
+      font-style: italic;
+      font-size: 0.95em;
+    }
+
+    /* Emily's note — a second voice, set apart from Sebastian's notes */
+    .emily {
+      margin: 2.25rem 0 0.5rem;
+      padding: 1.4rem 1.6rem;
+      border-left: 2px solid var(--orange);
+      background: rgba(7, 23, 50, 0.32);
+      border-radius: 0 10px 10px 0;
+    }
+    .emily__label {
+      font-family: var(--label-font);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--orange-bright);
+      margin-bottom: 0.55rem;
+    }
+    .emily p {
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.55;
+      color: var(--ink-mid);
+      margin-bottom: 0.85rem;
+    }
+    .emily p:last-child { margin-bottom: 0; }
 
     /* Placeholder for songs still in progress */
     .song--draft .song__title { color: var(--ink-mid); }
@@ -538,7 +582,7 @@
       <header class="hero">
         <p class="hero__kicker">port-pourri · liner notes</p>
         <h1 class="hero__title">SONGS</h1>
-        <p class="hero__dates">A circle of songs for one evening in a port bar — samba, forró, and klezmer, sung between the players. Notes on the music and the words behind it.</p>
+        <p class="hero__dates">A circle of songs for one evening in a port bar — pagode, samba chula, forró, klezmer, bolero, and more, sung between the players. Notes on the music and the words behind it.</p>
         <p class="hero__scroll-hint">scroll to listen ↓</p>
       </header>
 
@@ -551,10 +595,10 @@
             <li><a href="#song-1">Time Without War</a><span class="trk-genre">Samba Pagode</span></li>
             <li><a href="#song-2">They Hum</a><span class="trk-genre">Samba Chula</span></li>
             <li><a href="#song-3">Between the Players</a><span class="trk-genre">Samba de Raiz</span></li>
-            <li class="is-coming"><a href="#song-4">The Storm / Der Mabul</a><span class="trk-genre">notes to come</span></li>
-            <li class="is-coming"><a href="#song-5">The Green Ray</a><span class="trk-genre">notes to come</span></li>
-            <li class="is-coming"><a href="#song-6">Flowers (How Could You Forget)</a><span class="trk-genre">notes to come</span></li>
-            <li class="is-coming"><a href="#song-7">Vai</a><span class="trk-genre">notes to come</span></li>
+            <li><a href="#song-4">The Storm / Der Mabul</a><span class="trk-genre">Forró · Xaxado · Klezmer</span></li>
+            <li><a href="#song-5">The Green Ray</a><span class="trk-genre">Samba-Canção</span></li>
+            <li><a href="#song-6">Flowers (How Could You Forget)</a><span class="trk-genre">Bolero</span></li>
+            <li><a href="#song-7">Vai</a><span class="trk-genre">Samba Pagode</span></li>
           </ol>
         </div>
       </section>
@@ -579,6 +623,11 @@
         <div class="note reveal">
           <p class="note__label">On orchestration &amp; harmony</p>
           <p>I focused on the rule-breaking minor V, borrowing from <em>Eu e Você Sempre</em>, which is interchangeable with the bVII in the chorus, both of which lead to the IV plagally. This creates the narrative of heartbreak that the I chord has to go through because its V chord becomes minor, thus setting up the beauty of the IV chord, only to break our hearts with the minor IV. The second line of the A section borrows from the other Aragão, <em>Lucidez</em>, utilizing the II7 superimposed on top of the I to create the sense of wonder and rising intrigue. I always feel like that #11 makes you raise your eyebrows a bit, and that moment feels right for that. We're using simple instruments here — the guitar, the piano, the pandeiro, some shakers — but we get a sound that's extremely full.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>The last two quarters have been overshadowed by U.S. attacks on people in Lebanon and Iran. This violence is ever-present, and I wanted to link the show's historic setting to the current context during which we've written it.</p>
         </div>
 
         <div class="lyrics reveal">
@@ -615,6 +664,11 @@
         <div class="note reveal">
           <p class="note__label">On orchestration &amp; harmony</p>
           <p>The harmony here is pretty simple. I studied samba chula with Roberto Mendes, one of the few on the forefront of preservation and appreciation of the style, and he speaks about it not as folklore to be preserved under glass, but as a living classical tradition. He describes the songwriting as necessitating "perfect verses," beautiful poetry carried by simply two chords. The verses oscillate between G and C, with the signature dead-note plucking style of chula guitar — heavily rhythmic, and repetitive. It's accompanied by the cavaquinho, a four-stringed Portuguese-turned-Brazilian instrument taking the place of the ten-stringed Portuguese-turned-Brazilian instrument, the viola machete, playing syncopated arpeggiations of the chords. It's also accompanied by percussion, most of which is customary in any samba, but the key instrument to highlight is the prato-e-faca, or "plate and knife," coming from a long history of repurposing household items as percussion when drums weren't available.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>Our "List Song" plays after the juxtaposition of the quotidian with the absurd. The images are overlaid on the rhythms of the dockworkers, the sounds of the words, and a musing melody.</p>
         </div>
 
         <div class="lyrics reveal">
@@ -659,6 +713,11 @@
           <p>This is fun. We finally get to the true samba instrumentation: violão sete-cordas (seven-string guitar), cavaquinho, pandeiro, tamborim, agogô, ganzá, surdo, rebolo, and more. This batucada is what makes the engine of this song move forward, and we get a glimpse of that when we reprise it at the end, when Bruno leads the group in a percussion call-and-response. This is the heartbeat of the show, and it's the song I think people will be walking out singing. Harmonically and melodically, I was aiming to capture the dual nature of this kind of music: we have a driving, minor-focused refrain section, and a lighter, sweet-sounding verse. The verse also borrows melodic ideas from Almir Guineto's <em>Conselho</em>, with its jumps and stretching over the top of the range of where you thought the melody was going to go.</p>
         </div>
 
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>Sebastian wanted the songs of this world to feel like they already exist as crowd favorites. Singing about singing is one such classic in samba as well as folk traditions worldwide. In a mix of voices, it's possible to hear familiar hints of someone you're listening for. This song is about the phenomenon of catching echoes of people we've lost in songs they might have sung.</p>
+        </div>
+
         <div class="lyrics reveal">
           <p class="lyrics__caption">Words — Emily, from original verses by Eva Saenz &amp; Rabiah Kabir</p>
           <p class="stanza"><span class="refrain">Lai, lai lai lai — lai lai lai lai lai<br>Lai, lai lai lai — lai lai lai lai lai<br>Lai, lai lai lai — lai lai lai lai lai<br>Lai, lai lai lai lai — lai lai lai lai</span></p>
@@ -672,29 +731,186 @@
         </div>
       </article>
 
-      <!-- SONGS IN PROGRESS -->
-      <article class="song song--draft" id="song-4">
+      <!-- SONG 4 -->
+      <article class="song" id="song-4">
         <span class="song__num reveal">Song Four</span>
         <h2 class="song__title reveal">The Storm / Der Mabul</h2>
-        <p class="song__tocome reveal">Notes coming soon.</p>
+        <span class="song__genre reveal">Forró · Xaxado · Klezmer</span>
+
+        <div class="note reveal">
+          <p class="note__label">On content</p>
+          <p>This is another list song, and this time we're listing the things that are found in a flood. We knew this song would happen when a storm came, and the only thing that made sense was to do an upbeat, high-energy song about the water flooding a boat. A lot of the music was supposed to conceptually relate to what is happening literally, but not be overtly literal. In this case, that distinction is clear. The lyrics do an interesting thing: when the three parts are overlapped, they intertwine the meanings in clever ways. Kudos to Emily for all of that.</p>
+          <p>For the second section of the piece, we move to Yiddish. The Yiddish lyrics — expertly crafted by Yiddish comparative literature scholar Elizabeth Shepherd — tell a similar story to the first part, but instead use the word <em>מבול</em> for "flood," borrowing from the biblical flood and giving it a grandiosity that is well reflected in the beautiful language.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On genre</p>
+          <p>We're moving northeast with this one. This play is inspired in large part by the Northeast of Brazil, so it felt only appropriate that this song become part of that identity. The song takes inspiration from forró, a hugely influential musical tradition from northeastern Brazil. Someone once described it to me as "bandit music." There is a real historical connection here. This piece is especially inspired by xaxado, a style of music and dance associated with nomadic bandits, or cangaceiros, who used it to commemorate victories in battle. Over time, it became part of the broader traditional culture of northeastern Brazil. The name xaxado is said to come from the sound of sandals scraping against the ground as people danced.</p>
+          <p>Rhythmically, this music is often built around the baião pattern: a three-pulse structure with two dotted eighth notes followed by a single eighth note. That rhythm shows up in forró and in many related northeastern Brazilian styles. Forró itself draws from many rural rhythms across the Northeast. Its etymology is also interesting. One possible origin — maybe apocryphal, but I like it — is the word <em>forrobodó</em>, which people use to describe a party or commotion that seems to go on forever, which feels pretty close to the spirit of this show.</p>
+          <p>As the song continues, our dentist, Leon, starts to realize that these rhythms remind him of another musical tradition he knows well: klezmer. Klezmer is Jewish traditional music from Central and Eastern Europe, often played at weddings and celebrations. It combines Jewish religious and Middle Eastern sounds with Slavic, Ottoman, and Romanian folk influences, creating music that is deeply danceable and full of joy, ache, and ornament.</p>
+          <p>There are also some surprising sonic overlaps between klezmer and northeastern Brazilian music. Both traditions make prominent use of instruments like accordion and clarinet, and both often include tambourine-like percussion. In Brazilian music, that might be the pandeiro; in klezmer and nearby Middle Eastern traditions, it might be the riq. I decided to bring these worlds together because they have always sounded connected to me. I imagine Leon would hear that connection too — and that this rhythm might remind him of a song his grandfather once sang to him.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On orchestration &amp; harmony</p>
+          <p>I used the common forró instrumentation, making some alterations. I was very excited to buy Reid an accordion, and learn about the methods of playing baião on it — using different ways of accelerating the bellows, and accentuating notes with the bass keys and the treble keys syncopated against each other. The other instruments are triángulo — a triangle hand-made by Bola, our instrument dealer — along with the pandeiros and more, the surdo (replacing the zabumba, the forró bass drum), as well as the violin and cello, making their first appearances, playing the baião rhythms as well.</p>
+          <p>The harmony starts pretty tame, V–i, in Am then C major (echoing the "Between the Players" relativity switch), but when it goes to the klezmer, we move into Freygish territory, or "Phrygian dominant" — also called "hijaz," a common mode in Jewish and Arab music.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>The joy of constructing this song came from inventing word combinations that fit to Sebastian's driving rhythms.</p>
+        </div>
+
+        <div class="lyrics reveal">
+          <p class="lyrics__caption">Words — Emily · Yiddish by Elizabeth Shepherd</p>
+          <p class="stanza">The storm around the boat<br>We anchor in the sea<br>We keep the keel afloat<br>Alone among debris</p>
+          <p class="stanza">The water high enough<br>Now to flood the deck<br>We gotta race around<br>To help prevent a wreck</p>
+          <p class="stanza">It's taken stable hands to stay aboard<br>Praying we will see the ship restored<br>Hoping that we don't end up in mud<br>Is there more to life than being in the flood</p>
+          <hr class="lyrics__divider">
+          <p class="lyrics__movement">The parts overlap</p>
+          <p class="stanza">The wind, the hole, the hull, the boat,<br>The storm, the anchor in, the sea,<br>The rain, the keep, the keel, afloat,<br>The flood, no other path, debris</p>
+          <p class="stanza">The wind, the water flow, the deck<br>The storm, the hands, the stay, aboard,<br>The rain, the hope, the vent, a wreck,<br>The flood, the fate, the ship, restored</p>
+          <p class="stanza">With a hole in the hull of the boat<br>Still we're anchoring under the sea<br>Reeling keeping the keel just afloat<br>Finding no other path but debris</p>
+          <p class="stanza">Wading water aflow on the deck<br>Stable hands staying barely aboard<br>Race in hope of preventing a wreck<br>Fighting fate till the ship is restored</p>
+          <hr class="lyrics__divider">
+          <p class="lyrics__movement">Der Mabul · in Yiddish</p>
+          <p class="stanza"><span class="yiddish">די וואָלקן רעגן אַראָפּ שווערע שלונדן</span><span class="translit">Di volkn regn arop shvere shlundn</span><span class="yiddish">און זינגען דאָס ליד פֿון זאַלץ אין די וואונדן</span><span class="translit">Un zingen dos lid fun zalts in di vundn</span></p>
+          <p class="stanza"><span class="aside">Ok, ok, now to D minor!</span></p>
+          <p class="stanza"><span class="yiddish">מײַן הויז איז פֿאַרלוירן אין דער מבול</span><span class="translit">Mayn hoyz iz farloyrn in der mabul</span><span class="yiddish">איך זוך און זוך אין דער וועלט, פאַרבונדן</span><span class="translit">Ikh zukh un zukh in der velt, farbundn</span></p>
+          <hr class="lyrics__divider">
+          <p class="lyrics__movement">English of the Yiddish</p>
+          <p class="stanza"><span class="gloss">The clouds rain down heavy sludge<br>And sing the song of salt in the wounds<br>My house is lost in the flood<br>I search and search in this world, still bound</span></p>
+        </div>
       </article>
 
-      <article class="song song--draft" id="song-5">
+      <!-- SONG 5 -->
+      <article class="song" id="song-5">
         <span class="song__num reveal">Song Five</span>
         <h2 class="song__title reveal">The Green Ray</h2>
-        <p class="song__tocome reveal">Notes coming soon.</p>
+        <span class="song__genre reveal">Samba-Canção</span>
+
+        <div class="note reveal">
+          <p class="note__label">On content</p>
+          <p>This song began with a story my mother used to tell me about the green flash: the brief green light that can appear just as the sun slips below the horizon. That image had already surfaced a few times in the play, and I wanted to finally give it its own musical moment.</p>
+          <p>Emily's lyrics do a beautiful job of capturing the sky at that exact threshold: orange clouds, pink and peach, the last flash of light before the day disappears. There is something naturally theatrical about the image. Everyone is looking in the same direction, waiting for something that may or may not happen, and then, for one second, the world seems to reveal itself.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On genre</p>
+          <p>This is a samba-canção, a slower and more contemplative kind of samba. I knew I needed one of these in the show. These softer, more inward songs have always had a special place in my heart: the kind of song that lets harmony, color, and breath do the work.</p>
+          <p>The inspirations go beyond samba as well. I was thinking about the intimacy of Rita Payés' <em>Quién lo diría</em>, the floating lyricism of Luiz Murá's <em>Águila Andina</em>, and the late-night ache of Chico Buarque's <em>Samba e Amor</em>. Those songs all live in a space where softness carries a lot of weight.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On orchestration &amp; harmony</p>
+          <p>The orchestration is close to the rest of the show's samba language, but with the piano brought farther forward. That gives the song a more suspended, intimate quality. It still belongs to the world of the ensemble, but it starts from a more interior place.</p>
+          <p>Harmonically, the song moves between two main sections: a verse and a refrain, each with a different kind of intensity. In the verses, I use a Neapolitan sixth chord as the subdominant harmony, with a sharp 11 on top. That color gives the progression its haunted quality: beautiful, but slightly bent out of shape. The second time we return to the one chord, it turns major, creating a sound related to Hijaz or Phrygian dominant — the pull between the major tonic and the flat-two major chord.</p>
+          <p>The refrain moves toward the minor four and then circles back to the one, but it does so in a way that feels cyclical rather than conclusive. The harmony keeps turning back on itself, almost like the horizon line. It could keep going around and around forever. The song needs to feel like it is interrupted.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>When Sebastian first described the show's concept and location to me, sunset played a powerful role at the border of theatricality. Like the opening number, this song blends between the world of the play and the world outside it. Under Sebastian's skillful composition, the verses linger, and the choruses roll. Lyrically, the verses take some patience, with an ABCD near-rhyme scheme across stanzas. The chorus bends around into itself.</p>
+        </div>
+
+        <div class="lyrics reveal">
+          <p class="lyrics__caption">Words — Emily</p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai lai lai</span></p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai</span></p>
+          <p class="stanza">In the sky / Far above<br>Orange clouds / Pink and peach</p>
+          <p class="stanza">Keep your eye / On the sun<br>As it drowns / Past your reach</p>
+          <p class="stanza">A last flash of light<br>Just before the day is done<br>Don't dare look away</p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai lai lai</span></p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai</span></p>
+          <p class="stanza">Moments die / Raise your cup<br>Drink it down / Give your speech</p>
+          <p class="stanza">Some give signs <span class="aside">(Some give signs) (Some give signs)</span><br>Some give up <span class="aside">(Some give up) (Some give up)</span><br>Some give out <span class="aside">(Oohh)</span><br>Some give grief</p>
+          <p class="stanza">A last flash of light<br>Just before the day is done<br>Don't dare look away<br>We only have the one…</p>
+          <p class="stanza">Last flash of light<br>Before the day is done<br>Don't dare look away<br>We only have the one</p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai lai lai</span></p>
+          <p class="stanza"><span class="refrain">Lai, lai lai lai lai lai,<br>Lai lai lai lai<br>Lai lai lai lai<br>Lai…</span></p>
+        </div>
       </article>
 
-      <article class="song song--draft" id="song-6">
+      <!-- SONG 6 -->
+      <article class="song" id="song-6">
         <span class="song__num reveal">Song Six</span>
         <h2 class="song__title reveal">Flowers (How Could You Forget)</h2>
-        <p class="song__tocome reveal">Notes coming soon.</p>
+        <span class="song__genre reveal">Bolero</span>
+
+        <div class="note reveal">
+          <p class="note__label">On content</p>
+          <p>This song was quick to write. Not because it was simple, but because it made a lot of sense to us. We knew we wanted the song to be about death before we even knew whether there was going to be any death within the story itself.</p>
+          <p>We wanted to sing about things that a ghost might be upset about someone else forgetting: flowers, candles, and pictures, all of which appear throughout the show as recurring themes. Those objects become altars to the dead. We see that idea referenced again and again throughout the show, and this song brings it forward directly.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On genre</p>
+          <p>This song steps out of Brazil, but not into a place entirely foreign from Brazil. Here, we explore bolero: a style of music that comes from Cuba and spread across much of Latin America in the mid-20th century. I was inspired by Los Tres Ases and other bolero trio groups from Mexico. It is also a bit of an homage to <em>Tierras Prometidas</em>, a project I was working on when I lived in Mexico City last summer.</p>
+          <p>Bolero helps us tell this story. The genre is often characterized by sophisticated lyrics, usually having to do with love. Here, we turn that slightly on its head by singing a song from the perspective of the departed, wishing they had been loved more.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On orchestration &amp; harmony</p>
+          <p>The main thing that had to change was how we played the instruments we already had. We took a pandeiro and turned it into a bongo, playing bolero rhythms on it. We also introduced trumpet, as we did in the previous song, which is a common bolero instrument. The guitar is able to play more floridly here, with extended lines and beautiful harmonies inspired by early bolero trios.</p>
+          <p>The harmony itself begins with the texture of a line cliché: E minor, with the bass line ascending. Ethan, our guitar player, often commented that it sounded like a grunge song because of the voicings, which leave a lot of open strings ringing. That is also very common in Brazilian music: playing with the sound of open strings as extensions that were not necessarily intentional and could not be created the same way in other keys.</p>
+          <p>We eventually shift to the major key. But we do not just shift from E minor to G major. We shift to C major, via G7 as a turnaround, which is something I borrowed from Luiz Murá. I think that tells a really interesting story in this melancholy bridge. We are using saudade in a very specific way here: the sorrow of a time forgotten. With the three-part harmony in the bridge, we get a beautiful, rich texture that could only be accomplished with three voices singing together.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>This song has a classic game to it — one idea expressed through different images.</p>
+        </div>
       </article>
 
-      <article class="song song--draft" id="song-7">
+      <!-- SONG 7 -->
+      <article class="song" id="song-7">
         <span class="song__num reveal">Song Seven</span>
         <h2 class="song__title reveal">Vai</h2>
-        <p class="song__tocome reveal">Notes coming soon.</p>
+        <span class="song__genre reveal">Samba Pagode</span>
+
+        <div class="note reveal">
+          <p class="note__label">On content</p>
+          <p>The final song in the show is necessarily a fun one. We wanted to bring back the pagode style from the beginning, except this time with more of a storytelling twist.</p>
+          <p>We created this character, João, who is represented by something very special in the show, and we wanted to tell his story as a sailor who was always being told to go, go, go. Hence the lyric "vai, vai, vai." When I first wrote the song, I had that chorus in mind before I really knew what the song was about. I knew it had to say "vai, vai, vai," but I did not yet know why.</p>
+          <p>Sammy, our co-creator, helped us situate that impulse inside the narrative. By the last moments of the play, we get the story of a man who has always been told to go, right as our characters have to decide whether they themselves are going to go or not. That parallel became very powerful. We are saying: go, go, go without fear. Go, go, go with faith.</p>
+          <p>The final line changes from "go, go, go, boy, go" to "go, go, go, we go," using the phrase <em>a gente</em>. In Brazilian Portuguese, "a gente" literally means "the people," but it is commonly used to mean "we." I love that shift. The song moves from an instruction given to one person into a collective decision. By the end, going is no longer something João is told to do alone. It becomes something everyone chooses together.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On genre</p>
+          <p>Again, we are in the world of pagode. This time, the tempo is faster, the energy is brighter, and the whole thing is meant to feel like the show throwing its arms open at the end.</p>
+          <p>We are playing partido alto on the pandeiros, and everyone gets to have a lot of fun with the instruments. We bring in cuíca, agogô, tamborim, rebolo, tantã, and more, which gives the song an exciting lift as it drives toward the final section of the show.</p>
+        </div>
+
+        <div class="note reveal">
+          <p class="note__label">On orchestration &amp; harmony</p>
+          <p>The harmony is very simple because the song is telling a very simple story. For most of it, we keep it to basically four chords. It has that sunny, open progression that feels right for a final number: immediate, singable, and easy to join.</p>
+          <p>The bridge gives us a chance to explore slightly new harmonic territory. It connects back a little to the verse of the third song, but it is also inspired by Grupo Fundo de Quintal's beautiful harmonic shifts: I to iii minor to v minor, acting almost like a ii–V–I into the IV, then moving to iv minor and flat VII to bring us back home to the I. That full bridge lets the song open up for a moment before returning to the simple chorus at the end. After all the harmonic turns and story turns, we land back on the thing we knew from the beginning: vai, vai, vai.</p>
+        </div>
+
+        <div class="emily reveal">
+          <p class="emily__label">A note from Emily</p>
+          <p>Adventure and structure rule "Vai." The transition of meaning in the chorus lends itself to different setups in the verses. There is an insatiable, driving, spiritual power in the narrative and the music. Inspired by classic myths, it is a song that pits an exploratory character with circular storytelling.</p>
+        </div>
+
+        <div class="lyrics reveal">
+          <p class="lyrics__caption">Words — Emily</p>
+          <p class="stanza">João was an only child<br>Impulse in his eyes<br>Freedom in his smile</p>
+          <p class="stanza">João grew almost ravenous<br>He couldn't find enough<br>To climb and swim and run</p>
+          <p class="stanza">João's father knew the world held more<br>For the boy to go explore<br>So father said to son—</p>
+          <p class="stanza"><span class="refrain">Vai, vai, vai, sem medo<br>Vai, vai menino vai, vai, com credo</span></p>
+          <p class="stanza">João was a sailing man<br>Followed every wind<br>Harbored every rain</p>
+          <p class="stanza">João wasn't one to stay the course<br>Or reach a place by force<br>Or pay mind to delay</p>
+          <p class="stanza">As long as he was on the move<br>With a nonexistent crew<br>He'd yell into the waves—</p>
+          <p class="stanza"><span class="refrain">Vai, vai, vai, sem medo<br>Vai, vai menino vai, vai, com credo</span></p>
+          <p class="stanza">A man in an ancient tale<br>Solicited to pray<br>Swallowed by a whale</p>
+          <p class="stanza">If God says go to Nineveh<br>No matter where you sail<br>You'll end up there anyway</p>
+          <p class="stanza"><span class="refrain">Vai, vai, vai, sem medo<br>Vai, vai menino vai, vai, com credo</span></p>
+          <p class="stanza">João became a lonely man<br>Eventually he swam<br>Back to his own land</p>
+          <p class="stanza">João came in with the tide<br>To find everyone had died<br>He fell upon the sand, cried—</p>
+          <p class="stanza"><span class="refrain">Vai, vai, vai, sem medo<br>Vai, vai, a gente vai, vai com credo<br>Vai, vai, vai, sem medo<br>Vai, vai, toda gente vai, vai com credo</span></p>
+        </div>
       </article>
     </main>
 
